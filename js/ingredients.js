@@ -70,22 +70,37 @@ async function saveIngredient() {
         return
     }
 
-    const { error } = await supabase.rpc('backoffice_save_ingredient', {
-        p_ingredient_id: document.getElementById('ingredientId').value || null,
-        p_name: name,
-        p_unit: unit,
-        p_cost_per_unit: Number(document.getElementById('ingredientCost').value || 0),
-        p_min_stock: Number(document.getElementById('ingredientMin').value || 0),
-        p_is_active: document.getElementById('ingredientActive').checked
-    })
+    function ingredientErrorText(error) {
+    const text = String(error?.message || error || '')
 
-    if (error) {
-        document.getElementById('ingredientFormMessage').textContent = error.message
-        return
+    if (
+        text.includes('INGREDIENT_NAME_EXISTS')
+        ||
+        text.includes('uq_ingredients_branch_name')
+        ||
+        text.includes('duplicate key')
+    ) {
+        return 'มีวัตถุดิบชื่อนี้อยู่แล้วในสาขานี้'
     }
+
+    if (text.includes('INGREDIENT_NAME_REQUIRED')) {
+        return 'กรุณาระบุชื่อวัตถุดิบ'
+    }
+
+    if (text.includes('INGREDIENT_UNIT_REQUIRED')) {
+        return 'กรุณาระบุหน่วยวัตถุดิบ'
+    }
+
+    return text || 'บันทึกข้อมูลไม่สำเร็จ'
+}
 
     document.getElementById('ingredientModal').classList.add('hidden')
     await load()
+}
+if (error) {
+    document.getElementById('ingredientFormMessage').textContent =
+        ingredientErrorText(error)
+    return
 }
 
 function openAdjust(row) {
@@ -97,6 +112,7 @@ function openAdjust(row) {
     document.getElementById('adjustMessage').textContent = ''
     document.getElementById('adjustModal').classList.remove('hidden')
 }
+
 
 async function saveAdjust() {
     const qty = Number(document.getElementById('adjustQty').value || 0)
