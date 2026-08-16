@@ -1,0 +1,43 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>วัตถุดิบ | JOKJUNG Back Office</title><link rel="stylesheet" href="../css/app.css"></head><body><div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Stock</div>
+<a class="nav-link" data-nav="ingredients" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" data-nav="movements" href="../stock/movements.html">🔄 Stock Movement</a>
+<a class="nav-link" data-nav="recipes" href="../stock/recipes.html">🍳 Recipe / BOM</a></div>
+<div class="nav-section"><div class="nav-title">กำลังพัฒนา</div>
+<span class="nav-link disabled">🧮 Stock Count</span><span class="nav-link disabled">🛒 Purchasing</span><span class="nav-link disabled">🚚 Supplier</span><span class="nav-link disabled">💰 Cost Control</span></div>
+</nav></aside>
+<div class="main"><header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>📦 วัตถุดิบ / Stock</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<main class="content">
+<div class="page-head"><div><h2>วัตถุดิบและ Stock</h2><p>ข้อมูลใช้ตาราง ingredients เดิมของ POS โดยตรง</p></div><button id="addBtn" class="primary-btn">＋ เพิ่มวัตถุดิบ</button></div>
+<section class="summary-grid">
+<article class="summary-card"><span>ทั้งหมด</span><strong id="totalCount">0</strong></article>
+<article class="summary-card"><span>ต่ำกว่าขั้นต่ำ</span><strong id="lowCount">0</strong></article>
+<article class="summary-card"><span>หมด</span><strong id="outCount">0</strong></article>
+<article class="summary-card"><span>มูลค่า Stock</span><strong id="stockValue">฿0.00</strong></article>
+</section>
+<section class="panel">
+<div class="toolbar"><input id="search" placeholder="ค้นหาวัตถุดิบ..."><select id="status"><option value="">ทุกสถานะ</option><option value="low">ใกล้หมด</option><option value="out">หมด</option><option value="inactive">ปิดใช้งาน</option></select><button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button></div>
+<div id="table"></div><p id="message" class="message"></p>
+</section>
+</main></div></div>
+<div id="ingredientModal" class="modal hidden"><div class="modal-card"><div class="modal-head"><div><h3 id="ingredientModalTitle">เพิ่มวัตถุดิบ</h3></div><button id="closeIngredientModal" class="close-btn">×</button></div>
+<input id="ingredientId" type="hidden"><div class="form-grid">
+<label class="field"><span>ชื่อวัตถุดิบ</span><input id="ingredientName"></label>
+<label class="field"><span>หน่วย</span><input id="ingredientUnit" placeholder="g, kg, ml, ขวด, ชิ้น"></label>
+<label class="field"><span>ต้นทุนต่อหน่วย</span><input id="ingredientCost" type="number" min="0" step="0.0001"></label>
+<label class="field"><span>Stock ขั้นต่ำ</span><input id="ingredientMin" type="number" min="0" step="0.001"></label>
+<label class="field form-wide"><span><input id="ingredientActive" type="checkbox" checked> เปิดใช้งาน</span></label>
+</div><p id="ingredientFormMessage" class="message"></p><button id="saveIngredientBtn" class="primary-btn full">บันทึก</button></div></div>
+<div id="adjustModal" class="modal hidden"><div class="modal-card"><div class="modal-head"><div><h3>ปรับ Stock</h3><p id="adjustName"></p></div><button id="closeAdjustModal" class="close-btn">×</button></div>
+<input id="adjustId" type="hidden"><div class="form-grid">
+<label class="field"><span>ประเภท</span><select id="movementType"><option value="receive">รับเข้า</option><option value="issue">เบิกออก</option><option value="waste">ของเสีย</option><option value="adjust_in">ปรับเพิ่ม</option><option value="adjust_out">ปรับลด</option></select></label>
+<label class="field"><span>จำนวน</span><input id="adjustQty" type="number" min="0.0001" step="0.001"></label>
+<label class="field"><span>ต้นทุนต่อหน่วย</span><input id="adjustCost" type="number" min="0" step="0.0001"></label>
+<label class="field form-wide"><span>หมายเหตุ</span><textarea id="adjustNote" rows="3"></textarea></label>
+</div><p id="adjustMessage" class="message"></p><button id="saveAdjustBtn" class="primary-btn full">บันทึก Movement</button></div></div>
+<script type="module" src="../js/ingredients.js"></script></body></html>

@@ -1,0 +1,15 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Stock Movement | JOKJUNG Back Office</title><link rel="stylesheet" href="../css/app.css"></head><body><div class="app"><aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Stock</div>
+<a class="nav-link" data-nav="ingredients" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" data-nav="movements" href="../stock/movements.html">🔄 Stock Movement</a>
+<a class="nav-link" data-nav="recipes" href="../stock/recipes.html">🍳 Recipe / BOM</a></div>
+<div class="nav-section"><div class="nav-title">กำลังพัฒนา</div>
+<span class="nav-link disabled">🧮 Stock Count</span><span class="nav-link disabled">🛒 Purchasing</span><span class="nav-link disabled">🚚 Supplier</span><span class="nav-link disabled">💰 Cost Control</span></div>
+</nav></aside><div class="main"><header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🔄 Stock Movement</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header><main class="content">
+<div class="page-head"><div><h2>ประวัติ Stock Movement</h2><p>ตรวจสอบการรับเข้า เบิก ของเสีย ปรับยอด และการตัดจากการขาย</p></div><button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button></div>
+<section class="panel"><div class="toolbar"><input id="search" placeholder="ค้นหาวัตถุดิบ / หมายเหตุ..."><select id="type"><option value="">ทุกประเภท</option><option value="receive">รับเข้า</option><option value="issue">เบิกออก</option><option value="waste">ของเสีย</option><option value="adjust_in">ปรับเพิ่ม</option><option value="adjust_out">ปรับลด</option><option value="sale">ขาย</option></select></div><div id="table"></div><p id="message" class="message"></p></section>
+</main></div></div><script type="module" src="../js/movements.js"></script></body></html>

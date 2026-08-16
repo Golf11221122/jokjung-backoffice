@@ -1,0 +1,26 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Dashboard | JOKJUNG Back Office</title><link rel="stylesheet" href="./css/app.css"></head><body><div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="./dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Stock</div>
+<a class="nav-link" data-nav="ingredients" href="./stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" data-nav="movements" href="./stock/movements.html">🔄 Stock Movement</a>
+<a class="nav-link" data-nav="recipes" href="./stock/recipes.html">🍳 Recipe / BOM</a></div>
+<div class="nav-section"><div class="nav-title">กำลังพัฒนา</div>
+<span class="nav-link disabled">🧮 Stock Count</span><span class="nav-link disabled">🛒 Purchasing</span><span class="nav-link disabled">🚚 Supplier</span><span class="nav-link disabled">💰 Cost Control</span></div>
+</nav></aside>
+<div class="main"><header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>📊 Dashboard</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<main class="content">
+<div class="page-head"><div><h2>ภาพรวมหลังบ้าน</h2><p>Stock และต้นทุนวัตถุดิบของสาขาปัจจุบัน</p></div><button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button></div>
+<section class="summary-grid">
+<article class="summary-card"><span>วัตถุดิบทั้งหมด</span><strong id="ingredientCount">0</strong><small>รายการ Active</small></article>
+<article class="summary-card"><span>Stock ต่ำ</span><strong id="lowCount">0</strong><small>ต่ำกว่าหรือเท่าจุดเตือน</small></article>
+<article class="summary-card"><span>Stock หมด</span><strong id="outCount">0</strong><small>คงเหลือ ≤ 0</small></article>
+<article class="summary-card"><span>มูลค่า Stock</span><strong id="stockValue">฿0.00</strong><small>Current Stock × Cost</small></article>
+</section>
+<section class="panel"><div class="panel-head"><div><h3>⚠️ รายการต้องตรวจสอบ</h3><p>วัตถุดิบหมดหรือใกล้หมด</p></div><a class="outline-btn" href="./stock/ingredients.html">จัดการ Stock</a></div><div id="alerts"></div></section>
+<section class="panel"><div class="panel-head"><div><h3>🔄 Movement ล่าสุด</h3><p>10 รายการล่าสุด</p></div><a class="outline-btn" href="./stock/movements.html">ดูทั้งหมด</a></div><div id="movements"></div></section>
+<p id="message" class="message"></p>
+</main></div></div><script type="module" src="./js/dashboard.js"></script></body></html>
