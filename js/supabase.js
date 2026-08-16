@@ -6,7 +6,7 @@ const SUPABASE_URL = 'https://fzjrnpoemivbthzghuz.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6aWpybnBvZW1pdmJ0aHpnaHV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzNTgxODMsImV4cCI6MjA5OTkzNDE4M30.m__-bDtgwEBjLD2hP3ereeNBtQ_CUztQFLPel6u5HMo'
 
 if (SUPABASE_ANON_KEY.includes('PASTE_')) {
-    console.warn('')
+    console.warn('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6aWpybnBvZW1pdmJ0aHpnaHV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzNTgxODMsImV4cCI6MjA5OTkzNDE4M30.m__-bDtgwEBjLD2hP3ereeNBtQ_CUztQFLPel6u5HMo')
 }
 
 export const supabase = createClient(
