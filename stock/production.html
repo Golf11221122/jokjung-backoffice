@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Production / Prep | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">STOCK & COST</div>
+<a class="nav-link" href="./ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" href="./categories.html">🗂️ หมวดวัตถุดิบ</a>
+<a class="nav-link" href="./movements.html">🔄 Stock Movement</a>
+<a class="nav-link" href="./recipes.html">🍳 Recipe / BOM</a>
+<a class="nav-link active" href="./production.html">🏭 Production / Prep</a>
+<a class="nav-link" href="./count.html">🧮 Stock Count</a>
+<a class="nav-link" href="./closing.html">🔒 ปิดรอบ Stock</a>
+<a class="nav-link" href="./reports.html">📈 Stock Report</a>
+<a class="nav-link" href="./cost-control.html">💰 Cost Control</a>
+</div>
+<div class="nav-section"><div class="nav-title">PURCHASING</div>
+<a class="nav-link" href="../purchasing/suppliers.html">🚚 Supplier</a>
+<a class="nav-link" href="../purchasing/purchase-orders.html">🛒 Purchase Orders</a>
+</div>
+</nav>
+</aside>
+
+<div class="main">
+<header class="topbar">
+<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🏭 Production / Prep</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+</header>
+
+<main class="content">
+<div class="page-head">
+<div><h2>ผลิต / แปรรูปวัตถุดิบ</h2><p>Raw → Prep พร้อม Yield, Production Cost และ Stock Movement</p></div>
+<div class="action-row"><button id="newRecipeBtn" class="outline-btn">＋ สร้างสูตร Prep</button><button id="newBatchBtn" class="primary-btn">🏭 บันทึกการผลิต</button></div>
+</div>
+
+<section class="kpi-grid">
+<article class="kpi-card"><span>Batch เดือนนี้</span><strong id="batchCount">0</strong></article>
+<article class="kpi-card"><span>Input Cost เดือนนี้</span><strong id="inputCost">฿0.00</strong></article>
+<article class="kpi-card"><span>Yield เฉลี่ย</span><strong id="avgYield">0%</strong></article>
+<article class="kpi-card"><span>Yield Loss</span><strong id="yieldLoss">฿0.00</strong></article>
+</section>
+
+<div class="split-grid">
+<section class="panel">
+<div class="panel-head"><div><h3>สูตร Prep</h3><p>สูตรมาตรฐานสำหรับงานเตรียม</p></div></div>
+<div id="recipeList"></div><p id="recipeMessage" class="message"></p>
+</section>
+<section class="panel">
+<div class="panel-head"><div><h3>Production Batch ล่าสุด</h3><p>ประวัติการแปรรูปจริง</p></div></div>
+<div id="batchList"></div><p id="batchMessage" class="message"></p>
+</section>
+</div>
+</main>
+</div>
+</div>
+
+<div id="recipeModal" class="modal hidden"><div class="modal-card" style="width:min(900px,100%)">
+<div class="modal-head"><div><h3 id="recipeTitle">สูตร Prep</h3><p class="mini-note">Output ต้องเป็นวัตถุดิบประเภท Prep</p></div><button id="closeRecipe" class="close-btn">×</button></div>
+<input id="recipeId" type="hidden">
+<div class="inline-fields">
+<label class="field"><span>Prep Output</span><select id="recipeOutput"></select></label>
+<label class="field"><span>Standard Output Qty</span><input id="standardOutput" type="number" min="0.001" step="0.001" value="1"></label>
+<label class="field"><span>Standard Yield %</span><input id="standardYield" type="number" min="0.01" max="100" step="0.01" placeholder="เช่น 75"></label>
+</div>
+<div class="panel-head" style="margin-top:14px"><div><h4>Raw / Ingredient Inputs</h4><p>เลือก 1 รายการเป็น Yield Basis ถ้าต้องการคำนวณ Yield</p></div><button id="addRecipeInput" class="outline-btn">＋ เพิ่ม Input</button></div>
+<div id="recipeInputs"></div>
+<label class="field"><span>หมายเหตุ</span><input id="recipeNote"></label>
+<label class="field"><span><input id="recipeActive" type="checkbox" checked> เปิดใช้งานสูตร</span></label>
+<p id="recipeFormMessage" class="message"></p>
+<button id="saveRecipeBtn" class="primary-btn full">บันทึกสูตร Prep</button>
+</div></div>
+
+<div id="batchModal" class="modal hidden"><div class="modal-card" style="width:min(950px,100%)">
+<div class="modal-head"><div><h3>บันทึก Production Batch</h3><p class="mini-note">ระบบจะตัด Raw และรับ Prep เข้า Stock พร้อมคำนวณต้นทุนใหม่อัตโนมัติ</p></div><button id="closeBatch" class="close-btn">×</button></div>
+<div class="inline-fields">
+<label class="field"><span>ใช้สูตร Prep</span><select id="batchRecipe"><option value="">-- Manual --</option></select></label>
+<label class="field"><span>Prep Output</span><select id="batchOutput"></select></label>
+<label class="field"><span>จำนวน Output จริง</span><input id="actualOutput" type="number" min="0.001" step="0.001"></label>
+</div>
+<div class="panel-head" style="margin-top:14px"><div><h4>Input ที่ใช้จริง</h4><p>จำนวนจริงที่เบิกเข้าสู่การผลิต</p></div><button id="addBatchInput" class="outline-btn">＋ เพิ่ม Input</button></div>
+<div id="batchInputs"></div>
+<div id="batchEstimate" class="production-estimate"></div>
+<label class="field"><span>หมายเหตุ</span><input id="batchNote"></label>
+<p id="batchFormMessage" class="message"></p>
+<button id="postBatchBtn" class="primary-btn full">✅ Post Production Batch</button>
+</div></div>
+
+<div id="detailModal" class="modal hidden"><div class="modal-card" style="width:min(850px,100%)">
+<div class="modal-head"><div><h3 id="detailTitle">Production Batch</h3><p id="detailSub"></p></div><button id="closeDetail" class="close-btn">×</button></div>
+<div id="detailKpis" class="kpi-grid"></div>
+<div id="detailInputs"></div>
+</div></div>
+
+<script type="module" src="../js/production.js"></script>
+</body>
+</html>
