@@ -1,5 +1,0 @@
-import { supabase } from './supabase.js'
-import { requireBackoffice, setupShell, money, number } from './auth.js'
-const ctx=await requireBackoffice();if(ctx){setupShell(ctx,'dashboard');await load()}
-async function load(){const{data,error}=await supabase.rpc('backoffice_stock_dashboard_v2');if(error){document.getElementById('message').textContent=error.message;return}const r=Array.isArray(data)?data[0]:data;document.getElementById('stockValue').textContent=money(r?.stock_value);document.getElementById('ingredientText').textContent=`${number(r?.ingredient_count,0)} วัตถุดิบ`;document.getElementById('alerts').textContent=number(Number(r?.low_stock_count||0)+Number(r?.out_stock_count||0),0);document.getElementById('openPo').textContent=number(r?.open_po_count,0);document.getElementById('purchaseMonth').textContent=`ซื้อเดือนนี้ ${money(r?.month_purchase_value)}`;document.getElementById('waste').textContent=money(r?.month_waste_value);document.getElementById('pendingCount').textContent=`Stock Count ค้าง ${number(r?.pending_count_count,0)}`;document.getElementById('message').textContent=''}
-document.getElementById('refreshBtn').onclick=load
