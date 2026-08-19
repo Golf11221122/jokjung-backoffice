@@ -99,7 +99,7 @@ function renderRecipeInputs() {
         <div class="production-input-row">
             <label class="field"><span>Input</span><select data-r-ing="${i}">${ingredientOptions(r.ingredient_id)}</select></label>
             <label class="field"><span>Standard Qty</span><input data-r-qty="${i}" type="number" min="0.001" step="0.001" value="${r.input_qty||''}"></label>
-            <label class="yield-basis"><input type="radio" name="yieldBasis" data-r-basis="${i}" ${r.is_yield_basis?'checked':''}> Yield Basis</label>
+            <label class="yield-basis"><input type="checkbox" data-r-basis="${i}" ${r.is_yield_basis?'checked':''}> Yield Basis</label>
             <button class="danger-btn" data-r-remove="${i}">ลบ</button>
         </div>`).join('')
 }
@@ -137,6 +137,15 @@ async function saveRecipe() {
     if (!output) return rmsg('กรุณาเลือก Prep Output')
     const clean = recipeInputs.filter(x => x.ingredient_id && Number(x.input_qty)>0)
     if (!clean.length) return rmsg('กรุณาเพิ่ม Input')
+
+    const standardOutput = Number(document.getElementById('standardOutput').value || 0)
+    if (standardOutput <= 0) return rmsg('Standard Output Qty ต้องมากกว่า 0')
+
+    const yieldRaw = document.getElementById('standardYield').value
+    const standardYield = yieldRaw === '' ? null : Number(yieldRaw)
+    if (standardYield !== null && (!Number.isFinite(standardYield) || standardYield <= 0)) {
+        return rmsg('Standard Yield % ต้องมากกว่า 0')
+    }
     const seen = new Set()
     for (const x of clean) {
         if (seen.has(x.ingredient_id)) return rmsg('Input ห้ามซ้ำ')
@@ -145,8 +154,8 @@ async function saveRecipe() {
     const { error } = await supabase.rpc('backoffice_save_production_recipe', {
         p_recipe_id: document.getElementById('recipeId').value || null,
         p_output_ingredient_id: output,
-        p_standard_output_qty: Number(document.getElementById('standardOutput').value||0),
-        p_standard_yield_pct: document.getElementById('standardYield').value === '' ? null : Number(document.getElementById('standardYield').value),
+        p_standard_output_qty: standardOutput,
+        p_standard_yield_pct: standardYield,
         p_note: document.getElementById('recipeNote').value || null,
         p_is_active: document.getElementById('recipeActive').checked,
         p_inputs: clean
@@ -164,7 +173,7 @@ function renderBatchInputs() {
         return `<div class="production-input-row">
             <label class="field"><span>Input</span><select data-b-ing="${i}">${ingredientOptions(r.ingredient_id)}</select></label>
             <label class="field"><span>Qty ใช้จริง</span><input data-b-qty="${i}" type="number" min="0.001" step="0.001" value="${r.quantity||''}"></label>
-            <label class="yield-basis"><input type="radio" name="batchYieldBasis" data-b-basis="${i}" ${r.is_yield_basis?'checked':''}> Yield Basis</label>
+            <label class="yield-basis"><input type="checkbox" data-b-basis="${i}" ${r.is_yield_basis?'checked':''}> Yield Basis</label>
             <div class="mini-note">${ing ? `Stock ${number(ing.current_stock)} ${esc(ing.unit)} • ${money(ing.cost_per_unit)}/หน่วย` : ''}</div>
             <button class="danger-btn" data-b-remove="${i}">ลบ</button>
         </div>`
@@ -178,13 +187,26 @@ function updateEstimate() {
         const ing=ingredients.find(x=>x.id===r.ingredient_id)
         return s+Number(r.quantity||0)*Number(ing?.cost_per_unit||0)
     },0)
-    const basis = batchInputs.find(x=>x.is_yield_basis)
-    const actualYield = basis && Number(basis.quantity)>0 && outputQty>0 ? outputQty/Number(basis.quantity)*100 : null
-    const outputId = document.getElementById('batchOutput').value
-    const output = ingredients.find(x=>x.id===outputId)
-    const standard = output?.standard_yield_pct
-    const lossQty = actualYield!=null && standard && actualYield<standard
-        ? Math.max(Number(basis.quantity)*Number(standard)/100-outputQty,0) : 0
+    const basisQty = batchInputs
+        .filter(x => x.is_yield_basis)
+        .reduce((sum, x) => sum + Number(x.quantity || 0), 0)
+
+    const actualYield = basisQty > 0 && outputQty > 0
+        ? outputQty / basisQty * 100
+        : null
+
+    const selectedRecipe = recipes.find(
+        x => x.id === document.getElementById('batchRecipe').value
+    )
+    const standard = Number(selectedRecipe?.standard_yield_pct || 0)
+
+    const expectedOutput = basisQty > 0 && standard > 0
+        ? basisQty * standard / 100
+        : 0
+
+    const lossQty = actualYield != null && standard > 0 && actualYield < standard
+        ? Math.max(expectedOutput - outputQty, 0)
+        : 0
     const unitCost = outputQty>0 ? cost/outputQty : 0
     document.getElementById('batchEstimate').innerHTML = `
         <div><span>Input Cost</span><strong>${money(cost)}</strong></div>
@@ -277,7 +299,8 @@ document.getElementById('recipeInputs').oninput = e => {
 document.getElementById('recipeInputs').onchange = e => {
     if (e.target.dataset.rIng !== undefined) recipeInputs[+e.target.dataset.rIng].ingredient_id = e.target.value
     if (e.target.dataset.rBasis !== undefined) {
-        recipeInputs.forEach((x,i)=>x.is_yield_basis=i===+e.target.dataset.rBasis)
+        const i = +e.target.dataset.rBasis
+        recipeInputs[i].is_yield_basis = e.target.checked
         renderRecipeInputs()
     }
 }
@@ -293,7 +316,8 @@ document.getElementById('batchInputs').oninput = e => {
 document.getElementById('batchInputs').onchange = e => {
     if (e.target.dataset.bIng !== undefined) batchInputs[+e.target.dataset.bIng].ingredient_id = e.target.value
     if (e.target.dataset.bBasis !== undefined) {
-        batchInputs.forEach((x,i)=>x.is_yield_basis=i===+e.target.dataset.bBasis)
+        const i = +e.target.dataset.bBasis
+        batchInputs[i].is_yield_basis = e.target.checked
         renderBatchInputs()
     } else updateEstimate()
 }
