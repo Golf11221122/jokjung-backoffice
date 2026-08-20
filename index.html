@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>เข้าสู่ระบบ | JOKJUNG Back Office</title>
+    <link rel="stylesheet" href="./css/app.css">
+</head>
+
+<body class="login-page">
+    <main class="login-card">
+        <div class="brand">
+            <div class="brand-mark">📦</div>
+            <div>
+                <h1>JOKJUNG Back Office</h1>
+                <p>Stock • Recipe • Purchasing • Cost Control</p>
+            </div>
+        </div>
+        <form id="loginForm">
+            <label class="field"><span>อีเมล</span><input id="email" type="email" autocomplete="username"
+                    required></label>
+            <label class="field"><span>รหัสผ่าน</span><input id="password" type="password"
+                    autocomplete="current-password" required></label>
+            <p id="message" class="message"></p>
+            <button id="loginBtn" class="primary-btn full" type="submit">เข้าสู่ระบบ</button>
+        </form>
+    </main>
+    <script type="module" src="./js/login.js"></script>
+</body>
+
+</html>
