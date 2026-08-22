@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🔄 Bulk Cost Sync | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<style>
+.sync-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.cardx{background:#fff;border:1px solid #ddd;border-radius:14px;padding:16px}
+.cardx span{font-size:12px;color:#667085}.cardx strong{display:block;font-size:24px;margin-top:4px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar input{padding:9px;border:1px solid #ddd;border-radius:8px;min-width:240px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}.num{text-align:right}.ok{color:#16853b;font-weight:800}.warn{color:#9a6b00;font-weight:800}.bad{color:#c5221f;font-weight:800}.muted{color:#667085}
+.notice{padding:12px;border-radius:10px;background:#fff8dc;border:1px solid #e8ca61;margin-bottom:14px}
+@media(max-width:700px){.sync-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" href="./pnl.html">📈 P&L</a>
+<a class="nav-link" href="./cost-quality.html">🧪 Cost Data Quality</a>
+<a class="nav-link" href="./cost-fix.html">🛠 Cost Fix Center</a>
+<a class="nav-link active" href="./bulk-cost-sync.html">🔄 Bulk Cost Sync</a>
+</div>
+<div class="nav-section"><div class="nav-title">Stock & Cost</div>
+<a class="nav-link" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" href="../stock/recipes.html">🧾 Recipe / BOM</a>
+<a class="nav-link" href="../stock/cost-control.html">💰 Cost Control</a>
+</div>
+</nav>
+</aside>
+
+<div class="main">
+<header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🔄 Bulk Cost Sync</h1><p id="branchText">-</p></div></div><div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+
+<main class="content">
+<div class="page-head"><div><h2>Sync Product Cost จาก Recipe/BOM</h2><p>Preview ก่อน แล้วค่อยอัปเดต products.cost</p></div></div>
+
+<div class="notice"><b>สำคัญ:</b> หน้านี้อัปเดตเฉพาะ <code>products.cost</code> สำหรับการขายใหม่ ไม่แก้ <code>sale_items.unit_cost</code> ของยอดขายย้อนหลัง</div>
+
+<div class="sync-grid">
+<div class="cardx"><span>สินค้าทั้งหมด</span><strong id="totalProducts">0</strong></div>
+<div class="cardx"><span>ต้อง Sync</span><strong id="needsSync">0</strong></div>
+<div class="cardx"><span>เลือกไว้</span><strong id="selectedCount">0</strong></div>
+</div>
+
+<section class="panel">
+<div class="toolbar">
+<input id="search" placeholder="ค้นหาเมนู...">
+<button id="previewBtn" class="outline-btn">↻ Preview ใหม่</button>
+<button id="selectAllBtn" class="outline-btn">เลือกทั้งหมดที่ Sync ได้</button>
+<button id="applyBtn" class="primary-btn">✅ Sync ต้นทุนที่เลือก</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th><input id="masterCheck" type="checkbox"></th><th>เมนู</th><th class="num">Recipe Rows</th><th class="num">ต้นทุนเดิม</th><th class="num">ต้นทุนจาก Recipe</th><th class="num">ต่างกัน</th><th>สถานะ</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<p id="message"></p>
+</section>
+</main></div></div>
+<script type="module" src="../js/bulk-cost-sync.js"></script>
+</body></html>
