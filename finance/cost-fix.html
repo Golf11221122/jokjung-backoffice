@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🛠 Cost Fix Center | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<style>
+.fix-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
+.fix-card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px}
+.fix-card span{font-size:11px;color:#667085}.fix-card strong{display:block;font-size:22px;margin-top:4px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filters input{padding:9px;border:1px solid #ddd;border-radius:8px}
+.issue{background:#fff;border:1px solid #e1e4e8;border-radius:13px;margin:11px 0;overflow:hidden}
+.issue-head{display:flex;justify-content:space-between;gap:14px;padding:14px}
+.issue-name strong{font-size:17px}.issue-name small{display:block;color:#667085;margin-top:3px}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}
+.red{background:#fff0ee;color:#b42318}.amber{background:#fff6d8;color:#7a5600}.blue{background:#eef5ff;color:#175cd3}
+.issue-body{padding:0 14px 14px}.diag{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.diag div{background:#f7f8fa;border-radius:9px;padding:9px}.diag span{display:block;font-size:10px;color:#667085}.diag b{font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.ingredient-list{margin-top:10px;border-top:1px dashed #ddd;padding-top:8px}
+.ing{display:grid;grid-template-columns:1fr 80px 110px 100px;gap:8px;padding:7px 0;border-bottom:1px solid #f1f1f1;font-size:12px}
+.zero{color:#c5221f;font-weight:800}.hidden{display:none!important}
+@media(max-width:900px){.fix-grid{grid-template-columns:1fr 1fr}.diag{grid-template-columns:1fr 1fr}}
+@media(max-width:550px){.fix-grid,.diag{grid-template-columns:1fr}.issue-head{flex-direction:column}.ing{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body><div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" href="./pnl.html">📈 P&L</a>
+<a class="nav-link" href="./cost-quality.html">🧪 Cost Data Quality</a>
+<a class="nav-link active" href="./cost-fix.html">🛠 Cost Fix Center</a>
+</div>
+<div class="nav-section"><div class="nav-title">Stock & Cost</div>
+<a class="nav-link" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
+<a class="nav-link" href="../stock/recipes.html">🧾 Recipe / BOM</a>
+<a class="nav-link" href="../stock/cost-control.html">💰 Cost Control</a>
+</div>
+</nav></aside>
+
+<div class="main">
+<header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🛠 Cost Fix Center</h1><p id="branchText">-</p></div></div><div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<main class="content">
+<div class="page-head"><div><h2>หาสาเหตุ COGS = 0</h2><p>ตรวจจาก Sale → Product → Recipe/BOM → Ingredient Cost แล้วพาไปแก้ตรงจุด</p></div></div>
+<section class="panel"><div class="filters"><input id="dateFrom" type="date"><input id="dateTo" type="date"><button id="monthBtn" class="outline-btn">เดือนนี้</button><button id="loadBtn" class="primary-btn">วิเคราะห์</button></div></section>
+
+<div class="fix-grid">
+<div class="fix-card"><span>ปัญหาทั้งหมด</span><strong id="total">0</strong></div>
+<div class="fix-card"><span>ไม่มี Recipe</span><strong id="noRecipe">0</strong></div>
+<div class="fix-card"><span>วัตถุดิบต้นทุน 0</span><strong id="ingZero">0</strong></div>
+<div class="fix-card"><span>Product Cost ไม่ Sync</span><strong id="notSynced">0</strong></div>
+<div class="fix-card"><span>Sale Snapshot ต้นทุน 0</span><strong id="saleSnapshot">0</strong></div>
+</div>
+
+<section class="panel">
+<div class="toolbar"><input id="search" placeholder="ค้นหาเมนู..." style="min-width:240px;padding:9px;border:1px solid #ddd;border-radius:8px"><select id="issueFilter"><option value="">ทุกสาเหตุ</option><option value="NO_RECIPE">ไม่มี Recipe</option><option value="INGREDIENT_COST_ZERO">วัตถุดิบต้นทุน 0</option><option value="PRODUCT_COST_NOT_SYNCED">Product Cost ไม่ Sync</option><option value="SALE_COST_NOT_CAPTURED">Sale Snapshot ต้นทุน 0</option><option value="INGREDIENT_MISSING">วัตถุดิบหาย/ปิด</option></select></div>
+<div id="issues"></div>
+<p id="message"></p>
+</section>
+</main></div></div>
+<script type="module" src="../js/cost-fix.js"></script>
+</body></html>
