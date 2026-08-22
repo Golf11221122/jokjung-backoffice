@@ -19,6 +19,26 @@ async function init(){
     products=Array.isArray(p.data)?p.data:[]
     ingredients=(Array.isArray(i.data)?i.data:[]).filter(x=>x.is_active)
     renderProducts()
+
+    // Cost Fix Center: เปิด Recipe ของเมนูที่เลือกให้อัตโนมัติ
+    const requestedProductId =
+        new URLSearchParams(
+            window.location.search
+        ).get('product_id')
+
+    if (
+        requestedProductId
+        &&
+        products.some(
+            product =>
+                product.id ===
+                requestedProductId
+        )
+    ) {
+        await selectProduct(
+            requestedProductId
+        )
+    }
 }
 function renderProducts(){
     const q=document.getElementById('productSearch').value.trim().toLowerCase()
