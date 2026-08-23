@@ -100,6 +100,98 @@ function renderTable() {
     <td class="num">${money(x.adjust_in_value)}</td><td class="num">${money(x.adjust_out_value)}</td>
     <td>${x.status==='ok'?'ปกติ':x.status==='low'?'ใกล้หมด':x.status==='out'?'หมด':'ปิด'}</td>
     </tr>`).join('')}</tbody></table></div>`:'<div class="empty">ไม่พบข้อมูล</div>'
+
+    renderPrintTables(list)
+}
+
+function statusText(x) {
+    return x.status==='ok'?'ปกติ':x.status==='low'?'ใกล้หมด':x.status==='out'?'หมด':'ปิด'
+}
+
+function printItemCell(x) {
+    return `<strong>${esc(x.name)}</strong><br><small>${esc(x.unit)}</small>`
+}
+
+function renderPrintTables(list) {
+    const box=document.getElementById('printDetail')
+    if(!box) return
+    if(!list.length){
+        box.innerHTML='<div class="empty">ไม่พบข้อมูล</div>'
+        return
+    }
+
+    const baseRows=list.map(x=>`<tr>
+        <td>${printItemCell(x)}</td>
+        <td>${esc(typeText(x.ingredient_type))}</td>
+        <td>${esc(x.category_name)}</td>
+        <td class="num">${number(x.current_stock)}</td>
+        <td class="num">${money(x.stock_value)}</td>
+        <td class="num">${number(x.stock_in_qty)}</td>
+        <td class="num">${money(x.stock_in_value)}</td>
+    </tr>`).join('')
+
+    const flowRows=list.map(x=>`<tr>
+        <td>${printItemCell(x)}</td>
+        <td class="num">${number(x.production_in_qty)}</td>
+        <td class="num">${money(x.production_in_value)}</td>
+        <td class="num">${number(x.production_out_qty)}</td>
+        <td class="num">${money(x.production_out_value)}</td>
+        <td class="num">${number(x.sale_qty)}</td>
+        <td class="num">${money(x.sale_value)}</td>
+    </tr>`).join('')
+
+    const controlRows=list.map(x=>`<tr>
+        <td>${printItemCell(x)}</td>
+        <td class="num">${number(x.waste_qty)}</td>
+        <td class="num loss">${money(x.waste_value)}</td>
+        <td class="num">${money(x.adjust_in_value)}</td>
+        <td class="num">${money(x.adjust_out_value)}</td>
+        <td>${statusText(x)}</td>
+    </tr>`).join('')
+
+    box.innerHTML=`
+      <section class="print-report-section">
+        <div class="print-section-title">
+          <h3>รายละเอียด Stock และรับเข้า</h3>
+          <span>ตาราง 1/3</span>
+        </div>
+        <table class="print-report-table">
+          <thead><tr>
+            <th>วัตถุดิบ</th><th>ประเภท</th><th>หมวด</th>
+            <th class="num">คงเหลือ</th><th class="num">Stock ฿</th>
+            <th class="num">รับเข้า Qty</th><th class="num">รับเข้า ฿</th>
+          </tr></thead><tbody>${baseRows}</tbody>
+        </table>
+      </section>
+
+      <section class="print-report-section print-page-break">
+        <div class="print-section-title">
+          <h3>Production และการใช้จากขาย</h3>
+          <span>ตาราง 2/3</span>
+        </div>
+        <table class="print-report-table">
+          <thead><tr>
+            <th>วัตถุดิบ</th>
+            <th class="num">Prod In Qty</th><th class="num">Prod In ฿</th>
+            <th class="num">Prod Out Qty</th><th class="num">Prod Out ฿</th>
+            <th class="num">ขาย Qty</th><th class="num">ขาย ฿</th>
+          </tr></thead><tbody>${flowRows}</tbody>
+        </table>
+      </section>
+
+      <section class="print-report-section print-page-break">
+        <div class="print-section-title">
+          <h3>Waste / Adjustment / สถานะ</h3>
+          <span>ตาราง 3/3</span>
+        </div>
+        <table class="print-report-table">
+          <thead><tr>
+            <th>วัตถุดิบ</th>
+            <th class="num">Waste Qty</th><th class="num">Waste ฿</th>
+            <th class="num">ปรับ+ ฿</th><th class="num">ปรับ- ฿</th><th>สถานะ</th>
+          </tr></thead><tbody>${controlRows}</tbody>
+        </table>
+      </section>`
 }
 
 document.getElementById('applyBtn').onclick=load
