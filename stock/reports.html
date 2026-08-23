@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Stock Report V3.1 | JOKJUNG Back Office</title>
 <link rel="stylesheet" href="../css/app.css"><link rel="stylesheet" href="../css/stock-v2.css">
-</head><body>
+<link rel="stylesheet" href="../css/responsive.css"><link rel="stylesheet" href="../css/print.css"></head><body>
 <div class="app">
 <aside id="sidebar" class="sidebar"><div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div><nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
@@ -38,4 +38,7 @@
 <section class="panel"><div id="categorySummary" class="category-summary-grid"></div></section>
 <section class="panel"><div id="table"></div><p id="message" class="message"></p></section>
 </main></div></div>
-<script type="module" src="../js/stock-reports.js"></script></body></html>
+<script type="module" src="../js/stock-reports.js"></script><script type="module">
+import { installReportToolbar } from '../js/report-tools.js';
+installReportToolbar();
+</script></body></html>

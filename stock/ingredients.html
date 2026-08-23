@@ -6,7 +6,7 @@
 <title>วัตถุดิบ | JOKJUNG Back Office</title>
 <link rel="stylesheet" href="../css/app.css">
 <link rel="stylesheet" href="../css/stock-v2.css">
-</head>
+<link rel="stylesheet" href="../css/responsive.css"><link rel="stylesheet" href="../css/print.css"></head>
 <body>
 <div class="app">
 <aside id="sidebar" class="sidebar">
@@ -98,4 +98,7 @@
 <button id="saveAdjustBtn" class="primary-btn full">บันทึก Movement</button>
 </div></div>
 <script type="module" src="../js/ingredients.js"></script>
-</body></html>
+<script type="module">
+import { installReportToolbar } from '../js/report-tools.js';
+installReportToolbar();
+</script></body></html>
