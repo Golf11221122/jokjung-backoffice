@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ประวัติยอดขาย | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<style>
+.history-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.history-card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:15px}
+.history-card small{display:block;color:#667085;margin-bottom:5px}
+.history-card strong{display:block;font-size:23px;line-height:1.25}
+.filter-bar{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
+.filter-field{display:flex;flex-direction:column;gap:5px}
+.filter-field label{font-size:13px;color:#667085;font-weight:700}
+.filter-field input{padding:9px 10px;border:1px solid #d0d5dd;border-radius:8px;background:#fff}
+.table-wrap{overflow:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:880px}
+th,td{padding:10px 9px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+th{font-size:13px;color:#667085;background:#fafafa;white-space:nowrap}
+.num{text-align:right;white-space:nowrap}
+.center{text-align:center}
+.status-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.status-closed{background:#e8f5e9;color:#188038}
+.status-open{background:#fff4d6;color:#946200}
+.status-not-closed{background:#f2f4f7;color:#475467}
+.status-no-data{background:#f2f4f7;color:#667085}
+.detail-btn{border:1px solid #d0d5dd;background:#fff;border-radius:8px;padding:7px 10px;cursor:pointer}
+.detail-panel{margin-top:16px}
+.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.tabs{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.tab{padding:9px 12px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer}
+.tab.active{background:#ffc21a;border-color:#e5aa00}
+.pane{display:none}
+.pane.active{display:block}
+.empty-box{padding:24px;text-align:center;color:#667085}
+.diff-ok{color:#188038;font-weight:800}
+.diff-bad{color:#c5221f;font-weight:800}
+#pageMessage{margin:10px 0;font-weight:700}
+.hidden{display:none!important}
+@media(max-width:900px){.history-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){
+  .history-grid{grid-template-columns:1fr 1fr}
+  .history-card{padding:12px}
+  .history-card strong{font-size:19px}
+  .filter-bar{display:grid;grid-template-columns:1fr 1fr}
+  .filter-field input{width:100%;box-sizing:border-box}
+  #loadBtn{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+    <nav>
+      <div class="nav-section">
+        <div class="nav-title">ภาพรวม</div>
+        <a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a>
+        <a class="nav-link" data-nav="daily-closing" href="./daily-closing.html">🌙 Daily Closing</a>
+        <a class="nav-link" data-nav="end-of-day" href="./end-of-day.html">🔐 End of Day</a>
+        <a class="nav-link active" data-nav="sales-history" href="./sales-history.html">🧾 ประวัติยอดขาย</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-title">Finance</div>
+        <a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a>
+        <a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button id="menuBtn" class="menu-btn" type="button">☰</button>
+        <div>
+          <h1>🧾 ประวัติยอดขาย</h1>
+          <p id="branchText">กำลังโหลด...</p>
+        </div>
+      </div>
+      <div class="user-box">
+        <span id="userName">-</span>
+        <span id="roleBadge" class="role-pill">-</span>
+        <button id="logoutBtn" class="outline-btn" type="button">ออกจากระบบ</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-head">
+        <div>
+          <h2>รายงานยอดขายย้อนหลัง</h2>
+          <p>ดูตาม Business Date • Cash / QR • จำนวนบิล • กะ • เงินขาดเกิน</p>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-field">
+            <label for="dateFrom">จากวันที่</label>
+            <input id="dateFrom" type="date">
+          </div>
+          <div class="filter-field">
+            <label for="dateTo">ถึงวันที่</label>
+            <input id="dateTo" type="date">
+          </div>
+          <button id="loadBtn" class="primary-btn" type="button">ดูรายงาน</button>
+        </div>
+      </div>
+
+      <p id="pageMessage"></p>
+
+      <section class="history-grid">
+        <article class="history-card">
+          <small>ยอดขายรวม</small>
+          <strong id="sumSales">฿0.00</strong>
+          <span id="sumDays">0 วัน</span>
+        </article>
+        <article class="history-card">
+          <small>เงินสด / QR</small>
+          <strong id="sumPayment">฿0.00 / ฿0.00</strong>
+        </article>
+        <article class="history-card">
+          <small>จำนวนบิล / จำนวนกะ</small>
+          <strong id="sumBillsShifts">0 / 0</strong>
+        </article>
+        <article class="history-card">
+          <small>เงินขาด / เกินรวม</small>
+          <strong id="sumDiff">฿0.00</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h3>สรุปรายวัน</h3>
+            <p id="periodText">-</p>
+          </div>
+        </div>
+        <div id="historyLoading" class="empty-box hidden">กำลังโหลดข้อมูล...</div>
+        <div id="historyEmpty" class="empty-box hidden">ไม่พบข้อมูลในช่วงวันที่นี้</div>
+        <div id="historyTable" class="table-wrap hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>Business Date</th>
+                <th>สถานะ</th>
+                <th class="num">ยอดขาย</th>
+                <th class="num">Cash</th>
+                <th class="num">QR</th>
+                <th class="num">บิล</th>
+                <th class="num">กะ</th>
+                <th class="num">ส่วนลด</th>
+                <th class="num">ขาด/เกิน</th>
+                <th class="center">รายละเอียด</th>
+              </tr>
+            </thead>
+            <tbody id="historyRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="detailPanel" class="panel detail-panel hidden">
+        <div class="detail-head">
+          <div>
+            <h3 id="detailTitle">รายละเอียด</h3>
+            <p id="detailStatus">-</p>
+          </div>
+          <button id="closeDetailBtn" class="outline-btn" type="button">ปิดรายละเอียด</button>
+        </div>
+
+        <section class="history-grid">
+          <article class="history-card">
+            <small>ยอดขาย</small>
+            <strong id="detailSales">฿0.00</strong>
+          </article>
+          <article class="history-card">
+            <small>Cash / QR</small>
+            <strong id="detailPayment">฿0.00 / ฿0.00</strong>
+          </article>
+          <article class="history-card">
+            <small>บิล / กะ</small>
+            <strong id="detailBillsShifts">0 / 0</strong>
+          </article>
+          <article class="history-card">
+            <small>ขาด / เกิน</small>
+            <strong id="detailDiff">฿0.00</strong>
+          </article>
+        </section>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="shiftPane" type="button">รายกะ</button>
+          <button class="tab" data-tab="billPane" type="button">รายบิล</button>
+        </div>
+
+        <section id="shiftPane" class="pane active">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>พนักงาน</th>
+                  <th>เครื่อง</th>
+                  <th>เวลาเปิด → ปิด</th>
+                  <th class="num">ยอดขาย</th>
+                  <th class="num">Cash</th>
+                  <th class="num">QR</th>
+                  <th class="num">Expected</th>
+                  <th class="num">Counted</th>
+                  <th class="num">ขาด/เกิน</th>
+                </tr>
+              </thead>
+              <tbody id="shiftRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="billPane" class="pane">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>เวลา</th>
+                  <th>เลขบิล</th>
+                  <th>พนักงาน</th>
+                  <th>Payment</th>
+                  <th>สถานะ</th>
+                  <th class="num">Subtotal</th>
+                  <th class="num">ส่วนลด</th>
+                  <th class="num">ยอดสุทธิ</th>
+                </tr>
+              </thead>
+              <tbody id="billRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script type="module" src="../js/sales-history.js"></script>
+</body>
+</html>
