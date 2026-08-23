@@ -6,6 +6,8 @@
 <title>ประวัติยอดขาย | JOKJUNG Back Office</title>
 <link rel="stylesheet" href="../css/app.css">
 <link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="stylesheet" href="../css/print.css">
 <style>
 .history-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
 .history-card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:15px}
@@ -102,6 +104,10 @@ th{font-size:13px;color:#667085;background:#fafafa;white-space:nowrap}
             <input id="dateTo" type="date">
           </div>
           <button id="loadBtn" class="primary-btn" type="button">ดูรายงาน</button>
+          <div class="report-actions no-print">
+            <button id="shareBtn" class="outline-btn" type="button">📤 แชร์</button>
+            <button id="printBtn" class="outline-btn" type="button">🖨️ พิมพ์</button>
+          </div>
         </div>
       </div>
 
