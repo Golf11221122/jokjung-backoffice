@@ -128,3 +128,45 @@ export function attachReportActions(options = {}) {
         );
     }
 }
+
+
+export function installReportToolbar(options = {}) {
+    const target = options.target || document.querySelector('.page-head') || document.querySelector('.content');
+    if (!target) return null;
+
+    let box = document.getElementById('globalReportActions');
+    if (!box) {
+        box = document.createElement('div');
+        box.id = 'globalReportActions';
+        box.className = 'report-actions auto-report-actions no-print';
+        box.innerHTML = `
+            <button id="globalShareBtn" class="outline-btn" type="button">📤 แชร์</button>
+            <button id="globalPrintBtn" class="outline-btn" type="button">🖨️ พิมพ์</button>
+        `;
+        target.appendChild(box);
+    }
+
+    const shareButton = document.getElementById('globalShareBtn');
+    const printButton = document.getElementById('globalPrintBtn');
+    const getText = () => {
+        const heading = document.querySelector('.page-head h2')?.textContent?.trim() || document.querySelector('.topbar h1')?.textContent?.trim() || document.title;
+        const branch = document.getElementById('branchText')?.textContent?.trim() || '';
+        return [heading, branch].filter(Boolean).join('\n');
+    };
+
+    attachReportActions({
+        shareButton,
+        printButton,
+        title: options.title || document.title,
+        getShareText: options.getShareText || getText,
+        onCopied: options.onCopied || (() => {
+            const oldText = shareButton?.textContent;
+            if (shareButton) {
+                shareButton.textContent = '✅ คัดลอกลิงก์แล้ว';
+                setTimeout(() => { shareButton.textContent = oldText || '📤 แชร์'; }, 1400);
+            }
+        })
+    });
+
+    return box;
+}
