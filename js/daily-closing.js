@@ -4,7 +4,9 @@ let days=Math.max(1,Math.round((pe-ps)/86400000)+1);
 let dailyTarget=Number(salesK.target_value||0)/days;
 let dailyPct=dailyTarget>0?Number(s.net_sales||0)/dailyTarget*100:0;
 $('salesTarget').textContent=`วันนี้ ${dailyPct.toFixed(2)}% ของเป้ารายวัน ${money(dailyTarget)} • เดือนสะสม ${Number(salesK.achievement_pct||0).toFixed(2)}% ของ ${kfmt(salesK,salesK.target_value)}`;
-}else $('salesTarget').textContent='ยังไม่มี Sales Target';let show=ki.filter(x=>['SALES','THEORETICAL_FC','ACTUAL_FC','GROSS_MARGIN','OPERATING_MARGIN','WASTE','CASH_VARIANCE'].includes(x.kpi_code)).map(x=>{
+}else $('salesTarget').textContent='ยังไม่มี Sales Target';let show=ki.filter(x=>['THEORETICAL_FC','ACTUAL_FC','GROSS_MARGIN','OPERATING_MARGIN','WASTE','CASH_VARIANCE'].includes(x.kpi_code));
+if(salesK)show.unshift(salesK);
+show=show.map(x=>{
 if(x.kpi_code==='CASH_VARIANCE'&&!c.closing_complete)return {...x,actual_value:null,status:'NO_DATA',_cashWaiting:true};
 return x;
 });$('kpiCards').innerHTML=show.map(x=>`<div class="card"><small>${esc(x.kpi_name)}</small><strong>${kfmt(x,x.actual_value)}</strong><div>Target ${x.direction==='lower_better'?'≤':'≥'} ${kfmt(x,x.target_value)}</div><div>${x._cashWaiting?'⚪ รอปิดกะ/นับเงินจริง':x.status==='GREEN'?'🟢 ตามเป้า':x.status==='YELLOW'?'🟡 เฝ้าระวัง':x.status==='RED'?'🔴 ต้องดูแล':'⚪ ยังไม่มีข้อมูล'}</div></div>`).join('')||'<div>ยังไม่มี KPI Target สำหรับช่วงนี้</div>'}async function load(){ $('msg').textContent='กำลังสรุป...';let{data,error}=await supabase.rpc('backoffice_daily_closing_v1',{p_date:$('date').value});if(error){$('msg').textContent=error.message;return}render(data);$('msg').textContent=''}$('date').value=new Date().toISOString().slice(0,10);$('loadBtn').onclick=load;let ctx=await requireBackoffice();if(ctx){setupShell(ctx,'daily-closing');load()}
