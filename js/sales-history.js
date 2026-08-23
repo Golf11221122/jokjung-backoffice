@@ -6,12 +6,18 @@ import {
     esc
 } from './auth.js';
 
+import {
+    attachReportActions
+} from './report-tools.js';
+
 const $ = id => document.getElementById(id);
 
 const el = {
     dateFrom: $('dateFrom'),
     dateTo: $('dateTo'),
     loadBtn: $('loadBtn'),
+    shareBtn: $('shareBtn'),
+    printBtn: $('printBtn'),
     pageMessage: $('pageMessage'),
 
     sumSales: $('sumSales'),
@@ -458,6 +464,56 @@ function activateTab(button) {
 
 function bindEvents() {
     el.loadBtn.addEventListener('click', loadHistory);
+
+    attachReportActions({
+        shareButton: el.shareBtn,
+        printButton: el.printBtn,
+
+        title: '\u0e23\u0e32\u0e22\u0e07\u0e32\u0e19\u0e22\u0e2d\u0e14\u0e02\u0e32\u0e22 JOKJUNG Back Office',
+
+        getShareText: () => {
+            const from =
+                formatDate(el.dateFrom.value);
+
+            const to =
+                formatDate(el.dateTo.value);
+
+            const sales =
+                el.sumSales.textContent || '-';
+
+            const payment =
+                el.sumPayment.textContent || '-';
+
+            const billsShifts =
+                el.sumBillsShifts.textContent || '-';
+
+            const diff =
+                el.sumDiff.textContent || '-';
+
+            return [
+                '\u0e23\u0e32\u0e22\u0e07\u0e32\u0e19\u0e22\u0e2d\u0e14\u0e02\u0e32\u0e22 JOKJUNG Back Office',
+                `\u0e0a\u0e48\u0e27\u0e07\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48 ${from} \u0e16\u0e36\u0e07 ${to}`,
+                `\u0e22\u0e2d\u0e14\u0e02\u0e32\u0e22\u0e23\u0e27\u0e21 ${sales}`,
+                `Cash / QR ${payment}`,
+                `\u0e1a\u0e34\u0e25 / \u0e01\u0e30 ${billsShifts}`,
+                `\u0e40\u0e07\u0e34\u0e19\u0e02\u0e32\u0e14 / \u0e40\u0e01\u0e34\u0e19 ${diff}`
+            ].join('\n');
+        },
+
+        onCopied: () => {
+            setMessage(
+                '\u0e04\u0e31\u0e14\u0e25\u0e2d\u0e01\u0e25\u0e34\u0e07\u0e01\u0e4c\u0e23\u0e32\u0e22\u0e07\u0e32\u0e19\u0e41\u0e25\u0e49\u0e27',
+                'success'
+            );
+        },
+
+        onError: error => {
+            setMessage(
+                error?.message ||
+                '\u0e41\u0e0a\u0e23\u0e4c\u0e23\u0e32\u0e22\u0e07\u0e32\u0e19\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08'
+            );
+        }
+    });
 
     el.historyRows.addEventListener('click', event => {
         const button = event.target.closest('[data-date]');
