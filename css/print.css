@@ -1,0 +1,162 @@
+
+/* =========================================================
+   JOKJUNG BACK OFFICE - PRINT V1
+   Shared print layout for report pages
+   ========================================================= */
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    overflow: visible !important;
+  }
+
+  body {
+    font-size: 11pt !important;
+  }
+
+  .sidebar,
+  .menu-btn,
+  .user-box,
+  .report-actions,
+  .filter-bar,
+  .detail-btn,
+  .outline-btn,
+  .primary-btn,
+  .secondary-btn,
+  #pageMessage,
+  #closeDetailBtn,
+  .no-print {
+    display: none !important;
+  }
+
+  .app,
+  .main,
+  .content {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .topbar {
+    position: static !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 0 10px !important;
+    margin: 0 0 10px !important;
+    background: #fff !important;
+  }
+
+  .topbar-left h1,
+  .topbar h1 {
+    font-size: 18pt !important;
+    margin: 0 !important;
+  }
+
+  .topbar p {
+    font-size: 10pt !important;
+    margin: 4px 0 0 !important;
+  }
+
+  .page-head {
+    margin-bottom: 10px !important;
+  }
+
+  .page-head h2 {
+    font-size: 16pt !important;
+    margin-bottom: 4px !important;
+  }
+
+  .page-head p {
+    color: #333 !important;
+  }
+
+  .panel,
+  .card,
+  .kpi-card,
+  .metric-card,
+  .history-card {
+    background: #fff !important;
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .history-grid,
+  .kpi-grid,
+  .metric-grid,
+  .summary-grid,
+  .grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .history-card strong,
+  .kpi-card strong,
+  .metric-card strong,
+  .card strong {
+    font-size: 14pt !important;
+  }
+
+  .table-wrap,
+  .table-responsive,
+  .report-table-wrap {
+    overflow: visible !important;
+  }
+
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    border-collapse: collapse !important;
+    font-size: 9pt !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+
+  th,
+  td {
+    border: 1px solid #bbb !important;
+    padding: 5px !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  .tabs {
+    display: none !important;
+  }
+
+  .pane {
+    display: block !important;
+    margin-top: 10px !important;
+  }
+
+  .detail-panel.hidden {
+    display: none !important;
+  }
+
+  .status-pill {
+    border: 1px solid #888 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+}
