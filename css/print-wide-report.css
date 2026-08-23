@@ -1,0 +1,174 @@
+/* =========================================================
+   JOKJUNG BACK OFFICE - WIDE REPORT PRINT V1.3
+   Use only on reports that contain very wide data tables.
+   Stock Report uses A3 landscape so every column stays visible.
+   ========================================================= */
+
+@page {
+  size: A3 landscape;
+  margin: 8mm;
+}
+
+@media print {
+  html,
+  body {
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  body {
+    font-size: 9pt !important;
+  }
+
+  .content {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .report-filter-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr !important;
+    gap: 5px !important;
+    align-items: end !important;
+  }
+
+  .report-filter-grid .field,
+  .report-filter-grid .field.wide {
+    grid-column: auto !important;
+  }
+
+  .report-filter-grid input,
+  .report-filter-grid select {
+    min-height: 28px !important;
+    height: 28px !important;
+    padding: 3px 5px !important;
+    font-size: 8pt !important;
+  }
+
+  .kpi-grid-6 {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .cost-kpi {
+    padding: 7px !important;
+    min-width: 0 !important;
+  }
+
+  .cost-kpi span {
+    font-size: 7pt !important;
+  }
+
+  .cost-kpi strong {
+    font-size: 11pt !important;
+  }
+
+  #productionSummary.kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .category-summary-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .category-cost-card {
+    padding: 6px !important;
+    break-inside: avoid;
+  }
+
+  .category-cost-card h4 {
+    margin: 0 0 4px !important;
+    font-size: 8pt !important;
+  }
+
+  .category-cost-row {
+    margin: 2px 0 !important;
+    font-size: 6.5pt !important;
+    line-height: 1.2 !important;
+  }
+
+  #table,
+  #table .table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  #table .raw-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    font-size: 6pt !important;
+  }
+
+  #table .raw-table th,
+  #table .raw-table td {
+    position: static !important;
+    left: auto !important;
+    z-index: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 2px 2px !important;
+    line-height: 1.15 !important;
+    vertical-align: top !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  #table .raw-table th {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    font-size: 5.8pt !important;
+  }
+
+  #table .raw-table td {
+    white-space: nowrap !important;
+  }
+
+  #table .raw-table th:nth-child(1),
+  #table .raw-table td:nth-child(1) {
+    width: 8.5% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #table .raw-table th:nth-child(2),
+  #table .raw-table td:nth-child(2) {
+    width: 5.5% !important;
+    white-space: normal !important;
+  }
+
+  #table .raw-table th:nth-child(3),
+  #table .raw-table td:nth-child(3) {
+    width: 6.5% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #table .raw-table th:nth-child(18),
+  #table .raw-table td:nth-child(18) {
+    width: 5% !important;
+    white-space: normal !important;
+  }
+
+  #table .raw-table small {
+    font-size: 5.2pt !important;
+  }
+
+  #table .raw-table thead {
+    display: table-header-group !important;
+  }
+
+  #table .raw-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .panel {
+    break-inside: auto !important;
+  }
+}
