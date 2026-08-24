@@ -117,3 +117,12 @@
 .reconcile-badge.over,.reconcile-badge.under{background:#fef3c7;color:#92400e}
 .reconcile-badge.no-po{background:#e5e7eb;color:#4b5563}
 @media(max-width:760px){.reconcile-grid{grid-template-columns:1fr 1fr}}
+
+
+/* PURCHASE 3-WAY MATCH V1.6 */
+.document-items-panel{margin:14px 0;padding:14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}
+.document-item-row{display:grid;grid-template-columns:minmax(220px,2fr) minmax(125px,.8fr) minmax(125px,.8fr) minmax(100px,.7fr) auto;gap:8px;align-items:end;padding:10px 0;border-bottom:1px solid #eef2f7}
+.document-item-total{display:flex;flex-direction:column;gap:5px;padding-bottom:7px}.document-item-total span{font-size:12px;color:#6b7280}
+.reconcile-badge.items_missing,.reconcile-badge.item_mismatch,.reconcile-badge.not_fully_received,.reconcile-badge.quantity_difference,.reconcile-badge.price_difference,.reconcile-badge.amount_difference{background:#fef3c7;color:#92400e}
+.three-way-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:760px){.document-item-row{grid-template-columns:1fr}.three-way-grid{grid-template-columns:1fr 1fr}.document-item-total{padding-bottom:0}}
