@@ -154,6 +154,35 @@
 </div>
 
 
+
+<section class="document-items-panel">
+<div class="section-head">
+  <div>
+    <strong>📦 รายการสินค้าในเอกสาร</strong>
+    <div class="mini-note">ใช้สำหรับ 3-Way Match: PO ↔ รับของ ↔ Invoice</div>
+  </div>
+  <div class="action-row">
+    <button id="importPoItemsBtn" class="outline-btn" type="button">ดึงรายการจาก PO</button>
+    <button id="addDocumentItemBtn" class="outline-btn" type="button">＋ เพิ่มรายการ</button>
+  </div>
+</div>
+<div id="documentItems"></div>
+</section>
+
+<section id="threeWayPanel" class="reconcile-panel">
+<div class="section-head">
+  <strong>✅ 3-Way Matching</strong>
+  <span id="threeWayBadge" class="reconcile-badge no-po">ยังไม่เลือก PO</span>
+</div>
+<div class="reconcile-grid three-way-grid">
+  <div><span>PO Items</span><strong id="threeWayPoItems">0</strong></div>
+  <div><span>รับครบ</span><strong id="threeWayReceived">0</strong></div>
+  <div><span>Invoice Items</span><strong id="threeWayInvoiceItems">0</strong></div>
+  <div><span>ส่วนต่างยอด</span><strong id="threeWayVariance">฿0.00</strong></div>
+</div>
+<p id="threeWayMessage" class="mini-note">เลือก PO และกรอกรายการในเอกสารเพื่อเริ่มตรวจ 3-Way Match</p>
+</section>
+
 <section id="reconcilePanel" class="reconcile-panel">
 <div class="section-head"><strong>🔎 PO Reconciliation</strong><span id="reconcileBadge" class="reconcile-badge no-po">ยังไม่เลือก PO</span></div>
 <div class="reconcile-grid">
