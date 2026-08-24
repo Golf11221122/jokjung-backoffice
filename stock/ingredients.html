@@ -76,9 +76,10 @@
 <label class="field"><span>ประเภท</span><select id="ingredientType"><option value="raw">Raw Ingredient</option><option value="prep">Prep / แปรรูป</option><option value="beverage">เครื่องดื่ม</option><option value="packaging">Packaging</option><option value="consumable">Consumable</option></select></label>
 <label class="field"><span>หมวดวัตถุดิบ</span><select id="ingredientCategory"></select></label>
 <label class="field"><span>รอบตรวจนับ</span><select id="ingredientFrequency"><option value="daily">ทุกวัน</option><option value="weekly">ทุกสัปดาห์</option><option value="monthly">ทุกเดือน</option></select></label>
-<label class="field"><span>ต้นทุนต่อหน่วย</span><input id="ingredientCost" type="number" min="0" step="0.0001"></label>
+<label class="field"><span>ต้นทุนซื้อ/หน่วย</span><input id="ingredientCost" type="number" min="0" step="0.0001"></label>
+<label class="field" id="rawYieldWrap"><span>Usable Yield % (เฉพาะ Raw)</span><input id="ingredientUsableYield" type="number" min="0.01" max="100" step="0.01" value="100" placeholder="เช่น 90"><small class="mini-note">ตัวอย่าง ซื้อ 1,000 g ใช้ได้ 900 g = 90%</small></label>
 <label class="field"><span>Stock ขั้นต่ำ</span><input id="ingredientMin" type="number" min="0" step="0.001"></label>
-<label class="field" id="yieldWrap"><span>Standard Yield % (เฉพาะ Prep)</span><input id="ingredientYield" type="number" min="0.01" max="100" step="0.01" placeholder="เช่น 75"></label>
+<label class="field" id="yieldWrap"><span>Production Yield % (เฉพาะ Prep)</span><input id="ingredientYield" type="number" min="0.01" max="100" step="0.01" placeholder="เช่น 75"></label>
 <label class="field form-wide"><span><input id="ingredientActive" type="checkbox" checked> เปิดใช้งาน</span></label>
 </div>
 <p id="ingredientFormMessage" class="message"></p>
