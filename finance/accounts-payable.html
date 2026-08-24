@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Accounts Payable | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a>
+<a class="nav-link" data-nav="kpi-targets" href="./kpi-targets.html">🎯 KPI & Targets</a>
+<a class="nav-link" data-nav="daily-closing" href="./daily-closing.html">🌙 Daily Closing</a>
+</div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="expenses" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a>
+<a class="nav-link active" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a>
+<a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a>
+<a class="nav-link" data-nav="cost-quality" href="./cost-quality.html">🧪 Cost Data Quality</a>
+<a class="nav-link" data-nav="cost-fix" href="./cost-fix.html">🛠 Cost Fix Center</a>
+<a class="nav-link" data-nav="bulk-cost-sync" href="./bulk-cost-sync.html">🔄 Bulk Cost Sync</a>
+</div>
+<div class="nav-section"><div class="nav-title">Purchasing</div>
+<a class="nav-link" data-nav="suppliers" href="../purchasing/suppliers.html">🚚 Supplier</a>
+<a class="nav-link" data-nav="purchase-orders" href="../purchasing/purchase-orders.html">🛒 Purchase Orders</a>
+<a class="nav-link" data-nav="purchase-documents" href="../purchasing/purchase-documents.html">🧾 Purchase Documents</a>
+</div>
+</nav>
+</aside>
+
+<div class="main">
+<header class="topbar">
+<div class="topbar-left"><button id="menuBtn" class="menu-btn" type="button">☰</button><div><h1>💸 Accounts Payable</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+</header>
+
+<main class="content">
+<div class="page-head">
+<div><h2>เจ้าหนี้การค้า</h2><p>อนุมัติเอกสารก่อนจ่าย ติดตาม Due Date, Aging และประวัติการชำระ</p></div>
+<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+</div>
+
+<section id="kpis" class="kpi-grid"></section>
+
+<section class="panel">
+<div class="toolbar ap-toolbar">
+<input id="search" placeholder="ค้นหา Supplier / Invoice / PO...">
+<select id="supplierFilter"><option value="">Supplier ทั้งหมด</option></select>
+<select id="approvalFilter">
+<option value="">ทุกสถานะอนุมัติ</option>
+<option value="pending">รอตรวจ</option>
+<option value="approved">อนุมัติแล้ว</option>
+<option value="hold">พักไว้</option>
+<option value="rejected">ไม่อนุมัติ</option>
+</select>
+<select id="paymentFilter">
+<option value="">ทุกสถานะชำระ</option>
+<option value="unpaid">ยังไม่ชำระ</option>
+<option value="partial">ชำระบางส่วน</option>
+<option value="paid">ชำระแล้ว</option>
+</select>
+<select id="dueFilter">
+<option value="">ทุก Due Date</option>
+<option value="open">ค้างชำระทั้งหมด</option>
+<option value="overdue">เกินกำหนด</option>
+<option value="due_7">ครบกำหนดใน 7 วัน</option>
+<option value="due_30">ครบกำหนดใน 30 วัน</option>
+<option value="no_due_date">ไม่มี Due Date</option>
+</select>
+</div>
+<div id="table"></div>
+<p id="message" class="message"></p>
+</section>
+</main>
+</div>
+</div>
+
+<div id="detailModal" class="modal hidden">
+<div class="modal-card ap-modal">
+<div class="modal-head">
+<div><h3 id="detailTitle">Accounts Payable</h3><p id="detailSub" class="mini-note">-</p></div>
+<button id="closeDetailBtn" class="close-btn">×</button>
+</div>
+
+<section class="ap-detail-grid">
+<div><span>Supplier</span><strong id="detailSupplier">-</strong></div>
+<div><span>Total</span><strong id="detailTotal">฿0.00</strong></div>
+<div><span>Paid</span><strong id="detailPaid">฿0.00</strong></div>
+<div><span>Balance Due</span><strong id="detailBalance">฿0.00</strong></div>
+<div><span>Due Date</span><strong id="detailDue">-</strong></div>
+<div><span>3-Way</span><strong id="detailThreeWay">-</strong></div>
+</section>
+
+<div class="ap-approval-box">
+<div class="section-head"><strong>Approval for Payment</strong><span id="approvalBadge" class="ap-badge pending">รอตรวจ</span></div>
+<div class="action-row">
+<button id="approveBtn" class="primary-btn">✅ อนุมัติจ่าย</button>
+<button id="holdBtn" class="outline-btn">⏸ พักไว้</button>
+<button id="rejectBtn" class="danger-btn">✕ ไม่อนุมัติ</button>
+</div>
+<p class="mini-note">เอกสารที่มี PO ต้องผ่าน 3-Way Match ก่อนจึงอนุมัติได้</p>
+</div>
+
+<div class="ap-payment-box">
+<div class="section-head"><strong>บันทึกการจ่ายเงิน</strong><span id="paymentStatusBadge" class="ap-badge">-</span></div>
+<div class="form-grid">
+<label class="field"><span>วันที่จ่าย</span><input id="paymentDate" type="date"></label>
+<label class="field"><span>ยอดจ่ายครั้งนี้</span><input id="paymentAmount" type="number" min="0.01" step="0.01"></label>
+<label class="field"><span>วิธีชำระ</span>
+<select id="paymentMethod">
+<option value="bank_transfer">Bank Transfer</option>
+<option value="qr">QR</option>
+<option value="cash">Cash</option>
+<option value="card">Card</option>
+<option value="credit">Credit</option>
+<option value="other">Other</option>
+</select></label>
+<label class="field"><span>เลขอ้างอิง</span><input id="paymentReference" placeholder="เลขสลิป / Ref / Cheque"></label>
+<label class="field form-wide"><span>หมายเหตุ</span><textarea id="paymentNote"></textarea></label>
+</div>
+<button id="payBtn" class="primary-btn">💸 บันทึกการจ่าย</button>
+</div>
+
+<section class="ap-history">
+<div class="section-head"><strong>ประวัติการจ่าย</strong><span id="historyCount">0 รายการ</span></div>
+<div id="paymentHistory"><div class="empty">ยังไม่มีประวัติการจ่าย</div></div>
+</section>
+
+<p id="detailMessage" class="message"></p>
+</div>
+</div>
+
+<script type="module" src="../js/accounts-payable.js"></script>
+</body>
+</html>

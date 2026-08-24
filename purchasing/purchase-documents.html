@@ -125,7 +125,7 @@
 <label class="field"><span>Withholding Tax</span><input id="withholdingTax" type="number" min="0" step="0.01" value="0"></label>
 
 <label class="field"><span>Total</span><input id="totalAmount" type="number" min="0" step="0.01" value="0"></label>
-<label class="field"><span>ยอดชำระแล้ว</span><input id="paidAmount" type="number" min="0" step="0.01" value="0"></label>
+<label class="field"><span>ยอดชำระแล้ว</span><input id="paidAmount" type="number" min="0" step="0.01" value="0" readonly><small>บันทึกการจ่ายที่ Finance → Accounts Payable</small></label>
 
 <label class="field"><span>วิธีชำระ</span>
 <select id="paymentMethod">
@@ -133,11 +133,11 @@
 <option value="qr">QR</option><option value="card">Card</option><option value="credit">Credit</option><option value="other">Other</option>
 </select></label>
 <label class="field"><span>สถานะชำระ</span>
-<select id="paymentStatus">
+<select id="paymentStatus" disabled>
 <option value="unpaid">Unpaid</option><option value="partial">Partial</option><option value="paid">Paid</option><option value="void">Void</option>
 </select></label>
 
-<label class="field"><span>วันที่/เวลาชำระ</span><input id="paidAt" type="datetime-local"></label>
+<label class="field"><span>วันที่/เวลาชำระ</span><input id="paidAt" type="datetime-local" readonly></label>
 <label class="field form-wide"><span>หมายเหตุ</span><textarea id="note"></textarea></label>
 
 <label class="field form-wide upload-box">

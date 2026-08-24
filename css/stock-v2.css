@@ -126,3 +126,23 @@
 .reconcile-badge.items_missing,.reconcile-badge.item_mismatch,.reconcile-badge.not_fully_received,.reconcile-badge.quantity_difference,.reconcile-badge.price_difference,.reconcile-badge.amount_difference{background:#fef3c7;color:#92400e}
 .three-way-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:760px){.document-item-row{grid-template-columns:1fr}.three-way-grid{grid-template-columns:1fr 1fr}.document-item-total{padding-bottom:0}}
+
+
+/* ACCOUNTS PAYABLE V1.7 */
+.ap-toolbar{display:grid;grid-template-columns:minmax(220px,1.5fr) repeat(4,minmax(140px,1fr));gap:8px}
+.ap-modal{width:min(900px,calc(100vw - 28px));max-height:92vh;overflow:auto}
+.ap-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.ap-detail-grid>div{display:flex;flex-direction:column;gap:4px;padding:11px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa}
+.ap-detail-grid span{font-size:12px;color:#6b7280}.ap-detail-grid strong{font-size:16px}
+.ap-approval-box,.ap-payment-box,.ap-history{margin-top:14px;padding:14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}
+.ap-badge{display:inline-flex;width:max-content;padding:4px 9px;border-radius:999px;background:#e5e7eb;color:#4b5563;font-size:12px;font-weight:800}
+.ap-badge.pending,.ap-badge.unpaid{background:#fef3c7;color:#92400e}
+.ap-badge.approved,.ap-badge.paid{background:#dcfce7;color:#166534}
+.ap-badge.hold,.ap-badge.partial,.ap-badge.due{background:#ffedd5;color:#9a3412}
+.ap-badge.rejected,.ap-badge.overdue{background:#fee2e2;color:#991b1b}
+.ap-overdue-row{background:#fff7f7}
+.ap-history-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}
+.ap-history-row>div{display:flex;flex-direction:column;gap:3px}
+.ap-history-row small{color:#6b7280}.ap-history-row.reversed{opacity:.55;text-decoration:line-through}
+@media(max-width:900px){.ap-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.ap-toolbar{grid-template-columns:1fr}.ap-detail-grid{grid-template-columns:1fr 1fr}.ap-history-row{align-items:flex-start;flex-direction:column}}
