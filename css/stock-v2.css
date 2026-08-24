@@ -146,3 +146,14 @@
 .ap-history-row small{color:#6b7280}.ap-history-row.reversed{opacity:.55;text-decoration:line-through}
 @media(max-width:900px){.ap-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.ap-toolbar{grid-template-columns:1fr}.ap-detail-grid{grid-template-columns:1fr 1fr}.ap-history-row{align-items:flex-start;flex-direction:column}}
+
+
+/* PURCHASE RETURNS V1.8 */
+.purchase-return-modal{width:min(900px,calc(100vw - 28px));max-height:92vh;overflow:auto}
+.return-items-panel{margin-top:14px;padding:14px;border:1px solid #e5e7eb;border-radius:12px}
+.return-item-row{display:grid;grid-template-columns:minmax(240px,2fr) minmax(130px,.8fr) minmax(110px,.7fr) minmax(110px,.7fr);gap:10px;align-items:end;padding:10px 0;border-bottom:1px solid #eef2f7}
+.return-item-row>div:first-child{display:flex;flex-direction:column;gap:3px}
+.return-item-row small{color:#6b7280}
+.return-cost{display:flex;flex-direction:column;gap:4px;padding-bottom:7px}.return-cost span{font-size:12px;color:#6b7280}
+.return-warning{margin-top:12px;padding:10px 12px;border:1px solid #f6d77b;background:#fff8dc;border-radius:10px;font-size:13px}
+@media(max-width:760px){.return-item-row{grid-template-columns:1fr 1fr}.return-item-row>div:first-child{grid-column:1/-1}}

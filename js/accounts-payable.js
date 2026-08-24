@@ -7,6 +7,7 @@ let rows = []
 let suppliers = []
 let current = null
 let history = []
+let creditHistory = []
 
 function today() {
     const d = new Date()
@@ -169,7 +170,7 @@ async function openDetail(id) {
     $('paymentReference').disabled=!canPay
     $('paymentNote').disabled=!canPay
 
-    await loadHistory()
+    await Promise.all([loadHistory(),loadCreditHistory()])
 }
 
 async function loadHistory() {
@@ -267,6 +268,28 @@ async function reversePayment(id) {
     await refreshAll()
     await openDetail(current.document_id)
     detailMessage('ย้อนรายการจ่ายแล้ว')
+}
+
+
+async function loadCreditHistory(){
+    if(!current)return
+    const{data,error}=await supabase.rpc(
+        'backoffice_ap_credit_history_v18',
+        {p_document_id:current.document_id}
+    )
+    if(error)return detailMessage(error.message)
+    creditHistory=data||[]
+    const box=document.getElementById('creditHistory')
+    const count=document.getElementById('creditHistoryCount')
+    if(!box||!count)return
+    count.textContent=`${creditHistory.length} รายการ`
+    box.innerHTML=creditHistory.length?creditHistory.map(x=>`
+      <div class="ap-history-row ${x.reversed_at?'reversed':''}">
+        <div>
+          <strong>${dateText(x.credit_date)} • ${money(x.amount)}</strong>
+          <small>Supplier Credit • ${esc(x.return_no)} ${x.credit_note_no?'• '+esc(x.credit_note_no):''}</small>
+        </div>
+      </div>`).join(''):'<div class="empty">ยังไม่มี Supplier Credit</div>'
 }
 
 async function refreshAll() {

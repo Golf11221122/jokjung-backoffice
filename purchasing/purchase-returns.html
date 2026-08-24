@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Purchase Returns | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Purchasing</div>
+<a class="nav-link" data-nav="suppliers" href="./suppliers.html">🚚 Supplier</a>
+<a class="nav-link" data-nav="purchase-orders" href="./purchase-orders.html">🛒 Purchase Orders</a>
+<a class="nav-link" data-nav="purchase-documents" href="./purchase-documents.html">🧾 Purchase Documents</a>
+<a class="nav-link active" data-nav="purchase-returns" href="./purchase-returns.html">↩️ Purchase Returns</a>
+</div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="accounts-payable" href="../finance/accounts-payable.html">💸 Accounts Payable</a>
+</div>
+</nav>
+</aside>
+<div class="main">
+<header class="topbar">
+<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>↩️ Purchase Returns</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+</header>
+<main class="content">
+<div class="page-head">
+<div><h2>คืนสินค้า Supplier</h2><p>คืนวัตถุดิบออกจาก Stock และสร้าง Supplier Credit เพื่อลดเจ้าหนี้</p></div>
+<button id="newBtn" class="primary-btn">＋ สร้างรายการคืน</button>
+</div>
+<section id="kpis" class="kpi-grid"></section>
+<section class="panel">
+<div class="toolbar"><input id="search" placeholder="ค้นหา Return / Supplier / PO / Credit Note..."><button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button></div>
+<div id="table"></div><p id="message" class="message"></p>
+</section>
+</main>
+</div>
+</div>
+
+<div id="modal" class="modal hidden">
+<div class="modal-card purchase-return-modal">
+<div class="modal-head">
+<div><h3>สร้าง Purchase Return</h3><p class="mini-note">เมื่อกดยืนยัน Stock จะถูกตัดออกทันที</p></div>
+<button id="closeBtn" class="close-btn">×</button>
+</div>
+<div class="form-grid">
+<label class="field"><span>Purchase Order</span><select id="po"></select></label>
+<label class="field"><span>Invoice / Purchase Document</span><select id="document"></select><small>ถ้าเลือก ระบบจะนำ Supplier Credit ไปลดเจ้าหนี้ใบนี้</small></label>
+<label class="field"><span>วันที่คืน</span><input id="returnDate" type="date"></label>
+<label class="field"><span>เลข Supplier Credit Note</span><input id="creditNo" placeholder="ถ้ามี"></label>
+<label class="field form-wide"><span>เหตุผลการคืน *</span><input id="reason" placeholder="เช่น ของเสีย / ส่งผิด / คุณภาพไม่ผ่าน"></label>
+<label class="field form-wide"><span>หมายเหตุ</span><textarea id="note"></textarea></label>
+</div>
+
+<section class="return-items-panel">
+<div class="section-head"><strong>รายการที่จะคืน</strong><span id="returnTotal">฿0.00</span></div>
+<div id="items"><div class="empty">เลือก PO ก่อน</div></div>
+</section>
+
+<div class="return-warning">⚠️ ระบบไม่อนุญาตคืนเกินจำนวนที่รับจริง และไม่อนุญาตคืนเกิน Stock ปัจจุบัน</div>
+<p id="formMessage" class="message"></p>
+<div class="form-actions"><button id="postBtn" class="primary-btn">↩️ ยืนยันคืนสินค้า</button></div>
+</div>
+</div>
+
+<script type="module" src="../js/purchase-returns.js"></script>
+</body></html>
