@@ -77,13 +77,14 @@ async function loadDocuments() {
     message('กำลังโหลด...')
 
     const { data, error } = await supabase.rpc(
-        'backoffice_list_purchase_documents',
+        'backoffice_list_purchase_documents_v15',
         {
             p_from: $('dateFrom').value || null,
             p_to: $('dateTo').value || null,
             p_supplier_id: $('supplierFilter').value || null,
             p_document_type: $('typeFilter').value || null,
-            p_payment_status: $('paymentFilter').value || null
+            p_payment_status: $('paymentFilter').value || null,
+            p_tolerance: 1
         }
     )
 
@@ -112,12 +113,16 @@ function renderKpis(list) {
     const paid = list.reduce((s,x)=>s+Number(x.paid_amount||0),0)
     const due = list.reduce((s,x)=>s+Number(x.balance_due||0),0)
     const files = list.reduce((s,x)=>s+Number(x.attachment_count||0),0)
+    const matched = list.filter(x=>x.reconcile_status==='matched').length
+    const differences = list.filter(x=>['over','under'].includes(x.reconcile_status)).length
 
     $('kpis').innerHTML = `
         <article class="kpi-card"><span>เอกสาร</span><strong>${list.length.toLocaleString('th-TH')}</strong></article>
         <article class="kpi-card"><span>ยอดเอกสาร</span><strong>${money(total)}</strong></article>
         <article class="kpi-card"><span>ชำระแล้ว</span><strong>${money(paid)}</strong></article>
         <article class="kpi-card"><span>คงค้าง</span><strong>${money(due)}</strong></article>
+        <article class="kpi-card"><span>PO ตรงกัน</span><strong>${matched.toLocaleString('th-TH')}</strong></article>
+        <article class="kpi-card"><span>PO มีส่วนต่าง</span><strong>${differences.toLocaleString('th-TH')}</strong></article>
         <article class="kpi-card"><span>ไฟล์แนบ</span><strong>${files.toLocaleString('th-TH')}</strong></article>
     `
 }
@@ -131,7 +136,7 @@ function render() {
         <table>
         <thead><tr>
             <th>เลขภายใน</th><th>ประเภท / เลขเอกสาร</th><th>Supplier / PO</th><th>วันที่</th>
-            <th class="num">Total</th><th class="num">คงค้าง</th><th>ชำระ</th><th>ไฟล์</th><th>จัดการ</th>
+            <th class="num">Total</th><th class="num">คงค้าง</th><th>PO Match</th><th>ชำระ</th><th>ไฟล์</th><th>จัดการ</th>
         </tr></thead>
         <tbody>${list.map(x => `
             <tr>
@@ -141,6 +146,17 @@ function render() {
                 <td>${new Date(x.document_date+'T00:00:00').toLocaleDateString('th-TH')}</td>
                 <td class="num">${money(x.total_amount)}</td>
                 <td class="num">${money(x.balance_due)}</td>
+                <td>
+                    <span class="reconcile-badge ${esc(x.reconcile_status || 'no_po')}">${
+                        ({
+                            matched:'ตรง',
+                            over:'สูงกว่า',
+                            under:'ต่ำกว่า',
+                            no_po:'ไม่มี PO'
+                        })[x.reconcile_status] || '-'
+                    }</span>
+                    ${x.purchase_order_id ? `<div class="mini-note">${money(x.reconcile_variance || 0)}</div>` : ''}
+                </td>
                 <td><span class="doc-status ${esc(x.payment_status)}">${esc(paymentLabel(x.payment_status))}</span></td>
                 <td>${Number(x.attachment_count||0)} ไฟล์</td>
                 <td><button class="small-btn" data-edit="${x.id}">เปิด / แก้ไข</button></td>
@@ -165,6 +181,7 @@ function resetForm() {
     $('exchangeRate').value = '1'
     $('subtotal').value = '0'
     $('discountAmount').value = '0'
+    $('shippingAmount').value = '0'
     $('taxMode').value = 'none'
     $('taxRate').value = '7'
     $('taxAmount').value = '0'
@@ -192,8 +209,8 @@ async function openEdit(id) {
     $('modal').classList.remove('hidden')
 
     const { data, error } = await supabase.rpc(
-        'backoffice_get_purchase_document',
-        { p_document_id:id }
+        'backoffice_get_purchase_document_v15',
+        { p_document_id:id, p_tolerance:1 }
     )
 
     if (error) {
@@ -215,6 +232,7 @@ async function openEdit(id) {
     $('exchangeRate').value = Number(data.exchange_rate || 1)
     $('subtotal').value = Number(data.subtotal || 0)
     $('discountAmount').value = Number(data.discount_amount || 0)
+    $('shippingAmount').value = Number(data.shipping_amount || 0)
     $('taxMode').value = data.tax_mode || 'none'
     $('taxRate').value = Number(data.tax_rate || 0)
     $('taxAmount').value = Number(data.tax_amount || 0)
@@ -230,14 +248,16 @@ async function openEdit(id) {
     formMessage('')
     renderAttachments()
     calculateAmounts(false)
+    renderReconciliation(data)
 }
 
 function calculateAmounts(forceTotal=false) {
     const subtotal = num('subtotal')
     const discount = num('discountAmount')
+    const shipping = num('shippingAmount')
     const rate = num('taxRate')
     const mode = $('taxMode').value
-    const net = Math.max(subtotal-discount,0)
+    const net = Math.max(subtotal-discount+shipping,0)
 
     let tax = num('taxAmount')
     let total = num('totalAmount')
@@ -262,6 +282,8 @@ function calculateAmounts(forceTotal=false) {
     $('vatPreview').textContent = money(tax)
     $('balancePreview').textContent =
         money(Math.max(num('totalAmount')-num('paidAmount'),0))
+
+    if ($('reconcilePanel')) renderReconciliation()
 }
 
 function autoPaymentStatus() {
@@ -289,7 +311,7 @@ async function saveDocument() {
 
     try {
         const { data:id, error } = await supabase.rpc(
-            'backoffice_save_purchase_document',
+            'backoffice_save_purchase_document_v15',
             {
                 p_document_id: $('documentId').value || null,
                 p_supplier_id: $('supplier').value || null,
@@ -302,6 +324,7 @@ async function saveDocument() {
                 p_exchange_rate: num('exchangeRate') || 1,
                 p_subtotal: num('subtotal'),
                 p_discount_amount: num('discountAmount'),
+                p_shipping_amount: num('shippingAmount'),
                 p_tax_mode: $('taxMode').value,
                 p_tax_rate: num('taxRate'),
                 p_tax_amount: num('taxAmount'),
@@ -432,6 +455,93 @@ async function deleteAttachment(id) {
     await loadDocuments()
 }
 
+
+function currentPo() {
+    return purchaseOrders.find(x => x.id === $('purchaseOrder').value) || null
+}
+
+function documentBaseAmount() {
+    const total = num('totalAmount')
+    const tax = num('taxAmount')
+    return $('taxMode').value === 'none'
+        ? total
+        : Math.max(total - tax, 0)
+}
+
+function renderReconciliation(savedData=null) {
+    const po = currentPo()
+    const poTotal = Number(savedData?.po_total_amount ?? po?.total_amount ?? 0)
+    const docBase = Number(savedData?.document_base_amount ?? documentBaseAmount())
+    const vat = num('taxAmount')
+    const variance = savedData?.reconcile_variance != null
+        ? Number(savedData.reconcile_variance)
+        : (po ? docBase - poTotal : 0)
+
+    let status = savedData?.reconcile_status || 'no_po'
+    if (!savedData && po) {
+        status = Math.abs(variance) <= 1 ? 'matched' : variance > 1 ? 'over' : 'under'
+    }
+
+    $('reconcilePoTotal').textContent = money(poTotal)
+    $('reconcileDocBase').textContent = money(docBase)
+    $('reconcileVat').textContent = money(vat)
+    $('reconcileVariance').textContent = money(variance)
+
+    const badge = $('reconcileBadge')
+    badge.className = `reconcile-badge ${status}`
+    badge.textContent = ({
+        no_po:'ไม่ได้อ้างอิง PO',
+        matched:'ตรงกับ PO',
+        over:'เอกสารสูงกว่า PO',
+        under:'เอกสารต่ำกว่า PO'
+    })[status] || status
+
+    if (!po && !savedData?.purchase_order_id) {
+        $('reconcileMessage').textContent =
+            'เอกสารนี้ไม่ได้อ้างอิง PO จึงไม่ต้องกระทบยอด'
+    } else if (status === 'matched') {
+        $('reconcileMessage').textContent =
+            '✅ ยอดก่อน VAT ของเอกสารตรงกับยอด PO (Tolerance ±฿1.00)'
+    } else if (status === 'over') {
+        $('reconcileMessage').textContent =
+            `⚠️ เอกสารสูงกว่า PO ${money(Math.abs(variance))} — ตรวจราคา/ค่าขนส่ง/ส่วนลด`
+    } else if (status === 'under') {
+        $('reconcileMessage').textContent =
+            `⚠️ เอกสารต่ำกว่า PO ${money(Math.abs(variance))} — ตรวจรับของไม่ครบ/ส่วนลด/ยอดเอกสาร`
+    }
+}
+
+async function autofillFromPo() {
+    const poId = $('purchaseOrder').value
+    if (!poId) {
+        renderReconciliation()
+        return
+    }
+
+    const po = currentPo()
+    if (po?.supplier_id) {
+        $('supplier').value = po.supplier_id
+    }
+
+    // เติมจาก PO เฉพาะเอกสารใหม่ หรือช่องยอดยังเป็น 0
+    if (!$('documentId').value &&
+        num('subtotal') === 0 &&
+        num('totalAmount') === 0) {
+        const { data, error } = await supabase.rpc(
+            'backoffice_get_purchase_order',
+            { p_purchase_order_id:poId }
+        )
+        if (!error && data) {
+            $('subtotal').value = Number(data.subtotal || 0).toFixed(2)
+            $('discountAmount').value = Number(data.discount_amount || 0).toFixed(2)
+            $('shippingAmount').value = Number(data.shipping_amount || 0).toFixed(2)
+            calculateAmounts(true)
+        }
+    }
+
+    renderReconciliation()
+}
+
 function setDefaultDates() {
     const now = new Date()
     const first = new Date(now.getFullYear(),now.getMonth(),1)
@@ -469,17 +579,19 @@ $('supplier').onchange = () => {
     renderPoOptions()
     const po = purchaseOrders.find(x => x.id===$('purchaseOrder').value)
     if (po && po.supplier_id!==$('supplier').value) $('purchaseOrder').value=''
+    renderReconciliation()
 }
 
-$('purchaseOrder').onchange = () => {
+$('purchaseOrder').onchange = async () => {
     const po = purchaseOrders.find(x => x.id===$('purchaseOrder').value)
     if (po?.supplier_id) {
         $('supplier').value = po.supplier_id
         renderPoOptions(po.id)
     }
+    await autofillFromPo()
 }
 
-for (const id of ['subtotal','discountAmount','taxRate']) {
+for (const id of ['subtotal','discountAmount','shippingAmount','taxRate']) {
     $(id).addEventListener('input',()=>calculateAmounts(true))
 }
 $('taxMode').onchange = () => calculateAmounts(true)
