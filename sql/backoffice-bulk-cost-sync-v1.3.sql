@@ -1,3 +1,4 @@
+-- RAW USABLE YIELD AWARE: requires PATCH_RAW_USABLE_YIELD_V1.sql
 -- =========================================================
 -- JOKJUNG BACK OFFICE - BULK COST SYNC V1
 -- Preview + Sync products.cost from Recipe/BOM
@@ -27,9 +28,9 @@ begin
             round(coalesce(p.price,0)::numeric,2) as sale_price_2dp,
             round(coalesce(p.cost,0)::numeric,2) as current_cost_2dp,
             count(pr.id) as recipe_rows,
-            round(coalesce(sum(coalesce(pr.quantity_used,0)*coalesce(i.cost_per_unit,0)),0)::numeric,2) as recipe_cost_2dp,
+            round(coalesce(sum(coalesce(pr.quantity_used,0)*public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct)),0)::numeric,2) as recipe_cost_2dp,
             count(*) filter(where pr.id is not null and (i.id is null or coalesce(i.is_active,true)=false)) as broken_ingredient_rows,
-            count(*) filter(where pr.id is not null and i.id is not null and coalesce(i.cost_per_unit,0)<=0) as zero_cost_ingredient_rows
+            count(*) filter(where pr.id is not null and i.id is not null and public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct)<=0) as zero_cost_ingredient_rows
         from public.products p
         left join public.product_recipes pr
           on pr.product_id=p.id and pr.branch_id=v_branch
@@ -101,7 +102,7 @@ begin
     with calc as (
         select
             p.id as product_id,
-            round(coalesce(sum(coalesce(pr.quantity_used,0)*coalesce(i.cost_per_unit,0)),0)::numeric,2) as recipe_cost,
+            round(coalesce(sum(coalesce(pr.quantity_used,0)*public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct)),0)::numeric,2) as recipe_cost,
             count(pr.id) as recipe_rows,
             count(*) filter (
                 where pr.id is not null
@@ -113,7 +114,7 @@ begin
             count(*) filter (
                 where pr.id is not null
                   and i.id is not null
-                  and coalesce(i.cost_per_unit,0)<=0
+                  and public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct)<=0
             ) as zero_cost_ingredient_rows
         from public.products p
         left join public.product_recipes pr

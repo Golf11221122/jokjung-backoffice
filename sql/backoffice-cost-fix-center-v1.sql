@@ -1,3 +1,4 @@
+-- RAW USABLE YIELD AWARE: requires PATCH_RAW_USABLE_YIELD_V1.sql
 -- =========================================================
 -- JOKJUNG BACK OFFICE - COST FIX CENTER V1
 -- วิเคราะห์สาเหตุ COGS = 0 จากข้อมูลจริง
@@ -81,7 +82,7 @@ begin
             coalesce((
                 select round(sum(
                     coalesce(pr.quantity_used,0)
-                    * coalesce(i.cost_per_unit,0)
+                    * public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct)
                 ),4)
                 from public.product_recipes pr
                 left join public.ingredients i
@@ -113,7 +114,7 @@ begin
                  and i.branch_id = v_branch
                 where pr.branch_id = v_branch
                   and pr.product_id = s.product_id
-                  and coalesce(i.cost_per_unit,0) <= 0
+                  and public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct) <= 0
             ),0) as zero_cost_ingredients,
 
             coalesce((
@@ -123,11 +124,13 @@ begin
                         'ingredient_name', coalesce(i.name,'ไม่พบวัตถุดิบ'),
                         'unit', i.unit,
                         'quantity_used', pr.quantity_used,
-                        'cost_per_unit', coalesce(i.cost_per_unit,0),
+                        'purchase_cost_per_unit', coalesce(i.cost_per_unit,0),
+                        'usable_yield_pct', case when i.ingredient_type='raw' then coalesce(i.usable_yield_pct,100) else null end,
+                        'cost_per_unit', public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct),
                         'line_cost',
                             round(
                                 coalesce(pr.quantity_used,0)
-                                * coalesce(i.cost_per_unit,0),
+                                * public.jokjung_effective_ingredient_cost(i.cost_per_unit,i.ingredient_type,i.usable_yield_pct),
                                 4
                             ),
                         'is_active', i.is_active
