@@ -98,7 +98,9 @@ function renderTable(){
       <td>${Number(x.planned_amount||0)>0
         ?`<strong>${money(x.planned_amount)}</strong><div class="mini-note">${dateText(x.planned_date)}</div>`
         :'<span class="mini-note">ยังไม่วางแผน</span>'}</td>
-      <td><button class="small-btn" data-plan="${x.document_id}">วางแผน</button></td>
+      <td>${x.approval_status==='approved'
+        ? `<button class="small-btn" data-plan="${x.document_id}">วางแผน</button>`
+        : '<span class="mini-note">รออนุมัติ AP</span>'}</td>
     </tr>`).join('')}
   </tbody></table></div>`:'<div class="empty">ไม่มีเจ้าหนี้ในช่วงวันที่นี้</div>'
 }
@@ -106,6 +108,10 @@ function renderTable(){
 function openPlan(id){
   current=rows.find(x=>x.document_id===id)
   if(!current)return
+  if(current.approval_status!=='approved'){
+    msg('ต้องอนุมัติเอกสารใน Accounts Payable ก่อนวางแผนจ่าย')
+    return
+  }
   $('planDocumentId').value=current.document_id
   $('planSub').textContent=`${current.supplier_name||'-'} • ${current.internal_no}`
   $('planBalance').value=Number(current.balance_due||0).toFixed(2)

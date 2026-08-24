@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cash Flow | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a></div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="expenses" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a>
+<a class="nav-link" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a>
+<a class="nav-link" data-nav="payment-forecast" href="./payment-forecast.html">📅 Payment Forecast</a>
+<a class="nav-link active" data-nav="cash-flow" href="./cash-flow.html">💵 Cash Flow</a>
+<a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a>
+</div>
+</nav>
+</aside>
+<div class="main">
+<header class="topbar">
+<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>💵 Cash Flow</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+</header>
+<main class="content">
+<div class="page-head">
+<div><h2>Cash Flow Dashboard</h2><p>เงินเข้าจริงจากยอดขาย − ค่าใช้จ่ายจริง − เงินจ่าย Supplier + แผนจ่ายล่วงหน้า</p></div>
+<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+</div>
+<section class="panel">
+<div class="toolbar cashflow-toolbar">
+<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label>
+<label class="field"><span>ถึง</span><input id="dateTo" type="date"></label>
+<div class="quick-range"><button class="small-btn" data-days="0">วันนี้</button><button class="small-btn" data-days="6">7 วัน</button><button class="small-btn" data-days="29">30 วัน</button></div>
+</div>
+</section>
+<section id="kpis" class="kpi-grid"></section>
+<section class="panel">
+<div class="section-head"><div><strong>กระแสเงินสดรายวัน</strong><div class="mini-note">Actual Net = Sales − Expenses − Supplier Payments</div></div></div>
+<div id="dailyChart" class="cashflow-chart"></div>
+</section>
+<section class="panel">
+<div class="section-head"><strong>รายละเอียดรายวัน</strong><span id="dayCount" class="mini-note">0 วัน</span></div>
+<div id="dailyTable"></div>
+</section>
+<section class="panel">
+<div class="section-head"><strong>รายการเงินออกจริง</strong><span id="outflowCount" class="mini-note">0 รายการ</span></div>
+<div id="outflowTable"></div>
+</section>
+<p id="message" class="message"></p>
+</main>
+</div>
+</div>
+<script type="module" src="../js/cash-flow.js"></script>
+</body></html>

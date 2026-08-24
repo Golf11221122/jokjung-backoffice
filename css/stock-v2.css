@@ -169,3 +169,17 @@
 .due-line{background:#fee2e2;color:#991b1b}
 .plan-line{background:#dcfce7;color:#166534}
 @media(max-width:760px){.forecast-toolbar{grid-template-columns:1fr}.forecast-row{grid-template-columns:90px 1fr}}
+
+
+/* CASH FLOW DASHBOARD V2.0 */
+.cashflow-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.cashflow-toolbar .field{min-width:170px}.quick-range{display:flex;gap:6px;padding-bottom:1px}
+.cash-in{border-left:4px solid #86efac}.cash-out{border-left:4px solid #fca5a5}.cash-plan{border-left:4px solid #93c5fd}
+.cash-positive{border-left:4px solid #22c55e}.cash-negative{border-left:4px solid #ef4444}
+.cash-text-positive{color:#166534}.cash-text-negative{color:#991b1b}
+.cashflow-chart{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.cashflow-chart-row{display:grid;grid-template-columns:105px 1fr;gap:10px;align-items:center}
+.cashflow-date{font-size:12px;color:#475569}.cashflow-tracks{display:flex;flex-direction:column;gap:4px;min-width:0}
+.cashflow-bar{min-height:23px;padding:4px 7px;border-radius:7px;font-size:11px;font-weight:800;white-space:nowrap}
+.cashflow-bar.inflow{background:#dcfce7;color:#166534}.cashflow-bar.outflow{background:#fee2e2;color:#991b1b}.cashflow-bar.planned{background:#dbeafe;color:#1e40af}
+@media(max-width:760px){.cashflow-chart-row{grid-template-columns:85px 1fr}.cashflow-toolbar{align-items:stretch}.cashflow-toolbar .field{width:100%}.quick-range{width:100%}}
