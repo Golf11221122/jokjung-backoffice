@@ -61,3 +61,13 @@
 .golive-total{display:flex;justify-content:flex-end;gap:14px;align-items:center;padding:14px 0;font-weight:900}
 .golive-total strong{font-size:22px}
 .golive-ok{padding:12px;border-radius:10px;background:#e6f4ea;color:#137333;font-weight:800}
+
+
+/* RAW YIELD COST CONTROL V1.2 */
+.summary-list{display:grid;gap:8px}.summary-list>div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #eee}
+.cost-chart-row{display:grid;grid-template-columns:minmax(115px,160px) 1fr;gap:12px;align-items:center;margin:10px 0}
+.cost-chart-label{display:flex;flex-direction:column}.cost-chart-label small{color:#777}
+.cost-chart-bars{display:grid;gap:7px}.cost-chart-line{position:relative;min-height:25px;background:#f3f3f3;border-radius:7px;overflow:hidden}
+.cost-chart-line i{display:block;position:absolute;inset:0 auto 0 0;background:rgba(251,188,4,.45);border-radius:7px}
+.cost-chart-line.actual i{background:rgba(217,48,37,.25)}.cost-chart-line span{position:relative;z-index:1;display:block;padding:4px 8px;font-size:12px;font-weight:700}
+@media(max-width:760px){.cost-chart-row{grid-template-columns:1fr}.summary-list>div{align-items:flex-start}}
