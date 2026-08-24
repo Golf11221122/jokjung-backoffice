@@ -29,7 +29,8 @@ function show(text = '') {
 function ingredientErrorText(error) {
     const text = String(error?.message || error || '')
     if (text.includes('INGREDIENT_NAME_EXISTS')) return 'มีวัตถุดิบชื่อนี้อยู่แล้วในสาขานี้'
-    if (text.includes('INVALID_STANDARD_YIELD')) return 'Standard Yield ต้องมากกว่า 0 (สามารถมากกว่า 100% ได้)'
+    if (text.includes('INVALID_STANDARD_YIELD')) return 'Production Yield ต้องมากกว่า 0'
+    if (text.includes('INVALID_USABLE_YIELD')) return 'Usable Yield ของ Raw ต้องมากกว่า 0 และไม่เกิน 100%' 
     return text || 'บันทึกข้อมูลไม่สำเร็จ'
 }
 
@@ -46,7 +47,7 @@ async function loadCategories() {
 }
 
 async function load() {
-    const { data, error } = await supabase.rpc('backoffice_list_ingredients_v31')
+    const { data, error } = await supabase.rpc('backoffice_list_ingredients_v32')
     if (error) return show(error.message)
     rows = data || []
     render()
@@ -85,8 +86,8 @@ function render() {
         <div class="table-wrap"><table>
         <thead><tr>
             <th>วัตถุดิบ</th><th>ประเภท</th><th>หมวด</th><th>รอบนับ</th><th>หน่วย</th>
-            <th class="num">ต้นทุน/หน่วย</th><th class="num">คงเหลือ</th>
-            <th class="num">Yield</th><th>สถานะ</th><th>จัดการ</th>
+            <th class="num">ต้นทุนซื้อ/หน่วย</th><th class="num">คงเหลือ</th>
+            <th class="num">Usable Yield</th><th class="num">ต้นทุนใช้จริง</th><th class="num">Production Yield</th><th>สถานะ</th><th>จัดการ</th>
         </tr></thead>
         <tbody>${list.map(x => {
             const cur = Number(x.current_stock || 0)
@@ -103,6 +104,8 @@ function render() {
                 <td>${esc(x.unit)}</td>
                 <td class="num">${money(x.cost_per_unit)}</td>
                 <td class="num">${number(x.current_stock)} ${esc(x.unit)}</td>
+                <td class="num">${x.ingredient_type === 'raw' ? Number(x.usable_yield_pct || 100).toFixed(2) + '%' : '-'}</td>
+                <td class="num">${money(x.effective_cost_per_unit ?? x.cost_per_unit)}</td>
                 <td class="num">${x.ingredient_type === 'prep' && x.standard_yield_pct ? Number(x.standard_yield_pct).toFixed(2) + '%' : '-'}</td>
                 <td>${badge}</td>
                 <td><div class="action-row">
@@ -115,8 +118,11 @@ function render() {
 }
 
 function updateYieldVisibility() {
-    const isPrep = document.getElementById('ingredientType').value === 'prep'
+    const type = document.getElementById('ingredientType').value
+    const isPrep = type === 'prep'
+    const isRaw = type === 'raw'
     document.getElementById('yieldWrap').classList.toggle('hidden', !isPrep)
+    document.getElementById('rawYieldWrap').classList.toggle('hidden', !isRaw)
 }
 
 function openIngredient(row = null) {
@@ -129,6 +135,7 @@ function openIngredient(row = null) {
     document.getElementById('ingredientCost').value = Number(row?.cost_per_unit || 0)
     document.getElementById('ingredientMin').value = Number(row?.min_stock || 0)
     document.getElementById('ingredientYield').value = row?.standard_yield_pct ?? ''
+    document.getElementById('ingredientUsableYield').value = Number(row?.usable_yield_pct ?? 100)
     document.getElementById('ingredientActive').checked = row ? row.is_active !== false : true
     document.getElementById('ingredientModalTitle').textContent = row ? 'แก้ไขวัตถุดิบ' : 'เพิ่มวัตถุดิบ'
     document.getElementById('ingredientFormMessage').textContent = ''
@@ -146,7 +153,8 @@ async function saveIngredient() {
 
     const type = document.getElementById('ingredientType').value
     const yieldRaw = document.getElementById('ingredientYield').value
-    const { error } = await supabase.rpc('backoffice_save_ingredient_v31', {
+    const usableYieldRaw = document.getElementById('ingredientUsableYield').value
+    const { error } = await supabase.rpc('backoffice_save_ingredient_v32', {
         p_ingredient_id: document.getElementById('ingredientId').value || null,
         p_name: name,
         p_unit: unit,
@@ -156,13 +164,15 @@ async function saveIngredient() {
         p_category_id: document.getElementById('ingredientCategory').value || null,
         p_count_frequency: document.getElementById('ingredientFrequency').value,
         p_ingredient_type: type,
-        p_standard_yield_pct: type === 'prep' && yieldRaw !== '' ? Number(yieldRaw) : null
+        p_standard_yield_pct: type === 'prep' && yieldRaw !== '' ? Number(yieldRaw) : null,
+        p_usable_yield_pct: type === 'raw' ? Number(usableYieldRaw || 100) : 100
     })
     if (error) {
         document.getElementById('ingredientFormMessage').textContent = ingredientErrorText(error)
         return
     }
     document.getElementById('ingredientModal').classList.add('hidden')
+    await supabase.rpc('backoffice_bulk_cost_sync_apply', { p_product_ids: null })
     await load()
 }
 
@@ -194,6 +204,7 @@ async function saveAdjust() {
         return
     }
     document.getElementById('adjustModal').classList.add('hidden')
+    await supabase.rpc('backoffice_bulk_cost_sync_apply', { p_product_ids: null })
     await load()
 }
 

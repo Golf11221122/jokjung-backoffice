@@ -22,7 +22,7 @@ async function loadStatus() {
 }
 
 async function loadIngredients() {
-    const { data, error } = await supabase.rpc('backoffice_list_ingredients_v31')
+    const { data, error } = await supabase.rpc('backoffice_list_ingredients_v32')
     if (error) throw error
     ingredients = (data || []).filter(x => x.is_active)
     renderOpening()
@@ -165,6 +165,7 @@ async function activate() {
             if (t.includes('ADMIN_REQUIRED')) return message('ต้องใช้สิทธิ์ Admin')
             throw error
         }
+        await supabase.rpc('backoffice_bulk_cost_sync_apply', { p_product_ids: null })
         message(`Go-Live สำเร็จ • ${data.opening_items} รายการ • Opening Value ${money(data.opening_value)}`)
         await loadStatus()
         await loadIngredients()

@@ -7,12 +7,21 @@ let selected=null
 let recipe=[]
 
 function typeText(v){return({raw:'Raw',prep:'Prep',beverage:'เครื่องดื่ม',packaging:'Packaging',consumable:'Consumable'})[v]||v}
+function recipeUnitCost(ing){return Number(ing?.effective_cost_per_unit ?? ing?.cost_per_unit ?? 0)}
+function costHint(ing){
+    if(!ing)return''
+    if(ing.ingredient_type==='raw'){
+        const y=Number(ing.usable_yield_pct||100)
+        return ` • Yield ${y.toFixed(2)}% • ใช้จริง ${money(recipeUnitCost(ing))}/${esc(ing.unit)}`
+    }
+    return ` • ${money(recipeUnitCost(ing))}/${esc(ing.unit)}`
+}
 function msg(t=''){document.getElementById('message').textContent=t}
 
 async function init(){
     const [p,i]=await Promise.all([
         supabase.rpc('backoffice_list_products'),
-        supabase.rpc('backoffice_list_ingredients_v31')
+        supabase.rpc('backoffice_list_ingredients_v32')
     ])
     if(p.error)return msg(p.error.message)
     if(i.error)return msg(i.error.message)
@@ -64,7 +73,7 @@ function renderRecipe(){
     const w=document.getElementById('recipeRows')
     w.innerHTML=recipe.length?recipe.map((r,i)=>`<div class="recipe-row">
         <label class="field"><span>วัตถุดิบ</span><select data-ing="${i}">
-        ${ingredients.map(x=>`<option value="${x.id}" ${x.id===r.ingredient_id?'selected':''}>${esc(x.name)} • ${esc(typeText(x.ingredient_type))} (${esc(x.unit)})</option>`).join('')}
+        ${ingredients.map(x=>`<option value="${x.id}" ${x.id===r.ingredient_id?'selected':''}>${esc(x.name)} • ${esc(typeText(x.ingredient_type))} (${esc(x.unit)})${costHint(x)}</option>`).join('')}
         </select></label>
         <label class="field"><span>จำนวนใช้/1 หน่วยขาย</span><input data-qty="${i}" type="number" min="0" step="0.001" value="${r.quantity_used}"></label>
         <button class="danger-btn" data-remove="${i}">ลบ</button></div>`).join(''):'<div class="empty">ยังไม่มี Recipe</div>'
@@ -74,7 +83,7 @@ function renderCost(){
     let cost=0,prepCost=0,rawCost=0
     for(const r of recipe){
         const ing=ingredients.find(x=>x.id===r.ingredient_id)
-        const line=Number(r.quantity_used||0)*Number(ing?.cost_per_unit||0)
+        const line=Number(r.quantity_used||0)*recipeUnitCost(ing)
         cost+=line
         if(ing?.ingredient_type==='prep')prepCost+=line;else rawCost+=line
     }
@@ -91,7 +100,9 @@ async function save(){
     for(const r of clean){if(seen.has(r.ingredient_id))return msg('วัตถุดิบในสูตรห้ามซ้ำ');seen.add(r.ingredient_id)}
     const{error}=await supabase.rpc('backoffice_save_product_recipe',{p_product_id:selected.id,p_recipe:clean})
     if(error)return msg(error.message)
-    msg('บันทึก Recipe สำเร็จ')
+    const sync=await supabase.rpc('backoffice_bulk_cost_sync_apply',{p_product_ids:[selected.id]})
+    if(sync.error)return msg('บันทึก Recipe แล้ว แต่ Sync ต้นทุนสินค้าไม่สำเร็จ: '+sync.error.message)
+    msg('บันทึก Recipe และ Sync ต้นทุนสำเร็จ')
     await selectProduct(selected.id)
 }
 

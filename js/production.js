@@ -258,6 +258,7 @@ async function postBatch() {
         p_inputs: clean
     })
     if (error) return bmsg(error.message.includes('INSUFFICIENT_STOCK') ? 'Stock วัตถุดิบไม่พอ' : error.message)
+    await supabase.rpc('backoffice_bulk_cost_sync_apply', { p_product_ids: null })
     document.getElementById('batchModal').classList.add('hidden')
     await loadIngredients()
     await loadBatches()
