@@ -111,6 +111,7 @@
 
 <label class="field"><span>Subtotal</span><input id="subtotal" type="number" min="0" step="0.01" value="0"></label>
 <label class="field"><span>Discount</span><input id="discountAmount" type="number" min="0" step="0.01" value="0"></label>
+<label class="field"><span>Shipping / Freight</span><input id="shippingAmount" type="number" min="0" step="0.01" value="0"></label>
 
 <label class="field"><span>VAT Mode</span>
 <select id="taxMode">
@@ -151,6 +152,18 @@
 <div><span>VAT</span><strong id="vatPreview">฿0.00</strong></div>
 <div><span>ยอดคงค้าง</span><strong id="balancePreview">฿0.00</strong></div>
 </div>
+
+
+<section id="reconcilePanel" class="reconcile-panel">
+<div class="section-head"><strong>🔎 PO Reconciliation</strong><span id="reconcileBadge" class="reconcile-badge no-po">ยังไม่เลือก PO</span></div>
+<div class="reconcile-grid">
+<div><span>PO Total (ก่อน VAT)</span><strong id="reconcilePoTotal">฿0.00</strong></div>
+<div><span>Document Base (ไม่รวม VAT)</span><strong id="reconcileDocBase">฿0.00</strong></div>
+<div><span>VAT</span><strong id="reconcileVat">฿0.00</strong></div>
+<div><span>ส่วนต่าง</span><strong id="reconcileVariance">฿0.00</strong></div>
+</div>
+<p id="reconcileMessage" class="mini-note">เลือก PO เพื่อเปรียบเทียบยอดเอกสารกับ PO</p>
+</section>
 
 <section class="attachment-panel">
 <div class="section-head"><strong>ไฟล์แนบ</strong><span id="attachmentCount">0 ไฟล์</span></div>
