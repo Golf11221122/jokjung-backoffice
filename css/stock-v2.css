@@ -157,3 +157,15 @@
 .return-cost{display:flex;flex-direction:column;gap:4px;padding-bottom:7px}.return-cost span{font-size:12px;color:#6b7280}
 .return-warning{margin-top:12px;padding:10px 12px;border:1px solid #f6d77b;background:#fff8dc;border-radius:10px;font-size:13px}
 @media(max-width:760px){.return-item-row{grid-template-columns:1fr 1fr}.return-item-row>div:first-child{grid-column:1/-1}}
+
+
+/* PAYMENT FORECAST V1.9 */
+.forecast-toolbar{display:grid;grid-template-columns:minmax(240px,1fr) minmax(180px,.5fr) minmax(160px,.4fr);gap:8px}
+.forecast-bars{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.forecast-row{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center}
+.forecast-date{font-size:12px;color:#475569}
+.forecast-track{display:flex;flex-direction:column;gap:4px;min-width:0}
+.forecast-line{min-height:24px;border-radius:7px;padding:4px 7px;font-size:11px;font-weight:800;white-space:nowrap;overflow:visible}
+.due-line{background:#fee2e2;color:#991b1b}
+.plan-line{background:#dcfce7;color:#166534}
+@media(max-width:760px){.forecast-toolbar{grid-template-columns:1fr}.forecast-row{grid-template-columns:90px 1fr}}
