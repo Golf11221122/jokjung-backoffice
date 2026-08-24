@@ -105,3 +105,15 @@
 .doc-status.unpaid{background:#fee2e2;color:#991b1b}.doc-status.void{background:#e5e7eb;color:#4b5563}
 @media(max-width:1000px){.document-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.document-toolbar{grid-template-columns:1fr}.doc-total-preview{grid-template-columns:1fr}.attachment-row{align-items:flex-start;flex-direction:column}}
+
+
+/* PURCHASE DOCUMENT RECONCILIATION V1.5 */
+.reconcile-panel{margin:14px 0;padding:14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}
+.reconcile-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.reconcile-grid>div{padding:10px;border-radius:9px;background:#f8fafc;display:flex;flex-direction:column;gap:4px}
+.reconcile-grid span{font-size:12px;color:#6b7280}.reconcile-grid strong{font-size:16px}
+.reconcile-badge{display:inline-flex;align-items:center;width:max-content;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#e5e7eb;color:#4b5563}
+.reconcile-badge.matched{background:#dcfce7;color:#166534}
+.reconcile-badge.over,.reconcile-badge.under{background:#fef3c7;color:#92400e}
+.reconcile-badge.no-po{background:#e5e7eb;color:#4b5563}
+@media(max-width:760px){.reconcile-grid{grid-template-columns:1fr 1fr}}
