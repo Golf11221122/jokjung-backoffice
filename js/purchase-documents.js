@@ -7,6 +7,8 @@ let rows = []
 let suppliers = []
 let purchaseOrders = []
 let currentAttachments = []
+let documentItems = []
+let currentPoDetail = null
 
 const $ = id => document.getElementById(id)
 const num = id => Number($(id).value || 0)
@@ -77,14 +79,13 @@ async function loadDocuments() {
     message('กำลังโหลด...')
 
     const { data, error } = await supabase.rpc(
-        'backoffice_list_purchase_documents_v15',
+        'backoffice_list_purchase_documents_v16',
         {
             p_from: $('dateFrom').value || null,
             p_to: $('dateTo').value || null,
             p_supplier_id: $('supplierFilter').value || null,
             p_document_type: $('typeFilter').value || null,
-            p_payment_status: $('paymentFilter').value || null,
-            p_tolerance: 1
+            p_payment_status: $('paymentFilter').value || null
         }
     )
 
@@ -113,8 +114,8 @@ function renderKpis(list) {
     const paid = list.reduce((s,x)=>s+Number(x.paid_amount||0),0)
     const due = list.reduce((s,x)=>s+Number(x.balance_due||0),0)
     const files = list.reduce((s,x)=>s+Number(x.attachment_count||0),0)
-    const matched = list.filter(x=>x.reconcile_status==='matched').length
-    const differences = list.filter(x=>['over','under'].includes(x.reconcile_status)).length
+    const matched = list.filter(x=>x.three_way_status==='matched').length
+    const differences = list.filter(x=>x.purchase_order_id && x.three_way_status!=='matched').length
 
     $('kpis').innerHTML = `
         <article class="kpi-card"><span>เอกสาร</span><strong>${list.length.toLocaleString('th-TH')}</strong></article>
@@ -136,7 +137,7 @@ function render() {
         <table>
         <thead><tr>
             <th>เลขภายใน</th><th>ประเภท / เลขเอกสาร</th><th>Supplier / PO</th><th>วันที่</th>
-            <th class="num">Total</th><th class="num">คงค้าง</th><th>PO Match</th><th>ชำระ</th><th>ไฟล์</th><th>จัดการ</th>
+            <th class="num">Total</th><th class="num">คงค้าง</th><th>3-Way</th><th>ชำระ</th><th>ไฟล์</th><th>จัดการ</th>
         </tr></thead>
         <tbody>${list.map(x => `
             <tr>
@@ -147,15 +148,19 @@ function render() {
                 <td class="num">${money(x.total_amount)}</td>
                 <td class="num">${money(x.balance_due)}</td>
                 <td>
-                    <span class="reconcile-badge ${esc(x.reconcile_status || 'no_po')}">${
+                    <span class="reconcile-badge ${esc(x.three_way_status || 'no_po')}">${
                         ({
-                            matched:'ตรง',
-                            over:'สูงกว่า',
-                            under:'ต่ำกว่า',
-                            no_po:'ไม่มี PO'
-                        })[x.reconcile_status] || '-'
+                            matched:'ผ่าน',
+                            no_po:'ไม่มี PO',
+                            items_missing:'ไม่มีรายการ',
+                            item_mismatch:'สินค้าไม่ตรง',
+                            not_fully_received:'รับไม่ครบ',
+                            quantity_difference:'จำนวนต่าง',
+                            price_difference:'ราคาต่าง',
+                            amount_difference:'ยอดต่าง'
+                        })[x.three_way_status] || '-'
                     }</span>
-                    ${x.purchase_order_id ? `<div class="mini-note">${money(x.reconcile_variance || 0)}</div>` : ''}
+                    ${x.purchase_order_id ? `<div class="mini-note">${money(x.three_way_amount_variance || 0)}</div>` : ''}
                 </td>
                 <td><span class="doc-status ${esc(x.payment_status)}">${esc(paymentLabel(x.payment_status))}</span></td>
                 <td>${Number(x.attachment_count||0)} ไฟล์</td>
@@ -194,6 +199,10 @@ function resetForm() {
     $('note').value = ''
     $('files').value = ''
     currentAttachments = []
+    documentItems = []
+    currentPoDetail = null
+    renderDocumentItems()
+    renderThreeWay()
     formMessage('')
     renderAttachments()
     calculateAmounts(true)
@@ -209,8 +218,8 @@ async function openEdit(id) {
     $('modal').classList.remove('hidden')
 
     const { data, error } = await supabase.rpc(
-        'backoffice_get_purchase_document_v15',
-        { p_document_id:id, p_tolerance:1 }
+        'backoffice_get_purchase_document_v16',
+        { p_document_id:id }
     )
 
     if (error) {
@@ -245,6 +254,14 @@ async function openEdit(id) {
     $('note').value = data.note || ''
     $('files').value = ''
     currentAttachments = Array.isArray(data.attachments) ? data.attachments : []
+    documentItems = Array.isArray(data.document_items) ? data.document_items.map(x => ({...x})) : []
+    currentPoDetail = null
+    if (data.purchase_order_id) {
+        const poResult = await supabase.rpc('backoffice_get_purchase_order',{p_purchase_order_id:data.purchase_order_id})
+        if (!poResult.error) currentPoDetail = poResult.data
+    }
+    renderDocumentItems()
+    renderThreeWay(data.three_way)
     formMessage('')
     renderAttachments()
     calculateAmounts(false)
@@ -284,6 +301,7 @@ function calculateAmounts(forceTotal=false) {
         money(Math.max(num('totalAmount')-num('paidAmount'),0))
 
     if ($('reconcilePanel')) renderReconciliation()
+    if ($('threeWayPanel')) renderThreeWay()
 }
 
 function autoPaymentStatus() {
@@ -311,7 +329,7 @@ async function saveDocument() {
 
     try {
         const { data:id, error } = await supabase.rpc(
-            'backoffice_save_purchase_document_v15',
+            'backoffice_save_purchase_document_v16',
             {
                 p_document_id: $('documentId').value || null,
                 p_supplier_id: $('supplier').value || null,
@@ -334,7 +352,8 @@ async function saveDocument() {
                 p_payment_status: $('paymentStatus').value,
                 p_paid_amount: num('paidAmount'),
                 p_paid_at: $('paidAt').value ? new Date($('paidAt').value).toISOString() : null,
-                p_note: $('note').value.trim() || null
+                p_note: $('note').value.trim() || null,
+                p_items: documentItems.filter(x => x.ingredient_id && Number(x.quantity)>0)
             }
         )
 
@@ -455,6 +474,182 @@ async function deleteAttachment(id) {
     await loadDocuments()
 }
 
+
+
+function availableIngredientList() {
+    if (currentPoDetail?.items?.length) {
+        return currentPoDetail.items.map(x => ({
+            id:x.ingredient_id,
+            name:x.ingredient_name,
+            unit:x.unit
+        }))
+    }
+    return []
+}
+
+function renderDocumentItems() {
+    const wrap = $('documentItems')
+    if (!wrap) return
+
+    if (!documentItems.length) {
+        wrap.innerHTML = '<div class="empty">ยังไม่มีรายการสินค้าในเอกสาร</div>'
+        return
+    }
+
+    const options = availableIngredientList()
+
+    wrap.innerHTML = documentItems.map((row,i) => {
+        const choices = options.length
+            ? options.map(x => `<option value="${x.id}" ${x.id===row.ingredient_id?'selected':''}>${esc(x.name)} (${esc(x.unit||'')})</option>`).join('')
+            : `<option value="${row.ingredient_id||''}">${esc(row.ingredient_name||'วัตถุดิบ')}</option>`
+
+        return `
+        <div class="document-item-row">
+            <label class="field">
+                <span>วัตถุดิบ</span>
+                <select data-doc-ing="${i}">
+                    <option value="">-- เลือก --</option>
+                    ${choices}
+                </select>
+            </label>
+            <label class="field">
+                <span>จำนวนใน Invoice</span>
+                <input data-doc-qty="${i}" type="number" min="0.001" step="0.001" value="${Number(row.quantity||0)}">
+            </label>
+            <label class="field">
+                <span>ราคา/หน่วย</span>
+                <input data-doc-cost="${i}" type="number" min="0" step="0.0001" value="${Number(row.unit_cost||0)}">
+            </label>
+            <div class="document-item-total">
+                <span>รวม</span>
+                <strong>${money(Number(row.quantity||0)*Number(row.unit_cost||0))}</strong>
+            </div>
+            <button class="danger-btn" data-doc-remove="${i}" type="button">ลบ</button>
+        </div>`
+    }).join('')
+}
+
+async function loadPoDetail() {
+    const poId = $('purchaseOrder').value
+    currentPoDetail = null
+    if (!poId) {
+        renderDocumentItems()
+        renderThreeWay()
+        return null
+    }
+
+    const {data,error} = await supabase.rpc(
+        'backoffice_get_purchase_order',
+        {p_purchase_order_id:poId}
+    )
+    if (error) {
+        formMessage(error.message)
+        return null
+    }
+    currentPoDetail = data
+    renderDocumentItems()
+    renderThreeWay()
+    return data
+}
+
+async function importPoItems() {
+    const po = currentPoDetail || await loadPoDetail()
+    if (!po) return formMessage('กรุณาเลือก PO ก่อน')
+    if (!Array.isArray(po.items) || !po.items.length) {
+        return formMessage('PO นี้ไม่มีรายการสินค้า')
+    }
+
+    if (documentItems.length && !confirm('แทนที่รายการในเอกสารด้วยรายการจาก PO?')) {
+        return
+    }
+
+    documentItems = po.items.map(x => ({
+        ingredient_id:x.ingredient_id,
+        ingredient_name:x.ingredient_name,
+        unit:x.unit,
+        quantity:Number(x.ordered_qty||0),
+        unit_cost:Number(x.unit_cost||0)
+    }))
+
+    renderDocumentItems()
+    renderThreeWay()
+}
+
+function localThreeWay() {
+    const po = currentPoDetail
+    if (!po) return {status:'no_po',po_item_count:0,invoice_item_count:documentItems.length,fully_received_item_count:0,amount_variance:null}
+
+    const poItems = Array.isArray(po.items) ? po.items : []
+    if (!documentItems.length) return {
+        status:'items_missing',
+        po_item_count:poItems.length,
+        invoice_item_count:0,
+        fully_received_item_count:poItems.filter(x=>Number(x.received_qty)>=Number(x.ordered_qty)).length,
+        amount_variance:documentBaseAmount()-Number(po.total_amount||0)
+    }
+
+    const docMap = new Map(documentItems.filter(x=>x.ingredient_id).map(x=>[x.ingredient_id,x]))
+    const poMap = new Map(poItems.map(x=>[x.ingredient_id,x]))
+    const missing = [...poMap.keys()].some(id=>!docMap.has(id)) || [...docMap.keys()].some(id=>!poMap.has(id))
+    const receivedFull = poItems.filter(x=>Number(x.received_qty)>=Number(x.ordered_qty)).length
+    const qtyDiff = poItems.some(x=>{
+        const d=docMap.get(x.ingredient_id)
+        return d && Math.abs(Number(d.quantity||0)-Number(x.ordered_qty||0))>0.0005
+    })
+    const priceDiff = poItems.some(x=>{
+        const d=docMap.get(x.ingredient_id)
+        return d && Math.abs(Number(d.unit_cost||0)-Number(x.unit_cost||0))>0.0001
+    })
+    const variance = documentBaseAmount()-Number(po.total_amount||0)
+
+    return {
+        status:
+            missing ? 'item_mismatch' :
+            receivedFull<poItems.length ? 'not_fully_received' :
+            qtyDiff ? 'quantity_difference' :
+            priceDiff ? 'price_difference' :
+            Math.abs(variance)>1 ? 'amount_difference' :
+            'matched',
+        po_item_count:poItems.length,
+        invoice_item_count:documentItems.length,
+        fully_received_item_count:receivedFull,
+        amount_variance:variance
+    }
+}
+
+function renderThreeWay(saved=null) {
+    const x = saved || localThreeWay()
+    if (!$('threeWayPanel')) return
+
+    $('threeWayPoItems').textContent = Number(x.po_item_count||0).toLocaleString('th-TH')
+    $('threeWayReceived').textContent = Number(x.fully_received_item_count||0).toLocaleString('th-TH')
+    $('threeWayInvoiceItems').textContent = Number(x.invoice_item_count||0).toLocaleString('th-TH')
+    $('threeWayVariance').textContent = x.amount_variance == null ? '-' : money(x.amount_variance)
+
+    const badge = $('threeWayBadge')
+    badge.className = `reconcile-badge ${x.status || 'no_po'}`
+    badge.textContent = ({
+        matched:'3-Way Match ผ่าน',
+        no_po:'ไม่ได้อ้างอิง PO',
+        items_missing:'ยังไม่มี Invoice Items',
+        item_mismatch:'รายการสินค้าไม่ตรง',
+        not_fully_received:'ยังรับของไม่ครบ',
+        quantity_difference:'จำนวนไม่ตรง',
+        price_difference:'ราคาไม่ตรง',
+        amount_difference:'ยอดรวมไม่ตรง'
+    })[x.status] || x.status || '-'
+
+    $('threeWayMessage').textContent = ({
+        matched:'✅ PO, ของที่รับจริง และรายการใน Invoice ตรงกัน',
+        no_po:'เอกสารนี้ไม่มี PO จึงไม่ตรวจ 3-Way Match',
+        items_missing:'เพิ่มรายการสินค้าในเอกสาร หรือกด “ดึงรายการจาก PO”',
+        item_mismatch:'⚠️ มีวัตถุดิบใน PO/Invoice ที่จับคู่กันไม่ได้',
+        not_fully_received:'⚠️ PO ยังมีรายการที่รับของไม่ครบ',
+        quantity_difference:'⚠️ จำนวนใน Invoice ไม่เท่ากับจำนวนที่สั่งใน PO',
+        price_difference:'⚠️ ราคา/หน่วยใน Invoice ไม่เท่ากับ PO',
+        amount_difference:'⚠️ ยอดเอกสารก่อน VAT ไม่ตรงกับ PO เกิน ±฿1.00'
+    })[x.status] || ''
+}
 
 function currentPo() {
     return purchaseOrders.find(x => x.id === $('purchaseOrder').value) || null
@@ -589,6 +784,7 @@ $('purchaseOrder').onchange = async () => {
         renderPoOptions(po.id)
     }
     await autofillFromPo()
+    await loadPoDetail()
 }
 
 for (const id of ['subtotal','discountAmount','shippingAmount','taxRate']) {
@@ -612,5 +808,59 @@ $('attachments').onclick = e => {
     const del = e.target.closest('[data-delete-file]')
     if (del) return deleteAttachment(del.dataset.deleteFile)
 }
+
+
+$('importPoItemsBtn')?.addEventListener('click',importPoItems)
+$('addDocumentItemBtn')?.addEventListener('click',async()=>{
+    if (!$('purchaseOrder').value) return formMessage('เลือก PO ก่อนเพื่อเพิ่มรายการสำหรับ 3-Way Match')
+    const po = currentPoDetail || await loadPoDetail()
+    const used = new Set(documentItems.map(x=>x.ingredient_id))
+    const first = po?.items?.find(x=>!used.has(x.ingredient_id)) || po?.items?.[0]
+    if (!first) return formMessage('PO ไม่มีรายการสินค้า')
+    documentItems.push({
+        ingredient_id:first.ingredient_id,
+        ingredient_name:first.ingredient_name,
+        unit:first.unit,
+        quantity:Number(first.ordered_qty||0),
+        unit_cost:Number(first.unit_cost||0)
+    })
+    renderDocumentItems()
+    renderThreeWay()
+})
+
+$('documentItems')?.addEventListener('change',e=>{
+    if (e.target.dataset.docIng!==undefined) {
+        const i=Number(e.target.dataset.docIng)
+        documentItems[i].ingredient_id=e.target.value
+        const poItem=currentPoDetail?.items?.find(x=>x.ingredient_id===e.target.value)
+        if (poItem) {
+            documentItems[i].ingredient_name=poItem.ingredient_name
+            documentItems[i].unit=poItem.unit
+            documentItems[i].unit_cost=Number(poItem.unit_cost||0)
+        }
+        renderDocumentItems()
+        renderThreeWay()
+    }
+})
+
+$('documentItems')?.addEventListener('input',e=>{
+    if (e.target.dataset.docQty!==undefined) {
+        documentItems[Number(e.target.dataset.docQty)].quantity=Number(e.target.value||0)
+    }
+    if (e.target.dataset.docCost!==undefined) {
+        documentItems[Number(e.target.dataset.docCost)].unit_cost=Number(e.target.value||0)
+    }
+    renderThreeWay()
+})
+
+$('documentItems')?.addEventListener('click',e=>{
+    const b=e.target.closest('[data-doc-remove]')
+    if (b) {
+        documentItems.splice(Number(b.dataset.docRemove),1)
+        renderDocumentItems()
+        renderThreeWay()
+    }
+})
+
 
 init()
