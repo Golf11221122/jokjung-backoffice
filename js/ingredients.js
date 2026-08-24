@@ -26,6 +26,16 @@ function show(text = '') {
     document.getElementById('message').textContent = text
 }
 
+
+function unitCost4(value) {
+    return new Intl.NumberFormat('th-TH', {
+        style: 'currency',
+        currency: 'THB',
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4
+    }).format(Number(value || 0))
+}
+
 function ingredientErrorText(error) {
     const text = String(error?.message || error || '')
     if (text.includes('INGREDIENT_NAME_EXISTS')) return 'มีวัตถุดิบชื่อนี้อยู่แล้วในสาขานี้'
@@ -102,10 +112,10 @@ function render() {
                 <td><span class="category-chip">${esc(x.category_name || 'อื่นๆ')}</span></td>
                 <td><span class="freq-chip">${esc(freqText(x.count_frequency))}</span></td>
                 <td>${esc(x.unit)}</td>
-                <td class="num">${money(x.cost_per_unit)}</td>
+                <td class="num">${unitCost4(x.cost_per_unit)}</td>
                 <td class="num">${number(x.current_stock)} ${esc(x.unit)}</td>
                 <td class="num">${x.ingredient_type === 'raw' ? Number(x.usable_yield_pct || 100).toFixed(2) + '%' : '-'}</td>
-                <td class="num">${money(x.effective_cost_per_unit ?? x.cost_per_unit)}</td>
+                <td class="num">${unitCost4(x.effective_cost_per_unit ?? x.cost_per_unit)}</td>
                 <td class="num">${x.ingredient_type === 'prep' && x.standard_yield_pct ? Number(x.standard_yield_pct).toFixed(2) + '%' : '-'}</td>
                 <td>${badge}</td>
                 <td><div class="action-row">
