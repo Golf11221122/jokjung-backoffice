@@ -183,3 +183,38 @@
 .cashflow-bar{min-height:23px;padding:4px 7px;border-radius:7px;font-size:11px;font-weight:800;white-space:nowrap}
 .cashflow-bar.inflow{background:#dcfce7;color:#166534}.cashflow-bar.outflow{background:#fee2e2;color:#991b1b}.cashflow-bar.planned{background:#dbeafe;color:#1e40af}
 @media(max-width:760px){.cashflow-chart-row{grid-template-columns:85px 1fr}.cashflow-toolbar{align-items:stretch}.cashflow-toolbar .field{width:100%}.quick-range{width:100%}}
+
+
+/* BANK & CASH RECONCILIATION V2.1 */
+.bank-recon-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.bank-recon-toolbar .field{min-width:170px}
+.bank-recon-help p{margin:5px 0}
+.bank-recon-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.bank-recon-card{border:1px solid #e2e8f0;border-radius:14px;padding:14px;background:#fff}
+.bank-recon-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.bank-recon-card-head>div{display:flex;flex-direction:column;gap:3px}
+.bank-recon-card-head>div>span{font-size:12px;color:#64748b}
+.bank-recon-values{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0}
+.bank-recon-values>div{background:#f8fafc;border-radius:9px;padding:8px}
+.bank-recon-values span{display:block;font-size:11px;color:#64748b}
+.bank-recon-values strong{display:block;margin-top:3px;font-size:14px}
+.bank-recon-open{width:100%;margin-top:10px}
+.recon-status{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:800}
+.recon-status.pending{background:#f1f5f9;color:#475569}
+.recon-status.matched{background:#dcfce7;color:#166534}
+.recon-status.short,.recon-status.over{background:#fee2e2;color:#991b1b}
+.bank-recon-modal{width:min(720px,calc(100vw - 28px));max-height:92vh;overflow:auto}
+.bank-recon-preview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.bank-recon-preview>div{padding:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px}
+.bank-recon-preview span{display:block;font-size:11px;color:#64748b}
+.bank-recon-preview strong{display:block;margin-top:4px}
+.bank-recon-result{margin:14px 0;padding:12px;border-radius:10px;display:flex;flex-direction:column;gap:3px}
+.bank-recon-result.matched{background:#dcfce7;color:#166534}
+.bank-recon-result.short,.bank-recon-result.over{background:#fee2e2;color:#991b1b}
+@media(max-width:760px){
+  .bank-recon-toolbar{align-items:stretch}
+  .bank-recon-toolbar .field{width:100%}
+  .bank-recon-list{grid-template-columns:1fr}
+  .bank-recon-values{grid-template-columns:1fr 1fr}
+  .bank-recon-preview{grid-template-columns:1fr 1fr}
+}
