@@ -235,3 +235,10 @@
 .finance-health{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800}
 @media(max-width:900px){.finance-health-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.finance-summary-toolbar{align-items:stretch}.finance-summary-toolbar .field{width:100%}.quick-range{width:100%}}
+\n/* WASTE & INVENTORY LOSS CONTROL V2.3 */
+.waste-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.waste-toolbar .field{min-width:150px}.waste-add-row{display:grid;grid-template-columns:minmax(260px,1fr) 160px auto;gap:10px;align-items:end;margin:12px 0}
+.waste-total{display:flex;justify-content:flex-end;align-items:center;gap:16px;padding:12px 0;font-size:14px}.waste-total strong{font-size:20px}
+.status-pill.pending{background:#fef3c7;color:#92400e}.status-pill.approved{background:#dcfce7;color:#166534}.status-pill.cancelled{background:#f1f5f9;color:#475569}.status-pill.reversed{background:#e0e7ff;color:#3730a3}
+.danger-btn.tiny{padding:5px 8px;font-size:11px}
+@media(max-width:760px){.waste-toolbar{align-items:stretch}.waste-toolbar .field{width:100%}.waste-add-row{grid-template-columns:1fr}.waste-add-row .field{width:100%}}
