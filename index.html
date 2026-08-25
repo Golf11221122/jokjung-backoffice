@@ -1,32 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <title>เข้าสู่ระบบ | JOKJUNG Back Office</title>
-    <link rel="stylesheet" href="./css/app.css">
-<link rel="stylesheet" href="./css/responsive.css"></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS</title>
 
-<body class="login-page">
-    <main class="login-card">
-        <div class="brand">
-            <div class="brand-mark">📦</div>
-            <div>
-                <h1>JOKJUNG Back Office</h1>
-                <p>Stock • Recipe • Purchasing • Cost Control</p>
-            </div>
-        </div>
-        <form id="loginForm">
-            <label class="field"><span>อีเมล</span><input id="email" type="email" autocomplete="username"
-                    required></label>
-            <label class="field"><span>รหัสผ่าน</span><input id="password" type="password"
-                    autocomplete="current-password" required></label>
-            <p id="message" class="message"></p>
-            <button id="loginBtn" class="primary-btn full" type="submit">เข้าสู่ระบบ</button>
-        </form>
-    </main>
-    <script type="module" src="./js/login.js"></script>
+    <link rel="stylesheet" href="./css/login.css">
+
+    <script type="module" src="./js/auth.js?v=2.9.2"></script>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>JOKJUNG POS</h1>
+        <p>ระบบจัดการร้านอาหาร</p>
+
+        <input type="email" id="email" placeholder="อีเมล">
+
+        <input type="password" id="password" placeholder="รหัสผ่าน">
+
+        <button id="loginBtn">
+            เข้าสู่ระบบ
+        </button>
+
+        <!--
+            V2.9.2
+            เก็บ element ไว้เพื่อไม่ให้ auth.js เดิม error
+            แต่ปิดการสมัครสมาชิกจากหน้า Login สาธารณะ
+        -->
+        <button
+            id="signupBtn"
+            type="button"
+            hidden
+            disabled
+            aria-hidden="true"
+            tabindex="-1"
+        >
+            สมัครสมาชิก
+        </button>
+
+        <p
+            style="
+                margin:12px 0 0;
+                color:#777;
+                font-size:13px;
+                text-align:center;
+            "
+        >
+            บัญชีพนักงานสร้างโดยผู้ดูแลระบบ
+        </p>
+
+        <p id="message"></p>
+
+    </div>
+
 </body>
 
 </html>
