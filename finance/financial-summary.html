@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Financial Summary | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a>
+<a class="nav-link active" data-nav="financial-summary" href="./financial-summary.html">🧭 Financial Summary</a>
+</div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="expenses" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a>
+<a class="nav-link" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a>
+<a class="nav-link" data-nav="payment-forecast" href="./payment-forecast.html">📅 Payment Forecast</a>
+<a class="nav-link" data-nav="cash-flow" href="./cash-flow.html">💵 Cash Flow</a>
+<a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a>
+<a class="nav-link" data-nav="bank-cash-reconciliation" href="./bank-cash-reconciliation.html">🏦 Bank / Cash Reconciliation</a>
+</div>
+</nav>
+</aside>
+
+<div class="main">
+<header class="topbar">
+<div class="topbar-left">
+<button id="menuBtn" class="menu-btn">☰</button>
+<div><h1>🧭 Financial Summary</h1><p id="branchText">กำลังโหลด...</p></div>
+</div>
+<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+</header>
+
+<main class="content">
+<div class="page-head">
+<div>
+<h2>สรุปการเงินประจำวัน / ช่วงเวลา</h2>
+<p>รวม Sales, P&amp;L, Cash Flow, AP, Payment Forecast และ Bank/Cash Reconciliation ในหน้าเดียว</p>
+</div>
+<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+</div>
+
+<section class="panel">
+<div class="toolbar finance-summary-toolbar">
+<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label>
+<label class="field"><span>ถึง</span><input id="dateTo" type="date"></label>
+<div class="quick-range">
+<button class="small-btn" data-range="today">วันนี้</button>
+<button class="small-btn" data-range="7">7 วัน</button>
+<button class="small-btn" data-range="month">เดือนนี้</button>
+</div>
+</div>
+</section>
+
+<section id="headlineKpis" class="kpi-grid"></section>
+
+<section class="finance-health-grid">
+<article class="panel">
+<div class="section-head"><strong>📈 Profitability</strong><a href="./pnl.html" class="small-btn">เปิด P&amp;L</a></div>
+<div id="profitability"></div>
+</article>
+
+<article class="panel">
+<div class="section-head"><strong>💵 Cash Flow</strong><a href="./cash-flow.html" class="small-btn">เปิด Cash Flow</a></div>
+<div id="cashFlow"></div>
+</article>
+
+<article class="panel">
+<div class="section-head"><strong>💸 Accounts Payable</strong><a href="./accounts-payable.html" class="small-btn">เปิด AP</a></div>
+<div id="apSummary"></div>
+</article>
+
+<article class="panel">
+<div class="section-head"><strong>🏦 Bank / Cash Recon</strong><a href="./bank-cash-reconciliation.html" class="small-btn">เปิด Recon</a></div>
+<div id="reconSummary"></div>
+</article>
+</section>
+
+<section class="panel">
+<div class="section-head"><strong>🚦 สถานะที่ต้องตรวจ</strong><span id="alertCount" class="mini-note">0 รายการ</span></div>
+<div id="alertsList"></div>
+</section>
+
+<p id="message" class="message"></p>
+</main>
+</div>
+</div>
+<script type="module" src="../js/financial-summary.js"></script>
+</body>
+</html>
