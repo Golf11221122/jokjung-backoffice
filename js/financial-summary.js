@@ -38,15 +38,16 @@ async function load(){
   if(!from||!to)return
   msg('กำลังรวมข้อมูลการเงิน...')
 
-  const [pnlRes,cashRes,apRes,forecastRes,reconRes]=await Promise.all([
+  const [pnlRes,cashRes,apRes,forecastRes,reconRes,wasteRes]=await Promise.all([
     supabase.rpc('backoffice_pnl_v2',{p_date_from:from,p_date_to:to}),
     supabase.rpc('backoffice_cash_flow_summary_v20',{p_date_from:from,p_date_to:to}),
     supabase.rpc('backoffice_accounts_payable_summary_v17'),
     supabase.rpc('backoffice_payment_forecast_summary_v19'),
-    supabase.rpc('backoffice_bank_cash_reconciliation_v21',{p_date_from:from,p_date_to:to})
+    supabase.rpc('backoffice_bank_cash_reconciliation_v21',{p_date_from:from,p_date_to:to}),
+    supabase.rpc('backoffice_waste_loss_summary_v23',{p_date_from:from,p_date_to:to})
   ])
 
-  const err=pnlRes.error||cashRes.error||apRes.error||forecastRes.error||reconRes.error
+  const err=pnlRes.error||cashRes.error||apRes.error||forecastRes.error||reconRes.error||wasteRes.error
   if(err){msg(err.message);return}
 
   const pnl=pnlRes.data||{}
@@ -54,17 +55,19 @@ async function load(){
   const ap=apRes.data||{}
   const forecast=forecastRes.data||{}
   const recon=Array.isArray(reconRes.data)?reconRes.data:[]
+  const waste=wasteRes.data||{}
 
-  renderHeadline(pnl,cash,ap,recon)
+  renderHeadline(pnl,cash,ap,recon,waste)
   renderProfitability(pnl)
   renderCash(cash,forecast)
   renderAp(ap,forecast)
   renderRecon(recon)
-  renderAlerts(pnl,cash,ap,recon)
+  renderWaste(waste)
+  renderAlerts(pnl,cash,ap,recon,waste)
   msg('')
 }
 
-function renderHeadline(pnl,cash,ap,recon){
+function renderHeadline(pnl,cash,ap,recon,waste){
   const matched=recon.filter(x=>x.status==='matched').length
   const pending=recon.filter(x=>x.status==='pending').length
   const diff=recon.filter(x=>['short','over'].includes(x.status)).length
@@ -77,6 +80,7 @@ function renderHeadline(pnl,cash,ap,recon){
     <article class="kpi-card ${net>=0?'cash-positive':'cash-negative'}"><span>Actual Net Cash Flow</span><strong>${money(net)}</strong></article>
     <article class="kpi-card"><span>AP คงค้าง</span><strong>${money(ap.open_balance)}</strong><small>Overdue ${money(ap.overdue_balance)}</small></article>
     <article class="kpi-card"><span>Bank/Cash Recon</span><strong>${matched}/${recon.length}</strong><small>Pending ${pending} • Difference ${diff}</small></article>
+    <article class="kpi-card ${Number(waste.loss_pct_of_sales||0)<=2?'cash-positive':'cash-negative'}"><span>Waste / Loss</span><strong>${money(waste.approved_loss_value)}</strong><small>${Number(waste.loss_pct_of_sales||0).toFixed(2)}% ของยอดขาย</small></article>
   `
 }
 
@@ -129,7 +133,17 @@ function renderRecon(rows){
       : `<div class="finance-note warn">⚠️ ยังมีรายการที่ควรตรวจสอบ</div>`)
 }
 
-function renderAlerts(p,c,a,recon){
+
+function renderWaste(w){
+  const pct=Number(w.loss_pct_of_sales||0)
+  $('wasteSummary').innerHTML=
+    item('Waste / Loss ที่อนุมัติ',money(w.approved_loss_value),`${Number(w.approved_count||0)} รายการ`)+
+    item('% ต่อยอดขาย',`${pct.toFixed(2)}%`,`ยอดขาย ${money(w.sales_revenue)}`)+
+    item('รออนุมัติ',`${Number(w.pending_count||0)} รายการ`)+
+    (pct>2?`<div class="finance-note warn">⚠️ Waste มากกว่า 2% ของยอดขาย ควรตรวจสาเหตุ</div>`:`<div class="finance-note good">✅ Waste อยู่ไม่เกิน 2% ของยอดขาย</div>`)
+}
+
+function renderAlerts(p,c,a,recon,waste){
   const alerts=[]
 
   if(Number(a.overdue_balance||0)>0)
@@ -148,6 +162,12 @@ function renderAlerts(p,c,a,recon){
 
   if(Number(p.operating_profit||0)<0)
     alerts.push({level:'warn',title:'Operating Profit ติดลบ',detail:money(p.operating_profit),href:'./pnl.html'})
+
+  if(Number(waste.pending_count||0)>0)
+    alerts.push({level:'warn',title:'Waste / Loss รออนุมัติ',detail:`${Number(waste.pending_count||0)} รายการ`,href:'../stock/waste-loss.html'})
+
+  if(Number(waste.loss_pct_of_sales||0)>2)
+    alerts.push({level:'warn',title:'Waste / Loss สูงกว่า 2% ของยอดขาย',detail:`${Number(waste.loss_pct_of_sales||0).toFixed(2)}% • ${money(waste.approved_loss_value)}`,href:'../stock/waste-loss.html'})
 
   if(p.actual_control_cogs==null)
     alerts.push({level:'info',title:'Actual COGS ยังไม่ครบช่วง',detail:'P&L ยังใช้ Theoretical COGS',href:'./pnl.html'})
