@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bank & Cash Reconciliation | JOKJUNG Back Office</title>
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="../css/stock-v2.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section"><div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a>
+</div>
+<div class="nav-section"><div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="expenses" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
+<a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a>
+<a class="nav-link" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a>
+<a class="nav-link" data-nav="payment-forecast" href="./payment-forecast.html">📅 Payment Forecast</a>
+<a class="nav-link" data-nav="cash-flow" href="./cash-flow.html">💵 Cash Flow</a>
+<a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a>
+<a class="nav-link active" data-nav="bank-cash-reconciliation" href="./bank-cash-reconciliation.html">🏦 Bank / Cash Reconciliation</a>
+</div>
+</nav>
+</aside>
+
+<div class="main">
+<header class="topbar">
+<div class="topbar-left">
+<button id="menuBtn" class="menu-btn">☰</button>
+<div><h1>🏦 Bank / Cash Reconciliation</h1><p id="branchText">กำลังโหลด...</p></div>
+</div>
+<div class="user-box">
+<span id="userName" class="user-name">-</span>
+<span id="roleBadge" class="role-pill">-</span>
+<button id="logoutBtn" class="outline-btn">ออกจากระบบ</button>
+</div>
+</header>
+
+<main class="content">
+<div class="page-head">
+<div>
+<h2>กระทบยอดเงินจริง</h2>
+<p>เทียบยอด POS กับเงินสดที่นับจริง / เงินเข้าธนาคาร / ค่าธรรมเนียม</p>
+</div>
+<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+</div>
+
+<section class="panel">
+<div class="toolbar bank-recon-toolbar">
+<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label>
+<label class="field"><span>ถึง</span><input id="dateTo" type="date"></label>
+<div class="quick-range">
+<button class="small-btn" data-range="today">วันนี้</button>
+<button class="small-btn" data-range="7">7 วัน</button>
+<button class="small-btn" data-range="30">30 วัน</button>
+</div>
+</div>
+</section>
+
+<section id="kpis" class="kpi-grid"></section>
+
+<section class="panel bank-recon-help">
+<strong>วิธีคิด</strong>
+<p><b>Difference = เงินจริง + Fee + Adjustment − ยอดตาม POS</b></p>
+<p class="mini-note">QR เช่น POS ฿5,000 / เงินเข้าธนาคาร ฿4,985 / Fee ฿15 → Difference ฿0 = ตรงกัน</p>
+</section>
+
+<section class="panel">
+<div class="section-head">
+<strong>รายการกระทบยอด</strong>
+<select id="statusFilter">
+<option value="">ทุกสถานะ</option>
+<option value="pending">ยังไม่ตรวจ</option>
+<option value="matched">ตรง</option>
+<option value="short">ขาด</option>
+<option value="over">เกิน</option>
+</select>
+</div>
+<div id="reconList" class="bank-recon-list"></div>
+<p id="message" class="message"></p>
+</section>
+</main>
+</div>
+</div>
+
+<div id="modal" class="modal hidden">
+<div class="modal-card bank-recon-modal">
+<div class="modal-head">
+<div>
+<h3 id="modalTitle">บันทึกกระทบยอด</h3>
+<p id="modalSub" class="mini-note">-</p>
+</div>
+<button id="closeBtn" class="close-btn">×</button>
+</div>
+
+<input id="reconDate" type="hidden">
+<input id="reconChannel" type="hidden">
+
+<section class="bank-recon-preview">
+<div><span>ยอดตาม POS</span><strong id="expectedText">฿0.00</strong></div>
+<div><span>เงินจริง / Bank Credit</span><strong id="actualPreview">฿0.00</strong></div>
+<div><span>Fee</span><strong id="feePreview">฿0.00</strong></div>
+<div><span>Difference</span><strong id="differencePreview">฿0.00</strong></div>
+</section>
+
+<div class="form-grid">
+<label class="field">
+<span id="actualLabel">เงินจริง</span>
+<input id="actualAmount" type="number" min="0" step="0.01">
+</label>
+<label class="field">
+<span>ค่าธรรมเนียม (Fee)</span>
+<input id="feeAmount" type="number" min="0" step="0.01" value="0">
+</label>
+<label class="field">
+<span>Adjustment (+/-)</span>
+<input id="adjustmentAmount" type="number" step="0.01" value="0">
+<small>ใช้เฉพาะมีรายการปรับปรุงที่ตรวจสอบได้</small>
+</label>
+<label class="field">
+<span>Reference</span>
+<input id="referenceNo" placeholder="Bank Ref / Slip / Deposit No.">
+</label>
+<label class="field form-wide">
+<span>หมายเหตุ</span>
+<textarea id="note"></textarea>
+</label>
+</div>
+
+<div id="resultBox" class="bank-recon-result"></div>
+<p id="formMessage" class="message"></p>
+<div class="form-actions">
+<button id="saveBtn" class="primary-btn">บันทึกกระทบยอด</button>
+</div>
+</div>
+</div>
+
+<script type="module" src="../js/bank-cash-reconciliation.js"></script>
+</body>
+</html>
