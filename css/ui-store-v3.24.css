@@ -1,0 +1,217 @@
+/* =========================================================
+   JOKJUNG Back Office V3.24 — Formal Action Layout
+   Make operational buttons non-overlapping and more professional.
+   No business logic changes.
+   ========================================================= */
+:root{
+  --jk24-surface:#ffffff;
+  --jk24-soft:#f8fafc;
+  --jk24-border:#d0d5dd;
+  --jk24-text:#1d2939;
+  --jk24-muted:#667085;
+  --jk24-primary:#14213d;
+  --jk24-primary-2:#1f3361;
+}
+
+/* ----- Page header becomes a stable 2-column operations layout ----- */
+.page-head{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(300px,430px) !important;
+  gap:16px 18px !important;
+  align-items:start !important;
+  margin-bottom:18px !important;
+}
+.page-head > :first-child{
+  min-width:0;
+  grid-column:1;
+}
+.page-head > :not(:first-child){
+  grid-column:2;
+  width:100%;
+  min-width:0;
+}
+
+/* Any action container inside page head stacks neatly */
+.page-head > :not(:first-child),
+.page-head > .action-row,
+.page-head > .report-actions,
+.page-head .report-actions.auto-report-actions{
+  display:grid;
+  gap:10px;
+  align-content:start;
+}
+
+/* Standard action block: 2 columns desktop, date/filter full width */
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions){
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > input,
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > select,
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > .field,
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > .date-range,
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > .toolbar,
+.page-head > :not(:first-child):not(.action-row):not(.report-actions):not(.auto-report-actions) > .filter-bar{
+  grid-column:1 / -1;
+  width:100%;
+}
+
+/* Shared operational buttons */
+.page-head .primary-btn,
+.page-head .outline-btn,
+.page-head .secondary-btn,
+.page-head .danger-btn,
+.page-head .action-row > *,
+.page-head .report-actions > *,
+.page-head .auto-report-actions > *{
+  width:100%;
+  min-height:52px;
+  border-radius:14px !important;
+  font-size:15px !important;
+  font-weight:850 !important;
+  line-height:1.2 !important;
+  justify-content:center;
+  text-align:center;
+  white-space:normal;
+  text-decoration:none;
+  box-sizing:border-box;
+  box-shadow:0 1px 2px rgba(16,24,40,.04);
+}
+
+.page-head .outline-btn,
+.page-head .secondary-btn,
+.page-head .report-actions .outline-btn,
+.page-head .action-row .outline-btn{
+  border:1px solid var(--jk24-border) !important;
+  background:var(--jk24-surface) !important;
+  color:var(--jk24-text) !important;
+}
+.page-head .primary-btn,
+.page-head .action-row .primary-btn,
+.page-head .report-actions .primary-btn{
+  background:linear-gradient(180deg,var(--jk24-primary-2),var(--jk24-primary)) !important;
+  border:1px solid var(--jk24-primary) !important;
+  color:#fff !important;
+}
+.page-head .danger-btn{
+  border:1px solid #f3b5b1 !important;
+  background:#fef3f2 !important;
+  color:#b42318 !important;
+}
+.page-head .primary-btn:hover,
+.page-head .outline-btn:hover,
+.page-head .secondary-btn:hover,
+.page-head .danger-btn:hover{
+  transform:translateY(-1px);
+}
+
+/* Action rows use an intentional grid instead of loose wrapping */
+.page-head .action-row,
+.page-head > .action-row{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.page-head .action-row > :only-child,
+.page-head .action-row > :last-child:nth-child(odd){
+  grid-column:1 / -1;
+}
+
+/* Auto-injected share/print area gets its own tidy block */
+.report-actions.auto-report-actions{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  padding:0;
+  margin:0 !important;
+}
+.report-actions.auto-report-actions .outline-btn,
+.report-actions.auto-report-actions button{
+  background:#fff !important;
+}
+
+/* Inputs in page head look aligned with the buttons */
+.page-head input,
+.page-head select,
+.page-head textarea{
+  min-height:52px;
+  border-radius:14px !important;
+  border:1px solid var(--jk24-border) !important;
+  background:#fff;
+  box-sizing:border-box;
+  width:100%;
+  font-size:15px;
+  padding:0 14px !important;
+}
+
+/* Give the title side breathing room and more formal hierarchy */
+.page-head h2{
+  margin-bottom:6px !important;
+}
+.page-head p{
+  max-width:42ch;
+  color:var(--jk24-muted) !important;
+}
+
+/* Stock / employees / panels with action rows outside page-head */
+.panel .action-row,
+.card .action-row,
+.panel-head .action-row,
+.panel-header .action-row{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px !important;
+}
+.panel .action-row > *,
+.card .action-row > *,
+.panel-head .action-row > *,
+.panel-header .action-row > *{
+  min-height:46px;
+  border-radius:12px !important;
+  justify-content:center;
+  text-align:center;
+  white-space:normal;
+}
+.panel .action-row > :only-child,
+.panel .action-row > :last-child:nth-child(odd),
+.card .action-row > :only-child,
+.card .action-row > :last-child:nth-child(odd),
+.panel-head .action-row > :only-child,
+.panel-head .action-row > :last-child:nth-child(odd),
+.panel-header .action-row > :only-child,
+.panel-header .action-row > :last-child:nth-child(odd){
+  grid-column:1 / -1;
+}
+
+/* Mobile: everything stacks into a clean single-column flow */
+@media (max-width: 760px){
+  .page-head{
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+  .page-head > *{
+    grid-column:1 !important;
+  }
+  .page-head > :not(:first-child),
+  .page-head .action-row,
+  .report-actions.auto-report-actions,
+  .panel .action-row,
+  .card .action-row,
+  .panel-head .action-row,
+  .panel-header .action-row{
+    grid-template-columns:1fr !important;
+  }
+  .page-head .primary-btn,
+  .page-head .outline-btn,
+  .page-head .secondary-btn,
+  .page-head .danger-btn,
+  .page-head .action-row > *,
+  .page-head .report-actions > *,
+  .panel .action-row > *,
+  .card .action-row > *,
+  .panel-head .action-row > *,
+  .panel-header .action-row > *{
+    width:100% !important;
+  }
+  .page-head p{max-width:none}
+}
+
+@media (min-width: 761px){
+  /* allow a 3-button action row to look balanced on desktop */
+  .page-head > .action-row[data-layout="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
