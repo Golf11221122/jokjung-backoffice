@@ -1,0 +1,225 @@
+/* =========================================================
+   JOKJUNG Back Office V3.27 — Solid Locked Tab Dock
+   Stable, consistent action dock across the whole project.
+   UI/UX only. No business logic changes.
+   ========================================================= */
+:root{
+  --jk27-navy:#13213e;
+  --jk27-navy-2:#1d2f57;
+  --jk27-navy-3:#233862;
+  --jk27-line:#d0d5dd;
+  --jk27-soft:#eef2f7;
+  --jk27-soft-2:#f8fafc;
+  --jk27-ink:#1d2939;
+  --jk27-gold:#f2c94c;
+  --jk27-danger:#fda29b;
+  --jk27-shadow:0 16px 36px rgba(16,24,40,.18);
+}
+
+/* hide previous experimental fixed docks if any remain in DOM */
+#jk26Dock,
+.jk241-sticky-actions{display:none !important;}
+
+.page-head.jk27-ready{
+  display:block !important;
+  margin-bottom:18px !important;
+}
+.page-head.jk27-ready > .jk27-title-block{
+  margin-bottom:10px !important;
+}
+.page-head.jk27-ready > .jk27-title-block h2{
+  margin-bottom:6px !important;
+}
+.page-head.jk27-ready > .jk27-title-block p{
+  color:#667085 !important;
+  max-width:56ch;
+}
+
+.jk27-sentinel{
+  width:100%;
+  height:1px;
+  margin:0;
+  padding:0;
+}
+
+.jk27-placeholder{
+  display:none;
+  width:100%;
+}
+.jk27-placeholder.jk27-active{
+  display:block;
+}
+
+/* in-place dock and fixed dock share same visual language */
+.jk27-action-wrap,
+#jk27DockInner{
+  background:linear-gradient(180deg,var(--jk27-navy-2),var(--jk27-navy)) !important;
+  border:1px solid #0e1930 !important;
+  border-radius:18px !important;
+  box-shadow:var(--jk27-shadow) !important;
+}
+
+.jk27-action-wrap{
+  display:flex !important;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap !important;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding:10px !important;
+  box-sizing:border-box;
+}
+.jk27-action-wrap::-webkit-scrollbar,
+#jk27DockInner::-webkit-scrollbar{display:none;}
+
+.jk27-action-wrap > *,
+.jk27-action-wrap .action-row,
+.jk27-action-wrap .report-actions,
+.jk27-action-wrap .auto-report-actions,
+.jk27-action-wrap > div{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  flex-wrap:nowrap !important;
+  min-width:max-content !important;
+  margin:0 !important;
+}
+
+/* buttons/tabs */
+.jk27-action-wrap :where(button,a,.primary-btn,.outline-btn,.secondary-btn,.danger-btn){
+  flex:0 0 auto;
+  width:auto !important;
+  min-width:104px;
+  min-height:42px;
+  height:42px;
+  padding:0 14px !important;
+  border-radius:12px !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  background:rgba(255,255,255,.10) !important;
+  color:#fff !important;
+  box-shadow:none !important;
+  font-size:13px !important;
+  font-weight:850 !important;
+  line-height:1 !important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  text-align:center;
+  text-decoration:none !important;
+  backdrop-filter:none !important;
+}
+.jk27-action-wrap :where(button,a,.primary-btn,.outline-btn,.secondary-btn,.danger-btn):hover{
+  transform:translateY(-1px);
+}
+.jk27-action-wrap .primary-btn{
+  background:linear-gradient(180deg,#f4d26d,var(--jk27-gold)) !important;
+  border-color:#c9a63a !important;
+  color:var(--jk27-navy) !important;
+}
+.jk27-action-wrap .danger-btn{
+  background:rgba(253,162,155,.16) !important;
+  border-color:rgba(253,162,155,.42) !important;
+  color:#fff !important;
+}
+
+/* inputs keep readable light style inside the solid dock */
+.jk27-action-wrap :where(input,select,textarea){
+  flex:0 0 auto;
+  width:auto !important;
+  min-width:148px;
+  height:42px !important;
+  min-height:42px !important;
+  padding:0 12px !important;
+  border-radius:12px !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  background:rgba(255,255,255,.96) !important;
+  color:var(--jk27-ink) !important;
+  font-size:13px !important;
+  font-weight:700;
+  box-sizing:border-box;
+}
+.jk27-action-wrap input[type="date"]{min-width:154px;}
+.jk27-action-wrap select{padding-right:34px !important;}
+
+/* fixed dock */
+#jk27Dock{
+  position:fixed;
+  left:0;
+  right:0;
+  top:calc(env(safe-area-inset-top) + 6px);
+  z-index:32000;
+  display:none;
+  pointer-events:none;
+  padding:0 8px;
+}
+#jk27Dock.jk27-show{
+  display:block;
+}
+#jk27DockInner{
+  pointer-events:auto;
+  width:min(1180px,calc(100vw - 16px));
+  margin:0 auto;
+  padding:8px;
+  overflow-x:auto;
+}
+#jk27DockInner .jk27-action-wrap{
+  min-width:max-content;
+  width:max-content !important;
+  padding:0 !important;
+  margin:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+#jk27DockInner .jk27-action-wrap > *,
+#jk27DockInner .jk27-action-wrap .action-row,
+#jk27DockInner .jk27-action-wrap .report-actions,
+#jk27DockInner .jk27-action-wrap .auto-report-actions,
+#jk27DockInner .jk27-action-wrap > div{
+  min-width:max-content !important;
+}
+
+/* make .page-head forms below action dock feel consistent */
+.page-head.jk27-ready + .grid,
+.page-head.jk27-ready + .panel,
+.page-head.jk27-ready + .card,
+.page-head.jk27-ready + .table-wrap{
+  scroll-margin-top:88px;
+}
+
+/* mobile */
+@media (max-width: 760px){
+  .page-head.jk27-ready > .jk27-title-block{
+    margin-bottom:9px !important;
+  }
+  .jk27-action-wrap{
+    padding:8px !important;
+    gap:7px;
+    border-radius:16px !important;
+  }
+  .jk27-action-wrap :where(button,a,.primary-btn,.outline-btn,.secondary-btn,.danger-btn){
+    min-width:98px;
+    min-height:40px;
+    height:40px;
+    padding:0 12px !important;
+    font-size:13px !important;
+  }
+  .jk27-action-wrap :where(input,select,textarea){
+    min-width:140px;
+    height:40px !important;
+    min-height:40px !important;
+    font-size:13px !important;
+  }
+  #jk27Dock{
+    top:calc(env(safe-area-inset-top) + 4px);
+    padding:0 6px;
+  }
+  #jk27DockInner{
+    width:calc(100vw - 12px);
+    padding:7px;
+    border-radius:16px !important;
+  }
+}
