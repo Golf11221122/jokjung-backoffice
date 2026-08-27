@@ -1,671 +1,374 @@
 <!DOCTYPE html>
+
 <html lang="th">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>
         จัดการพนักงาน | JOKJUNG POS
     </title>
-
-    <link rel="stylesheet" href="./css/employees.css">
-</head>
-
-
+<link href="./css/employees.css" rel="stylesheet"/>
+<link href="css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
-
-
-    <!-- =========================================
+<!-- =========================================
      TOP BAR
 ========================================= -->
-
-    <header class="topbar">
-
-        <div class="topbar-left">
-
-            <button id="backBtn" class="icon-btn" type="button">
+<header class="topbar">
+<div class="topbar-left">
+<button class="icon-btn" id="backBtn" type="button">
                 ←
             </button>
-
-
-            <div>
-
-                <h1>
+<div>
+<h1>
                     จัดการพนักงาน
                 </h1>
-
-                <small id="branchText">
+<small id="branchText">
                     กำลังโหลดสาขา...
                 </small>
-
-            </div>
-
-        </div>
-
-
-        <div class="topbar-right">
-
-            <span id="userName">
+</div>
+</div>
+<div class="topbar-right">
+<span id="userName">
                 ผู้ใช้งาน
             </span>
-
-
-            <button id="logoutBtn" class="outline-btn" type="button">
+<button class="outline-btn" id="logoutBtn" type="button">
                 ออกจากระบบ
             </button>
-
-        </div>
-
-    </header>
-
-
-
-    <!-- =========================================
+</div>
+</header>
+<!-- =========================================
      MAIN
 ========================================= -->
-
-    <main class="page">
-
-
-        <!-- =====================================
+<main class="page">
+<!-- =====================================
          PAGE HEADER
     ====================================== -->
-
-        <section class="page-heading">
-        
-            <div>
-        
-                <h2>
+<section class="page-heading">
+<div>
+<h2>
                     พนักงานในสาขา
                 </h2>
-        
-                <p>
+<p>
                     จัดการชื่อ ตำแหน่ง สถานะการใช้งาน
                     และ PIN สำหรับอนุมัติ VOID
                 </p>
-        
-            </div>
-        
-        
-            <button id="addEmployeeBtn" class="primary-btn" type="button">
+</div>
+<button class="primary-btn" id="addEmployeeBtn" type="button">
                 + เพิ่มพนักงาน
             </button>
-        
-        </section>
-
-
-
-        <!-- =====================================
+</section>
+<!-- =====================================
          SUMMARY
     ====================================== -->
-
-        <section class="summary-grid">
-
-
-            <div class="summary-card">
-
-                <span>
+<section class="summary-grid">
+<div class="summary-card">
+<span>
                     พนักงานทั้งหมด
                 </span>
-
-                <strong id="summaryAll">
+<strong id="summaryAll">
                     0
                 </strong>
-
-            </div>
-
-
-            <div class="summary-card">
-
-                <span>
+</div>
+<div class="summary-card">
+<span>
                     Manager
                 </span>
-
-                <strong id="summaryManagers">
+<strong id="summaryManagers">
                     0
                 </strong>
-
-            </div>
-
-
-            <div class="summary-card">
-
-                <span>
+</div>
+<div class="summary-card">
+<span>
                     Staff
                 </span>
-
-                <strong id="summaryStaff">
+<strong id="summaryStaff">
                     0
                 </strong>
-
-            </div>
-
-
-            <div class="summary-card">
-
-                <span>
+</div>
+<div class="summary-card">
+<span>
                     ปิดใช้งาน
                 </span>
-
-                <strong id="summaryInactive">
+<strong id="summaryInactive">
                     0
                 </strong>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =====================================
+</div>
+</section>
+<!-- =====================================
          FILTER
     ====================================== -->
-
-        <section class="filter-card">
-
-
-            <div class="filter-grid">
-
-
-                <div class="field">
-
-                    <label for="searchInput">
+<section class="filter-card">
+<div class="filter-grid">
+<div class="field">
+<label for="searchInput">
                         ค้นหาพนักงาน
                     </label>
-
-                    <input id="searchInput" type="search" placeholder="ค้นหาจากชื่อ...">
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="roleFilter">
+<input id="searchInput" placeholder="ค้นหาจากชื่อ..." type="search"/>
+</div>
+<div class="field">
+<label for="roleFilter">
                         ตำแหน่ง
                     </label>
-
-                    <select id="roleFilter">
-
-                    <option value="">ทั้งหมด</option>
-                    <option value="staff">Staff / Service</option>
-                    <option value="cashier">Cashier</option>
-                    <option value="manager">Manager</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="stock">Stock</option>
-
-                </select>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="statusFilter">
+<select id="roleFilter">
+<option value="">ทั้งหมด</option>
+<option value="staff">Staff / Service</option>
+<option value="cashier">Cashier</option>
+<option value="manager">Manager</option>
+<option value="kitchen">Kitchen</option>
+<option value="stock">Stock</option>
+</select>
+</div>
+<div class="field">
+<label for="statusFilter">
                         สถานะ
                     </label>
-
-                    <select id="statusFilter">
-
-                        <option value="">
+<select id="statusFilter">
+<option value="">
                             ทั้งหมด
                         </option>
-
-                        <option value="active">
+<option value="active">
                             เปิดใช้งาน
                         </option>
-
-                        <option value="inactive">
+<option value="inactive">
                             ปิดใช้งาน
                         </option>
-
-                    </select>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div class="filter-actions">
-
-                <button id="clearFilterBtn" class="outline-btn" type="button">
+</select>
+</div>
+</div>
+<div class="filter-actions">
+<button class="outline-btn" id="clearFilterBtn" type="button">
                     ล้างตัวกรอง
                 </button>
-
-
-                <button id="refreshBtn" class="primary-btn" type="button">
+<button class="primary-btn" id="refreshBtn" type="button">
                     รีเฟรช
                 </button>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =====================================
+</div>
+</section>
+<!-- =====================================
          EMPLOYEE LIST
     ====================================== -->
-
-        <section class="employee-card">
-
-
-            <div class="employee-header">
-
-                <div>
-
-                    <h2>
+<section class="employee-card">
+<div class="employee-header">
+<div>
+<h2>
                         รายชื่อพนักงาน
                     </h2>
-
-                    <small id="resultCount">
+<small id="resultCount">
                         0 รายการ
                     </small>
-
-                </div>
-
-            </div>
-
-
-
-            <div id="loadingState" class="state">
+</div>
+</div>
+<div class="state" id="loadingState">
                 กำลังโหลดข้อมูล...
             </div>
-
-
-
-            <div id="emptyState" class="state hidden">
+<div class="state hidden" id="emptyState">
                 ไม่พบพนักงาน
             </div>
-
-
-
-            <div id="employeeTableWrap" class="table-wrap hidden">
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
+<div class="table-wrap hidden" id="employeeTableWrap">
+<table>
+<thead>
+<tr>
+<th>
                                 ชื่อพนักงาน
                             </th>
-
-                            <th>
+<th>
                                 ตำแหน่ง
                             </th>
-
-                            <th>
+<th>
                                 สถานะ
                             </th>
-
-                            <th>
+<th>
                                 PIN VOID
                             </th>
-
-                            <th>
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-
-                    <tbody id="employeeTableBody">
-                    </tbody>
-
-
-                </table>
-
-            </div>
-
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =========================================
+<th>
+</th>
+</tr>
+</thead>
+<tbody id="employeeTableBody">
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- =========================================
      EDIT EMPLOYEE MODAL
 ========================================= -->
-
-    <div id="editModal" class="modal hidden">
-
-        <div class="modal-card" style="max-width:520px;">
-
-
-            <div class="modal-head">
-
-                <div>
-
-                    <h2>
+<div class="modal hidden" id="editModal">
+<div class="modal-card" style="max-width:520px;">
+<div class="modal-head">
+<div>
+<h2>
                         แก้ไขพนักงาน
                     </h2>
-
-                    <small id="editUserId">
+<small id="editUserId">
                         -
                     </small>
-
-                </div>
-
-
-                <button id="closeEditBtn" class="icon-btn" type="button">
+</div>
+<button class="icon-btn" id="closeEditBtn" type="button">
                     ×
                 </button>
-
-            </div>
-
-
-
-            <div class="field">
-
-                <label for="editFullName">
+</div>
+<div class="field">
+<label for="editFullName">
                     ชื่อพนักงาน
                 </label>
-
-                <input id="editFullName" type="text" maxlength="100" placeholder="กรอกชื่อพนักงาน">
-
-            </div>
-
-
-
-            <div class="field" style="margin-top:16px;">
-
-                <label for="editRole">
+<input id="editFullName" maxlength="100" placeholder="กรอกชื่อพนักงาน" type="text"/>
+</div>
+<div class="field" style="margin-top:16px;">
+<label for="editRole">
                     ตำแหน่ง
                 </label>
-
-                <select id="editRole">
-
-                    <option value="staff">Staff / Service</option>
-                    <option value="cashier">Cashier</option>
-                    <option value="manager">Manager</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="stock">Stock</option>
-
-                </select>
-
-            </div>
-
-
-
-            <div class="field" style="margin-top:16px;">
-
-                <label>
+<select id="editRole">
+<option value="staff">Staff / Service</option>
+<option value="cashier">Cashier</option>
+<option value="manager">Manager</option>
+<option value="kitchen">Kitchen</option>
+<option value="stock">Stock</option>
+</select>
+</div>
+<div class="field" style="margin-top:16px;">
+<label>
                     สถานะบัญชี
                 </label>
-
-
-                <label class="switch-row">
-
-                    <input id="editIsActive" type="checkbox">
-
-                    <span>
+<label class="switch-row">
+<input id="editIsActive" type="checkbox"/>
+<span>
                         เปิดใช้งานบัญชี
                     </span>
-
-                </label>
-
-            </div>
-
-
-
-            <p id="editMessage" class="form-message">
-            </p>
-
-
-
-            <div class="modal-actions">
-
-                <button id="cancelEditBtn" class="outline-btn" type="button">
+</label>
+</div>
+<p class="form-message" id="editMessage">
+</p>
+<div class="modal-actions">
+<button class="outline-btn" id="cancelEditBtn" type="button">
                     ยกเลิก
                 </button>
-
-
-                <button id="saveEmployeeBtn" class="primary-btn" type="button">
+<button class="primary-btn" id="saveEmployeeBtn" type="button">
                     บันทึก
                 </button>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================================
+</div>
+</div>
+</div>
+<!-- =========================================
      MANAGER PIN MODAL
 ========================================= -->
-
-    <div id="pinModal" class="modal hidden">
-
-        <div class="modal-card" style="max-width:480px;">
-
-
-            <div class="modal-head">
-
-                <div>
-
-                    <h2>
+<div class="modal hidden" id="pinModal">
+<div class="modal-card" style="max-width:480px;">
+<div class="modal-head">
+<div>
+<h2>
                         ตั้ง PIN Manager
                     </h2>
-
-                    <small id="pinEmployeeName">
+<small id="pinEmployeeName">
                         -
                     </small>
-
-                </div>
-
-
-                <button id="closePinBtn" class="icon-btn" type="button">
+</div>
+<button class="icon-btn" id="closePinBtn" type="button">
                     ×
                 </button>
-
-            </div>
-
-
-
-            <div class="note-box">
-
-                <strong>
+</div>
+<div class="note-box">
+<strong>
                     PIN สำหรับอนุมัติ VOID
                 </strong>
-
-                <p>
+<p>
                     PIN นี้ใช้สำหรับอนุมัติการยกเลิกบิล
                     และจะถูกเก็บเป็น Hash ในระบบ
                 </p>
-
-            </div>
-
-
-
-            <div class="field" style="margin-top:18px;">
-
-                <label for="managerPinInput">
+</div>
+<div class="field" style="margin-top:18px;">
+<label for="managerPinInput">
                     PIN ใหม่ 6 หลัก
                 </label>
-
-                <input id="managerPinInput" type="password" inputmode="numeric" autocomplete="new-password"
-                    maxlength="6" pattern="[0-9]{6}" placeholder="••••••" class="pin-input">
-
-            </div>
-
-
-
-            <div class="field" style="margin-top:16px;">
-
-                <label for="managerPinConfirm">
+<input autocomplete="new-password" class="pin-input" id="managerPinInput" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="••••••" type="password"/>
+</div>
+<div class="field" style="margin-top:16px;">
+<label for="managerPinConfirm">
                     ยืนยัน PIN
                 </label>
-
-                <input id="managerPinConfirm" type="password" inputmode="numeric" autocomplete="new-password"
-                    maxlength="6" pattern="[0-9]{6}" placeholder="••••••" class="pin-input">
-
-            </div>
-
-
-
-            <p id="pinMessage" class="form-message">
-            </p>
-
-
-
-            <div class="modal-actions">
-
-                <button id="cancelPinBtn" class="outline-btn" type="button">
+<input autocomplete="new-password" class="pin-input" id="managerPinConfirm" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="••••••" type="password"/>
+</div>
+<p class="form-message" id="pinMessage">
+</p>
+<div class="modal-actions">
+<button class="outline-btn" id="cancelPinBtn" type="button">
                     ยกเลิก
                 </button>
-
-
-                <button id="savePinBtn" class="primary-btn" type="button">
+<button class="primary-btn" id="savePinBtn" type="button">
                     บันทึก PIN
                 </button>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
+</div>
+</div>
+</div>
+<!-- =========================================
          ADD EMPLOYEE MODAL
     ========================================= -->
-    
-    <div id="addEmployeeModal" class="modal hidden">
-    
-        <div class="modal-card" style="max-width:520px;">
-    
-            <div class="modal-head">
-    
-                <div>
-    
-                    <h2>
+<div class="modal hidden" id="addEmployeeModal">
+<div class="modal-card" style="max-width:520px;">
+<div class="modal-head">
+<div>
+<h2>
                         เพิ่มพนักงาน
                     </h2>
-    
-                    <small>
+<small>
                         สร้างบัญชีเข้าใช้งาน JOKJUNG POS
                     </small>
-    
-                </div>
-    
-    
-                <button id="closeAddEmployeeBtn" class="icon-btn" type="button">
+</div>
+<button class="icon-btn" id="closeAddEmployeeBtn" type="button">
                     ×
                 </button>
-    
-            </div>
-    
-    
-            <div class="field">
-    
-                <label for="addFullName">
+</div>
+<div class="field">
+<label for="addFullName">
                     ชื่อพนักงาน
                 </label>
-    
-                <input id="addFullName" type="text" maxlength="100" placeholder="เช่น สมชาย ใจดี">
-    
-            </div>
-    
-    
-            <div class="field" style="margin-top:16px;">
-    
-                <label for="addEmail">
+<input id="addFullName" maxlength="100" placeholder="เช่น สมชาย ใจดี" type="text"/>
+</div>
+<div class="field" style="margin-top:16px;">
+<label for="addEmail">
                     Email สำหรับเข้าสู่ระบบ
                 </label>
-    
-                <input id="addEmail" type="email" autocomplete="off" placeholder="employee@example.com">
-    
-            </div>
-    
-    
-            <div class="field" style="margin-top:16px;">
-    
-                <label for="addPassword">
+<input autocomplete="off" id="addEmail" placeholder="employee@example.com" type="email"/>
+</div>
+<div class="field" style="margin-top:16px;">
+<label for="addPassword">
                     Password เริ่มต้น
                 </label>
-    
-                <input id="addPassword" type="password" autocomplete="new-password" minlength="8"
-                    placeholder="อย่างน้อย 8 ตัวอักษร">
-    
-            </div>
-    
-    
-            <div class="field" style="margin-top:16px;">
-    
-                <label for="addRole">
+<input autocomplete="new-password" id="addPassword" minlength="8" placeholder="อย่างน้อย 8 ตัวอักษร" type="password"/>
+</div>
+<div class="field" style="margin-top:16px;">
+<label for="addRole">
                     ตำแหน่ง
                 </label>
-    
-                <select id="addRole">
-
-                    <option value="staff">Staff / Service</option>
-                    <option value="cashier">Cashier</option>
-                    <option value="manager">Manager</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="stock">Stock</option>
-
-                </select>
-    
-            </div>
-    
-    
-            <div id="addManagerPinWrap" class="field hidden" style="margin-top:16px;">
-    
-                <label for="addManagerPin">
+<select id="addRole">
+<option value="staff">Staff / Service</option>
+<option value="cashier">Cashier</option>
+<option value="manager">Manager</option>
+<option value="kitchen">Kitchen</option>
+<option value="stock">Stock</option>
+</select>
+</div>
+<div class="field hidden" id="addManagerPinWrap" style="margin-top:16px;">
+<label for="addManagerPin">
                     PIN Manager 6 หลัก
                 </label>
-    
-                <input id="addManagerPin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"
-                    pattern="[0-9]{6}" placeholder="••••••" class="pin-input">
-    
-                <small>
+<input autocomplete="new-password" class="pin-input" id="addManagerPin" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="••••••" type="password"/>
+<small>
                     ใช้สำหรับอนุมัติรายการสำคัญ เช่น VOID และเปิด/ปิดกะ
                 </small>
-    
-            </div>
-    
-    
-            <p id="addEmployeeMessage" class="form-message">
-            </p>
-    
-    
-            <div class="modal-actions">
-    
-                <button id="cancelAddEmployeeBtn" class="outline-btn" type="button">
+</div>
+<p class="form-message" id="addEmployeeMessage">
+</p>
+<div class="modal-actions">
+<button class="outline-btn" id="cancelAddEmployeeBtn" type="button">
                     ยกเลิก
                 </button>
-    
-    
-                <button id="saveNewEmployeeBtn" class="primary-btn" type="button">
+<button class="primary-btn" id="saveNewEmployeeBtn" type="button">
                     สร้างพนักงาน
                 </button>
-    
-            </div>
-    
-        </div>
-    
-    </div>
-
-
-
-    <script type="module" src="./js/employees.js?v=2.9.1"></script>
-
-
-</body>
-
+</div>
+</div>
+</div>
+<script src="./js/employees.js?v=2.9.1" type="module"></script>
+<script defer="True" src="js/ui-feedback-v3.20.js"></script></body>
 </html>
