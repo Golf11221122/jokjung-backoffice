@@ -1,19 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Go-Live | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css"><link rel="stylesheet" href="../css/print.css"></head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/><link href="../css/print.css" rel="stylesheet"/><link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
-<div class="nav-section"><div class="nav-title">STOCK & COST</div>
+<div class="nav-section"><div class="nav-title">STOCK &amp; COST</div>
 <a class="nav-link" href="./ingredients.html">📦 วัตถุดิบ / Stock</a>
 <a class="nav-link" href="./production.html">🏭 Production / Prep</a>
 <a class="nav-link active" href="./go-live.html">🚀 Go-Live / Opening Stock</a>
@@ -25,31 +26,28 @@
 </nav>
 </aside>
 <div class="main">
-<header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🚀 Go-Live</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<header class="topbar"><div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>🚀 Go-Live</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div></header>
 <main class="content">
-<div class="page-head"><div><h2>เริ่มใช้งานข้อมูลจริง</h2><p>ข้อมูลก่อน Go-Live จะเก็บไว้ แต่ไม่นำมาปน Stock Report ใหม่</p></div><span id="statusBadge" class="closing-status draft">ยังไม่ Go-Live</span></div>
-
-<section id="liveSummary" class="panel hidden"></section>
-
-<section id="setupPanel" class="panel">
+<div class="page-head"><div><h2>เริ่มใช้งานข้อมูลจริง</h2><p>ข้อมูลก่อน Go-Live จะเก็บไว้ แต่ไม่นำมาปน Stock Report ใหม่</p></div><span class="closing-status draft" id="statusBadge">ยังไม่ Go-Live</span></div>
+<section class="panel hidden" id="liveSummary"></section>
+<section class="panel" id="setupPanel">
 <div class="panel-head"><div><h3>1. กำหนดวัน/เวลา Go-Live</h3><p>ควรเลือกเวลาหลังจากหยุดทำรายการทดลองแล้ว</p></div></div>
 <div class="inline-fields">
-<label class="field"><span>วัน/เวลา Go-Live</span><input id="goLiveAt" type="datetime-local"></label>
-<label class="field"><span>หมายเหตุ</span><input id="note" placeholder="เริ่มใช้งานจริง"></label>
-<div class="field"><span>ตรวจข้อมูลหลังเวลานี้</span><button id="previewBtn" class="outline-btn">ตรวจสอบก่อน</button></div>
+<label class="field"><span>วัน/เวลา Go-Live</span><input id="goLiveAt" type="datetime-local"/></label>
+<label class="field"><span>หมายเหตุ</span><input id="note" placeholder="เริ่มใช้งานจริง"/></label>
+<div class="field"><span>ตรวจข้อมูลหลังเวลานี้</span><button class="outline-btn" id="previewBtn">ตรวจสอบก่อน</button></div>
 </div>
-<div id="previewBox" class="golive-preview"></div>
-
+<div class="golive-preview" id="previewBox"></div>
 <div class="panel-head" style="margin-top:18px"><div><h3>2. Opening Stock จริง</h3><p>กรอกจำนวนที่นับจริงและต้นทุนจริง ณ วันเริ่มระบบ</p></div></div>
-<div class="toolbar"><input id="search" placeholder="ค้นหาวัตถุดิบ..."><button id="fillZeroBtn" class="outline-btn">ใส่ 0 ช่องว่างทั้งหมด</button></div>
+<div class="toolbar"><input id="search" placeholder="ค้นหาวัตถุดิบ..."/><button class="outline-btn" id="fillZeroBtn">ใส่ 0 ช่องว่างทั้งหมด</button></div>
 <div id="openingTable"></div>
 <div class="golive-total"><span>มูลค่า Opening Stock</span><strong id="openingValue">฿0.00</strong></div>
-<p id="message" class="message"></p>
-<button id="activateBtn" class="primary-btn full">🚀 ยืนยัน Go-Live และตั้ง Opening Stock</button>
+<p class="message" id="message"></p>
+<button class="primary-btn full" id="activateBtn">🚀 ยืนยัน Go-Live และตั้ง Opening Stock</button>
 </section>
 </main>
 </div>
 </div>
-<script type="module" src="../js/go-live.js"></script>
-</body>
+<script src="../js/go-live.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

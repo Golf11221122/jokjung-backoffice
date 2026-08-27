@@ -1,19 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Production / Prep | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css"><link rel="stylesheet" href="../css/print.css"></head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/><link href="../css/print.css" rel="stylesheet"/><link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
-<div class="nav-section"><div class="nav-title">STOCK & COST</div>
+<div class="nav-section"><div class="nav-title">STOCK &amp; COST</div>
 <a class="nav-link" href="./ingredients.html">📦 วัตถุดิบ / Stock</a>
 <a class="nav-link" href="./categories.html">🗂️ หมวดวัตถุดิบ</a>
 <a class="nav-link" href="./movements.html">🔄 Stock Movement</a>
@@ -31,80 +32,72 @@
 </div>
 </nav>
 </aside>
-
 <div class="main">
 <header class="topbar">
-<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🏭 Production / Prep</h1><p id="branchText">กำลังโหลด...</p></div></div>
-<div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+<div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>🏭 Production / Prep</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div>
 </header>
-
 <main class="content">
 <div class="page-head">
 <div><h2>ผลิต / แปรรูปวัตถุดิบ</h2><p>Raw → Prep พร้อม Yield, Production Cost และ Stock Movement</p></div>
-<div class="action-row"><button id="newRecipeBtn" class="outline-btn">＋ สร้างสูตร Prep</button><button id="newBatchBtn" class="primary-btn">🏭 บันทึกการผลิต</button></div>
+<div class="action-row"><button class="outline-btn" id="newRecipeBtn">＋ สร้างสูตร Prep</button><button class="primary-btn" id="newBatchBtn">🏭 บันทึกการผลิต</button></div>
 </div>
-
 <section class="kpi-grid">
 <article class="kpi-card"><span>Batch เดือนนี้</span><strong id="batchCount">0</strong></article>
 <article class="kpi-card"><span>Input Cost เดือนนี้</span><strong id="inputCost">฿0.00</strong></article>
 <article class="kpi-card"><span>Yield เฉลี่ย</span><strong id="avgYield">0%</strong></article>
 <article class="kpi-card"><span>Yield Loss</span><strong id="yieldLoss">฿0.00</strong></article>
 </section>
-
 <div class="split-grid">
 <section class="panel">
 <div class="panel-head"><div><h3>สูตร Prep</h3><p>สูตรมาตรฐานสำหรับงานเตรียม</p></div></div>
-<div id="recipeList"></div><p id="recipeMessage" class="message"></p>
+<div id="recipeList"></div><p class="message" id="recipeMessage"></p>
 </section>
 <section class="panel">
 <div class="panel-head"><div><h3>Production Batch ล่าสุด</h3><p>ประวัติการแปรรูปจริง</p></div></div>
-<div id="batchList"></div><p id="batchMessage" class="message"></p>
+<div id="batchList"></div><p class="message" id="batchMessage"></p>
 </section>
 </div>
 </main>
 </div>
 </div>
-
-<div id="recipeModal" class="modal hidden"><div class="modal-card" style="width:min(900px,100%)">
-<div class="modal-head"><div><h3 id="recipeTitle">สูตร Prep</h3><p class="mini-note">Output ต้องเป็นวัตถุดิบประเภท Prep</p></div><button id="closeRecipe" class="close-btn">×</button></div>
-<input id="recipeId" type="hidden">
+<div class="modal hidden" id="recipeModal"><div class="modal-card" style="width:min(900px,100%)">
+<div class="modal-head"><div><h3 id="recipeTitle">สูตร Prep</h3><p class="mini-note">Output ต้องเป็นวัตถุดิบประเภท Prep</p></div><button class="close-btn" id="closeRecipe">×</button></div>
+<input id="recipeId" type="hidden"/>
 <div class="inline-fields">
 <label class="field"><span>Prep Output</span><select id="recipeOutput"></select></label>
-<label class="field"><span>Standard Output Qty</span><input id="standardOutput" type="number" min="0.001" step="0.001" value="1"></label>
-<label class="field"><span>Standard Yield %</span><input id="standardYield" type="number" min="0.01" step="0.01" placeholder="เช่น 75 หรือ 200"></label>
+<label class="field"><span>Standard Output Qty</span><input id="standardOutput" min="0.001" step="0.001" type="number" value="1"/></label>
+<label class="field"><span>Standard Yield %</span><input id="standardYield" min="0.01" placeholder="เช่น 75 หรือ 200" step="0.01" type="number"/></label>
 </div>
-<div class="panel-head" style="margin-top:14px"><div><h4>Raw / Ingredient Inputs</h4><p>ติ๊ก Yield Basis ได้มากกว่า 1 รายการ ถ้าต้องการคำนวณ Yield จาก Input รวม</p></div><button id="addRecipeInput" class="outline-btn">＋ เพิ่ม Input</button></div>
+<div class="panel-head" style="margin-top:14px"><div><h4>Raw / Ingredient Inputs</h4><p>ติ๊ก Yield Basis ได้มากกว่า 1 รายการ ถ้าต้องการคำนวณ Yield จาก Input รวม</p></div><button class="outline-btn" id="addRecipeInput">＋ เพิ่ม Input</button></div>
 <div id="recipeInputs"></div>
-<label class="field"><span>หมายเหตุ</span><input id="recipeNote"></label>
-<label class="field"><span><input id="recipeActive" type="checkbox" checked> เปิดใช้งานสูตร</span></label>
-<p id="recipeFormMessage" class="message"></p>
-<button id="saveRecipeBtn" class="primary-btn full">บันทึกสูตร Prep</button>
+<label class="field"><span>หมายเหตุ</span><input id="recipeNote"/></label>
+<label class="field"><span><input checked="" id="recipeActive" type="checkbox"/> เปิดใช้งานสูตร</span></label>
+<p class="message" id="recipeFormMessage"></p>
+<button class="primary-btn full" id="saveRecipeBtn">บันทึกสูตร Prep</button>
 </div></div>
-
-<div id="batchModal" class="modal hidden"><div class="modal-card" style="width:min(950px,100%)">
-<div class="modal-head"><div><h3>บันทึก Production Batch</h3><p class="mini-note">ระบบจะตัด Raw และรับ Prep เข้า Stock พร้อมคำนวณต้นทุนใหม่อัตโนมัติ</p></div><button id="closeBatch" class="close-btn">×</button></div>
+<div class="modal hidden" id="batchModal"><div class="modal-card" style="width:min(950px,100%)">
+<div class="modal-head"><div><h3>บันทึก Production Batch</h3><p class="mini-note">ระบบจะตัด Raw และรับ Prep เข้า Stock พร้อมคำนวณต้นทุนใหม่อัตโนมัติ</p></div><button class="close-btn" id="closeBatch">×</button></div>
 <div class="inline-fields">
 <label class="field"><span>ใช้สูตร Prep</span><select id="batchRecipe"><option value="">-- Manual --</option></select></label>
 <label class="field"><span>Prep Output</span><select id="batchOutput"></select></label>
-<label class="field"><span>จำนวน Output จริง</span><input id="actualOutput" type="number" min="0.001" step="0.001"></label>
+<label class="field"><span>จำนวน Output จริง</span><input id="actualOutput" min="0.001" step="0.001" type="number"/></label>
 </div>
-<div class="panel-head" style="margin-top:14px"><div><h4>Input ที่ใช้จริง</h4><p>จำนวนจริงที่เบิกเข้าสู่การผลิต</p></div><button id="addBatchInput" class="outline-btn">＋ เพิ่ม Input</button></div>
+<div class="panel-head" style="margin-top:14px"><div><h4>Input ที่ใช้จริง</h4><p>จำนวนจริงที่เบิกเข้าสู่การผลิต</p></div><button class="outline-btn" id="addBatchInput">＋ เพิ่ม Input</button></div>
 <div id="batchInputs"></div>
-<div id="batchEstimate" class="production-estimate"></div>
-<label class="field"><span>หมายเหตุ</span><input id="batchNote"></label>
-<p id="batchFormMessage" class="message"></p>
-<button id="postBatchBtn" class="primary-btn full">✅ Post Production Batch</button>
+<div class="production-estimate" id="batchEstimate"></div>
+<label class="field"><span>หมายเหตุ</span><input id="batchNote"/></label>
+<p class="message" id="batchFormMessage"></p>
+<button class="primary-btn full" id="postBatchBtn">✅ Post Production Batch</button>
 </div></div>
-
-<div id="detailModal" class="modal hidden"><div class="modal-card" style="width:min(850px,100%)">
-<div class="modal-head"><div><h3 id="detailTitle">Production Batch</h3><p id="detailSub"></p></div><button id="closeDetail" class="close-btn">×</button></div>
-<div id="detailKpis" class="kpi-grid"></div>
+<div class="modal hidden" id="detailModal"><div class="modal-card" style="width:min(850px,100%)">
+<div class="modal-head"><div><h3 id="detailTitle">Production Batch</h3><p id="detailSub"></p></div><button class="close-btn" id="closeDetail">×</button></div>
+<div class="kpi-grid" id="detailKpis"></div>
 <div id="detailInputs"></div>
 </div></div>
-
-<script type="module" src="../js/production.js"></script>
+<script src="../js/production.js" type="module"></script>
 <script type="module">
 import { installReportToolbar } from '../js/report-tools.js';
 installReportToolbar();
-</script></body>
+</script><script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

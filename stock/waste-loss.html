@@ -1,16 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Waste & Loss | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Waste &amp; Loss | JOKJUNG Back Office</title>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="../finance/financial-summary.html">🧭 Financial Summary</a></div>
@@ -23,21 +24,18 @@
 </nav>
 </aside>
 <div class="main">
-<header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🗑️ Waste / Inventory Loss</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<header class="topbar"><div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>🗑️ Waste / Inventory Loss</h1><p id="branchText">กำลังโหลด...</p></div></div><div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div></header>
 <main class="content">
-<div class="page-head"><div><h2>ควบคุมของเสียและสูญเสีย</h2><p>บันทึก → รออนุมัติ → ตัด Stock → เก็บ Cost และ Audit</p></div><button id="newBtn" class="primary-btn">+ บันทึกของเสีย</button></div>
-<section id="wasteKpis" class="kpi-grid"></section>
-<section class="panel"><div class="toolbar waste-toolbar"><label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label><label class="field"><span>ถึง</span><input id="dateTo" type="date"></label><label class="field"><span>สถานะ</span><select id="statusFilter"><option value="">ทั้งหมด</option><option value="pending">รออนุมัติ</option><option value="approved">อนุมัติแล้ว</option><option value="cancelled">ยกเลิก</option><option value="reversed">Reversed</option></select></label><label class="field"><span>เหตุผล</span><select id="reasonFilter"><option value="">ทั้งหมด</option></select></label><button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button></div></section>
-<section class="panel"><div class="section-head"><strong>รายการ Waste / Loss</strong><span id="rowCount" class="mini-note">0 รายการ</span></div><div id="list"></div></section>
-<p id="message" class="message"></p>
+<div class="page-head"><div><h2>ควบคุมของเสียและสูญเสีย</h2><p>บันทึก → รออนุมัติ → ตัด Stock → เก็บ Cost และ Audit</p></div><button class="primary-btn" id="newBtn">+ บันทึกของเสีย</button></div>
+<section class="kpi-grid" id="wasteKpis"></section>
+<section class="panel"><div class="toolbar waste-toolbar"><label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"/></label><label class="field"><span>ถึง</span><input id="dateTo" type="date"/></label><label class="field"><span>สถานะ</span><select id="statusFilter"><option value="">ทั้งหมด</option><option value="pending">รออนุมัติ</option><option value="approved">อนุมัติแล้ว</option><option value="cancelled">ยกเลิก</option><option value="reversed">Reversed</option></select></label><label class="field"><span>เหตุผล</span><select id="reasonFilter"><option value="">ทั้งหมด</option></select></label><button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button></div></section>
+<section class="panel"><div class="section-head"><strong>รายการ Waste / Loss</strong><span class="mini-note" id="rowCount">0 รายการ</span></div><div id="list"></div></section>
+<p class="message" id="message"></p>
 </main></div></div>
-
-<div id="newModal" class="modal hidden"><div class="modal-card modal-wide"><div class="modal-head"><div><h3>บันทึก Waste / Loss</h3><p>ยังไม่ตัด Stock จนกว่าจะอนุมัติ</p></div><button id="closeNew" class="icon-btn">✕</button></div><div class="modal-body">
-<div class="form-grid"><label class="field"><span>วันที่ *</span><input id="eventDate" type="date"></label><label class="field"><span>เหตุผล *</span><select id="reasonCode"></select></label><label class="field field-wide"><span>หมายเหตุ</span><input id="eventNote" maxlength="300" placeholder="เช่น ของเสียรอบเตรียมเช้า"></label></div>
-<div class="waste-add-row"><label class="field"><span>วัตถุดิบ / Prep</span><select id="ingredientSelect"></select></label><label class="field"><span>จำนวน</span><input id="qtyInput" type="number" min="0.001" step="0.001"></label><button id="addItemBtn" class="small-btn">+ เพิ่มรายการ</button></div>
-<div id="draftItems"></div><div class="waste-total"><span>มูลค่าของเสียโดยประมาณ</span><strong id="draftTotal">฿0.00</strong></div><p id="newMessage" class="message"></p></div><div class="modal-actions"><button id="saveDraftBtn" class="primary-btn">บันทึกเพื่อรออนุมัติ</button></div></div></div>
-
-<div id="detailModal" class="modal hidden"><div class="modal-card modal-wide"><div class="modal-head"><div><h3 id="detailTitle">Waste / Loss</h3><p id="detailSub">-</p></div><button id="closeDetail" class="icon-btn">✕</button></div><div class="modal-body"><div id="detailItems"></div><div id="detailAudit" class="finance-note"></div><p id="detailMessage" class="message"></p></div><div class="modal-actions"><button id="cancelBtn" class="danger-btn hidden">ยกเลิกรายการ</button><button id="reverseBtn" class="outline-btn hidden">Reverse</button><button id="approveBtn" class="primary-btn hidden">✓ อนุมัติและตัด Stock</button></div></div></div>
-
-<script type="module" src="../js/waste-loss.js"></script>
-</body></html>
+<div class="modal hidden" id="newModal"><div class="modal-card modal-wide"><div class="modal-head"><div><h3>บันทึก Waste / Loss</h3><p>ยังไม่ตัด Stock จนกว่าจะอนุมัติ</p></div><button class="icon-btn" id="closeNew">✕</button></div><div class="modal-body">
+<div class="form-grid"><label class="field"><span>วันที่ *</span><input id="eventDate" type="date"/></label><label class="field"><span>เหตุผล *</span><select id="reasonCode"></select></label><label class="field field-wide"><span>หมายเหตุ</span><input id="eventNote" maxlength="300" placeholder="เช่น ของเสียรอบเตรียมเช้า"/></label></div>
+<div class="waste-add-row"><label class="field"><span>วัตถุดิบ / Prep</span><select id="ingredientSelect"></select></label><label class="field"><span>จำนวน</span><input id="qtyInput" min="0.001" step="0.001" type="number"/></label><button class="small-btn" id="addItemBtn">+ เพิ่มรายการ</button></div>
+<div id="draftItems"></div><div class="waste-total"><span>มูลค่าของเสียโดยประมาณ</span><strong id="draftTotal">฿0.00</strong></div><p class="message" id="newMessage"></p></div><div class="modal-actions"><button class="primary-btn" id="saveDraftBtn">บันทึกเพื่อรออนุมัติ</button></div></div></div>
+<div class="modal hidden" id="detailModal"><div class="modal-card modal-wide"><div class="modal-head"><div><h3 id="detailTitle">Waste / Loss</h3><p id="detailSub">-</p></div><button class="icon-btn" id="closeDetail">✕</button></div><div class="modal-body"><div id="detailItems"></div><div class="finance-note" id="detailAudit"></div><p class="message" id="detailMessage"></p></div><div class="modal-actions"><button class="danger-btn hidden" id="cancelBtn">ยกเลิกรายการ</button><button class="outline-btn hidden" id="reverseBtn">Reverse</button><button class="primary-btn hidden" id="approveBtn">✓ อนุมัติและตัด Stock</button></div></div></div>
+<script src="../js/waste-loss.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body></html>
