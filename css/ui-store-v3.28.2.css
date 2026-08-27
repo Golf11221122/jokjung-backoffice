@@ -1,0 +1,126 @@
+/* =========================================================
+   JOKJUNG Back Office V3.28.2 — Dark Component Coverage Fix
+   Covers legacy white components that escaped V3.28 dark theme.
+   UI only. No business logic changes.
+   ========================================================= */
+html[data-jk-theme="dark"]{
+  --jk282-surface:#0f1a2d;
+  --jk282-surface-2:#13223a;
+  --jk282-surface-3:#172840;
+  --jk282-line:#273954;
+  --jk282-text:#f3f7ff;
+  --jk282-text-2:#d8e2f1;
+  --jk282-muted:#9eacc1;
+}
+
+/* Dashboard attention cards */
+html[data-jk-theme="dark"] .jk-attention-card{
+  background:var(--jk282-surface) !important;
+  border-color:var(--jk282-line) !important;
+  box-shadow:0 8px 20px rgba(0,0,0,.20) !important;
+}
+html[data-jk-theme="dark"] .jk-attention-label{
+  color:#b8c5d8 !important;
+}
+html[data-jk-theme="dark"] .jk-attention-card strong{
+  color:var(--jk282-text) !important;
+}
+html[data-jk-theme="dark"] .jk-attention-card small{
+  color:var(--jk282-muted) !important;
+}
+
+/* Dashboard quick links and daily action tiles */
+html[data-jk-theme="dark"] .quick-link,
+html[data-jk-theme="dark"] .jk-action-tile{
+  background:var(--jk282-surface-2) !important;
+  border-color:var(--jk282-line) !important;
+  color:var(--jk282-text) !important;
+}
+html[data-jk-theme="dark"] .quick-link:hover,
+html[data-jk-theme="dark"] .jk-action-tile:hover{
+  background:var(--jk282-surface-3) !important;
+}
+html[data-jk-theme="dark"] .jk-action-tile strong{
+  color:var(--jk282-text) !important;
+}
+html[data-jk-theme="dark"] .jk-action-tile small{
+  color:var(--jk282-muted) !important;
+}
+
+/* Legacy white operational components across the project */
+html[data-jk-theme="dark"] .product-item,
+html[data-jk-theme="dark"] .production-card,
+html[data-jk-theme="dark"] .filter-card,
+html[data-jk-theme="dark"] .table-card,
+html[data-jk-theme="dark"] .cost-kpi,
+html[data-jk-theme="dark"] .po-summary-card,
+html[data-jk-theme="dark"] .attachment-row,
+html[data-jk-theme="dark"] .ap-detail-card,
+html[data-jk-theme="dark"] .forecast-card,
+html[data-jk-theme="dark"] .cashflow-card,
+html[data-jk-theme="dark"] .bank-recon-card,
+html[data-jk-theme="dark"] .category-summary-card{
+  background:var(--jk282-surface) !important;
+  border-color:var(--jk282-line) !important;
+  color:var(--jk282-text-2) !important;
+}
+html[data-jk-theme="dark"] .product-item.active{
+  background:#1b2d47 !important;
+  border-color:#5275a8 !important;
+}
+
+/* Generic legacy elements that use inline-ish white styles via classes */
+html[data-jk-theme="dark"] .empty,
+html[data-jk-theme="dark"] .recipe-row,
+html[data-jk-theme="dark"] .line-editor,
+html[data-jk-theme="dark"] .form-grid,
+html[data-jk-theme="dark"] .split-grid{
+  color:var(--jk282-text-2) !important;
+}
+
+/* Make KPI labels and values unambiguous */
+html[data-jk-theme="dark"] .kpi-card,
+html[data-jk-theme="dark"] .summary-card,
+html[data-jk-theme="dark"] .metric-card{
+  background:var(--jk282-surface) !important;
+  border-color:var(--jk282-line) !important;
+}
+html[data-jk-theme="dark"] .kpi-card span,
+html[data-jk-theme="dark"] .summary-card span,
+html[data-jk-theme="dark"] .metric-card span{
+  color:#b2bfd2 !important;
+}
+html[data-jk-theme="dark"] .kpi-card strong,
+html[data-jk-theme="dark"] .summary-card strong,
+html[data-jk-theme="dark"] .metric-card strong{
+  color:var(--jk282-text) !important;
+}
+html[data-jk-theme="dark"] .kpi-card small,
+html[data-jk-theme="dark"] .summary-card small,
+html[data-jk-theme="dark"] .metric-card small{
+  color:var(--jk282-muted) !important;
+}
+
+/* Ensure links inside dark panels do not inherit near-black colors */
+html[data-jk-theme="dark"] .panel a:not(.primary-btn):not(.danger-btn),
+html[data-jk-theme="dark"] .card a:not(.primary-btn):not(.danger-btn){
+  color:#dbeafe;
+}
+
+/* Status cards keep semantic colors but readable foreground */
+html[data-jk-theme="dark"] .status,
+html[data-jk-theme="dark"] .status.ok,
+html[data-jk-theme="dark"] .status.no,
+html[data-jk-theme="dark"] .good,
+html[data-jk-theme="dark"] .warn,
+html[data-jk-theme="dark"] .bad{
+  border-color:var(--jk282-line) !important;
+}
+
+/* Prevent older CSS from forcing black text inside dark surfaces */
+html[data-jk-theme="dark"] .content :where(.jk-attention-card,.jk-action-tile,.quick-link,.kpi-card,.summary-card,.metric-card,.panel,.card) :where(h1,h2,h3,h4,strong,b){
+  color:var(--jk282-text) !important;
+}
+html[data-jk-theme="dark"] .content :where(.jk-attention-card,.jk-action-tile,.quick-link,.kpi-card,.summary-card,.metric-card,.panel,.card) :where(p,small,.mini-note){
+  color:var(--jk282-muted) !important;
+}
