@@ -1,0 +1,154 @@
+/* =========================================================
+   JOKJUNG Back Office V3.24.1 — Sticky Action Bar
+   Compact, formal, top-pinned action controls for mobile.
+   No business logic changes.
+   ========================================================= */
+:root{
+  --jk241-border:#d0d5dd;
+  --jk241-surface:rgba(255,255,255,.97);
+  --jk241-text:#1d2939;
+  --jk241-muted:#667085;
+  --jk241-primary:#14213d;
+  --jk241-shadow:0 10px 24px rgba(16,24,40,.10);
+}
+
+.page-head.jk241-page-head{
+  display:block !important;
+  margin-bottom:18px !important;
+}
+.page-head.jk241-page-head > :first-child{
+  margin-bottom:12px;
+}
+
+.jk241-sticky-actions{
+  position:sticky;
+  top:8px;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding:10px;
+  border:1px solid var(--jk241-border);
+  border-radius:16px;
+  background:var(--jk241-surface);
+  backdrop-filter:saturate(160%) blur(10px);
+  box-shadow:var(--jk241-shadow);
+}
+.jk241-sticky-actions::-webkit-scrollbar{display:none}
+
+.jk241-toolbar-group,
+.jk241-sticky-actions > .action-row,
+.jk241-sticky-actions > .report-actions,
+.jk241-sticky-actions > .auto-report-actions,
+.jk241-sticky-actions > div{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap;
+  min-width:max-content;
+}
+
+.jk241-sticky-actions .outline-btn,
+.jk241-sticky-actions .primary-btn,
+.jk241-sticky-actions .secondary-btn,
+.jk241-sticky-actions .danger-btn,
+.jk241-sticky-actions button,
+.jk241-sticky-actions a{
+  flex:0 0 auto;
+  width:auto !important;
+  min-width:110px;
+  min-height:42px;
+  padding:0 14px !important;
+  border-radius:12px !important;
+  font-size:14px !important;
+  font-weight:850 !important;
+  line-height:1 !important;
+  justify-content:center;
+  white-space:nowrap;
+  box-shadow:none;
+}
+.jk241-sticky-actions .outline-btn,
+.jk241-sticky-actions .secondary-btn,
+.jk241-sticky-actions a,
+.jk241-sticky-actions button:not(.primary-btn):not(.danger-btn){
+  border:1px solid var(--jk241-border) !important;
+  background:#fff !important;
+  color:var(--jk241-text) !important;
+}
+.jk241-sticky-actions .primary-btn{
+  background:linear-gradient(180deg,#213563,var(--jk241-primary)) !important;
+  border:1px solid var(--jk241-primary) !important;
+  color:#fff !important;
+}
+.jk241-sticky-actions .danger-btn{
+  border:1px solid #f3b5b1 !important;
+  background:#fef3f2 !important;
+  color:#b42318 !important;
+}
+
+.jk241-sticky-actions input,
+.jk241-sticky-actions select,
+.jk241-sticky-actions textarea{
+  flex:0 0 auto;
+  min-height:42px;
+  height:42px;
+  min-width:150px;
+  width:auto !important;
+  padding:0 12px !important;
+  border:1px solid var(--jk241-border) !important;
+  border-radius:12px !important;
+  background:#fff;
+  font-size:14px !important;
+  color:var(--jk241-text);
+  box-sizing:border-box;
+}
+.jk241-sticky-actions input[type="date"]{min-width:158px}
+.jk241-sticky-actions select{padding-right:34px !important}
+
+/* separate sticky bar from following KPIs/tables */
+.jk241-page-head + *{scroll-margin-top:72px}
+
+/* Desktop/tablet keep it neat and formal */
+@media (min-width: 761px){
+  .jk241-sticky-actions{
+    top:10px;
+    justify-content:flex-end;
+  }
+}
+
+/* Mobile: compact bar, title remains normal, controls stay pinned */
+@media (max-width: 760px){
+  .page-head.jk241-page-head > :first-child{
+    margin-bottom:10px;
+  }
+  .jk241-sticky-actions{
+    top:8px;
+    margin-left:-2px;
+    margin-right:-2px;
+    padding:8px;
+    border-radius:14px;
+  }
+  .jk241-sticky-actions .outline-btn,
+  .jk241-sticky-actions .primary-btn,
+  .jk241-sticky-actions .secondary-btn,
+  .jk241-sticky-actions .danger-btn,
+  .jk241-sticky-actions button,
+  .jk241-sticky-actions a{
+    min-width:102px;
+    min-height:40px;
+    font-size:13px !important;
+    padding:0 12px !important;
+  }
+  .jk241-sticky-actions input,
+  .jk241-sticky-actions select,
+  .jk241-sticky-actions textarea{
+    min-width:140px;
+    min-height:40px;
+    height:40px;
+    font-size:13px !important;
+  }
+}
