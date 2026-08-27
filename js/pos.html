@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>
+        POS | JOKJUNG POS
+    </title>
+
+    <link rel="stylesheet" href="./css/pos.css">
+
+    <style>
+        @media print {
+            #receiptOrderId {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            .receipt-order-note-row {
+                margin-top: 2px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ========================================
+         TOPBAR
+    ========================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button id="backBtn" class="icon-btn" type="button" aria-label="ย้อนกลับ">
+                ←
+            </button>
+
+
+            <div class="topbar-brand">
+
+                <strong>
+                    JOKJUNG POS
+                </strong>
+
+                <small id="branchText">
+                    กำลังโหลด...
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span id="userName">
+                ผู้ใช้งาน
+            </span>
+
+
+            <button id="logoutBtn" class="outline-btn" type="button">
+                ออกจากระบบ
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ========================================
+         MAIN
+    ========================================= -->
+
+    <main class="layout">
+
+
+        <!-- ====================================
+             PRODUCT CATALOG
+        ===================================== -->
+
+        <section class="catalog">
+
+
+            <!-- SEARCH -->
+
+            <div class="toolbar">
+
+                <input id="searchInput" type="search" placeholder="ค้นหาชื่อสินค้า SKU หรือบาร์โค้ด" autocomplete="off">
+
+
+                <button id="refreshBtn" class="outline-btn refresh-btn" type="button">
+
+                    <span class="refresh-icon">
+                        ↻
+                    </span>
+
+                    <span class="refresh-text">
+                        รีเฟรช
+                    </span>
+
+                </button>
+
+                <button id="modifierManagerBtn" class="outline-btn modifier-manager-open-btn" type="button">
+                    ⚙ ตัวเลือกเมนู
+                </button>
+
+            </div>
+
+
+
+            <!-- CATEGORY -->
+
+            <div id="categoryTabs" class="tabs"></div>
+
+
+
+            <!-- LOADING -->
+
+            <div id="loading" class="state">
+                กำลังโหลดสินค้า...
+            </div>
+
+
+
+            <!-- EMPTY -->
+
+            <div id="empty" class="state hidden">
+                ไม่พบสินค้า
+            </div>
+
+
+
+            <!-- PRODUCTS -->
+
+            <div id="productGrid" class="product-grid hidden"></div>
+
+        </section>
+
+
+
+        <!-- ====================================
+             CART
+        ===================================== -->
+
+        <aside class="cart" id="cartPanel">
+
+
+            <!-- MOBILE HANDLE -->
+
+            <div class="cart-handle"></div>
+
+
+
+            <!-- CART HEADER -->
+
+            <div class="cart-head">
+
+                <div>
+
+                    <h2>
+                        ตะกร้าสินค้า
+                    </h2>
+
+                    <small id="cartCount">
+                        0 รายการ
+                    </small>
+
+                </div>
+
+
+                <div class="cart-head-actions">
+
+                    <button id="clearCartBtn" class="danger-link" type="button">
+                        ล้างตะกร้า
+                    </button>
+
+
+
+
+                    <!-- ใช้บนมือถือ -->
+                    <button id="mobileCartClose" class="mobile-cart-close" type="button" aria-label="ปิดตะกร้า">
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMPTY CART -->
+
+            <div id="emptyCart" class="state">
+                ยังไม่มีสินค้า
+            </div>
+
+
+
+            <!-- CART ITEMS -->
+
+            <div id="cartItems" class="cart-items hidden"></div>
+
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary">
+
+
+                <div>
+
+                    <span>
+                        ยอดก่อนลด
+                    </span>
+
+                    <strong id="subtotalText">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+                <input id="discountInput" type="hidden" value="0">
+
+                <div class="total">
+
+                    <span>
+                        ยอดสุทธิ
+                    </span>
+
+                    <strong id="totalText">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <button type="button" id="confirmOrderBtn" class="confirm-order-btn" disabled>
+                    ✅ ยืนยันออเดอร์
+                </button>
+
+                <small class="confirm-order-help">
+                    ทวนรายการให้เรียบร้อย แล้วกดยืนยันเพื่อส่งเข้าครัว
+                </small>
+
+                <button type="button" id="holdTableBtn" class="hold-table-btn hidden">
+                    🪑 พักโต๊ะ / เลือกโต๊ะใหม่
+                </button>
+
+                <button id="checkoutBtn" class="primary-btn" type="button" disabled>
+                    ชำระเงิน
+                </button>
+
+
+                <p id="pageMessage" class="message"></p>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+
+
+    <!-- ========================================
+         MOBILE CART BACKDROP
+    ========================================= -->
+
+    <div id="cartBackdrop" class="cart-backdrop"></div>
+
+
+
+    <!-- ========================================
+         MOBILE CART BAR
+    ========================================= -->
+
+    <button id="mobileCartBar" class="mobile-cart-bar" type="button">
+
+        <div class="mobile-cart-info">
+
+            <span class="mobile-cart-icon">
+                🛒
+            </span>
+
+
+            <div>
+
+                <strong id="mobileCartCount">
+                    0 รายการ
+                </strong>
+
+                <small>
+                    ตะกร้าสินค้า
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mobile-cart-right">
+
+            <strong id="mobileCartTotal">
+                ฿0.00
+            </strong>
+
+            <span>
+                ดูตะกร้า ›
+            </span>
+
+        </div>
+
+    </button>
+
+    <!-- ========================================
+     START ORDER MODAL
+======================================== -->
+
+    <div id="orderStartModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <div class="modal-head">
+
+                <h2>เริ่มออเดอร์</h2>
+
+                <button id="closeOrderStartBtn" class="icon-btn" type="button">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="order-type-select">
+
+                <button type="button" class="order-type-btn active" data-order-type="dine_in">
+                    🍽️ ทานที่ร้าน
+                </button>
+
+                <button type="button" class="order-type-btn" data-order-type="takeaway">
+                    🥡 กลับบ้าน
+                </button>
+
+            </div>
+
+
+            <div id="tableSelectSection">
+
+                <label>
+                    เลือกโต๊ะ
+                </label>
+
+                <div id="tableGrid" class="table-grid">
+                    กำลังโหลดโต๊ะ...
+                </div>
+
+            </div>
+
+
+            <div class="guest-section">
+
+                <label>
+                    จำนวนลูกค้า
+                </label>
+
+                <div class="guest-control">
+
+                    <button id="guestMinusBtn" type="button">
+                        −
+                    </button>
+
+                    <strong id="guestCountText">
+                        1 คน
+                    </strong>
+
+                    <button id="guestPlusBtn" type="button">
+                        ＋
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <p id="orderStartMessage" class="message"></p>
+
+
+            <button id="startOrderBtn" type="button" class="primary-btn">
+                เริ่มออเดอร์
+            </button>
+            <button type="button" id="backToDashboardBtn" class="back-dashboard-btn">
+                ← กลับหน้าแดชบอร์ด
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================
+         PAYMENT MODAL
+    ========================================= -->
+
+    <div id="paymentModal" class="modal hidden">
+
+        <div class="modal-card">
+
+
+            <div class="modal-head">
+
+                <h2>
+                    ชำระเงิน
+                </h2>
+
+
+                <button id="closePaymentBtn" class="icon-btn" type="button" aria-label="ปิด">
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- TOTAL -->
+
+            <div class="pay-total">
+
+                <span>
+                    ยอดที่ต้องชำระ
+                </span>
+
+                <strong id="paymentTotalText">
+                    ฿0.00
+                </strong>
+
+            </div>
+
+            <!-- VAT READY: แสดงเฉพาะเมื่อสาขาเปิด VAT -->
+            <div id="paymentVatBreakdown" class="vat-breakdown hidden">
+                <div><span>มูลค่าก่อน VAT</span><strong id="paymentBeforeVat">฿0.00</strong></div>
+                <div><span id="paymentVatLabel">VAT 7%</span><strong id="paymentVatAmount">฿0.00</strong></div>
+                <small>ราคาสินค้ารวม VAT แล้ว</small>
+            </div>
+
+
+            <!-- ========================================
+                 DISCOUNT / PROMOTION
+            ========================================= -->
+
+            <section class="payment-discount-card">
+
+                <div class="payment-discount-head">
+                    <div>
+                        <strong>🏷️ ส่วนลด / โปรโมชั่น</strong>
+                        <small>เลือกโปรโมชั่นที่อยู่ในช่วงเวลา หรือขอส่วนลดพิเศษ</small>
+                    </div>
+
+                    <button id="clearPaymentDiscountBtn" class="discount-clear-btn hidden" type="button">
+                        ล้างส่วนลด
+                    </button>
+                </div>
+
+                <div id="activePromotionSection" class="promotion-select-row">
+
+                    <select id="activePromotionSelect">
+                        <option value="">ไม่มีโปรโมชั่นที่ใช้ได้</option>
+                    </select>
+
+                    <button id="applyPromotionBtn" class="outline-btn" type="button" disabled>
+                        ใช้โปรโมชั่น
+                    </button>
+
+                </div>
+
+
+                <div class="coupon-redeem-row">
+                    <input id="couponCodeInput" type="text" maxlength="40" autocomplete="off"
+                        placeholder="กรอกรหัสคูปอง / วอชเชอร์">
+
+                    <button id="applyCouponBtn" class="outline-btn" type="button">
+                        ใช้คูปอง
+                    </button>
+                </div>
+
+                <button id="manualDiscountBtn" class="manual-discount-btn" type="button">
+                    🔐 ขอส่วนลดพิเศษ
+                </button>
+
+                <div id="paymentDiscountSummary" class="payment-discount-summary hidden">
+                    <span id="paymentDiscountLabel">ส่วนลด</span>
+                    <strong id="paymentDiscountAmount">-฿0.00</strong>
+                </div>
+
+            </section>
+
+
+
+            <!-- PAYMENT METHOD -->
+
+            <div class="methods">
+
+                <button class="method active" data-method="cash" type="button">
+                    💵 เงินสด
+                </button>
+
+
+                <button class="method" data-method="qr" type="button">
+                    📱 QR
+                </button>
+
+            </div>
+
+
+
+            <!-- CASH -->
+
+            <div id="cashSection">
+
+                <label for="receivedInput">
+                    รับเงินมา
+                </label>
+
+
+                <input id="receivedInput" class="money" type="number" min="0" step="0.01" placeholder="0.00">
+
+
+                <div id="quickCash" class="quick-cash"></div>
+
+
+                <div class="change">
+
+                    <span>
+                        เงินทอน
+                    </span>
+
+                    <strong id="changeText">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QR -->
+
+            <div id="qrSection" class="qr hidden">
+
+                <div class="qr-payment">
+
+                    <h3>
+                        สแกนเพื่อชำระเงิน
+                    </h3>
+
+
+                    <p class="qr-label">
+                        PromptPay
+                    </p>
+
+
+                    <div id="promptpayQr" class="promptpay-qr"></div>
+
+
+                    <div id="qrAmountText" class="qr-amount">
+                        ฿0.00
+                    </div>
+
+
+                    <p class="qr-warning">
+                        กรุณาตรวจสอบชื่อผู้รับและยอดเงิน
+                        ก่อนยืนยันการชำระเงิน
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NOTE -->
+
+            <label for="saleNote">
+                หมายเหตุ
+            </label>
+
+
+            <textarea id="saleNote" rows="2"></textarea>
+
+
+
+            <p id="paymentMessage" class="message"></p>
+
+
+
+            <!-- ACTION -->
+
+            <div class="actions">
+
+                <button id="cancelPaymentBtn" class="outline-btn" type="button">
+                    ยกเลิก
+                </button>
+
+
+                <button id="confirmPaymentBtn" class="primary-btn" type="button">
+                    ยืนยันการชำระเงิน
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         MANUAL DISCOUNT APPROVAL
+    ========================================= -->
+
+    <div id="manualDiscountModal" class="modal hidden">
+
+        <div class="modal-card manual-discount-modal-card">
+
+            <div class="modal-head">
+                <div>
+                    <h2>🔐 อนุมัติส่วนลดพิเศษ</h2>
+                    <small>ต้องมีเหตุผลและ PIN ของผู้อนุมัติ</small>
+                </div>
+
+                <button id="closeManualDiscountBtn" class="icon-btn" type="button" aria-label="ปิด">
+                    ×
+                </button>
+            </div>
+
+            <label for="manualDiscountAmount">
+                จำนวนส่วนลด (บาท)
+            </label>
+
+            <input id="manualDiscountAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
+
+            <label for="manualDiscountReason">
+                เหตุผลในการให้ส่วนลด
+            </label>
+
+            <textarea id="manualDiscountReason" rows="3"
+                placeholder="เช่น ลูกค้าร้องเรียน / อาหารล่าช้า / ชดเชยบริการ"></textarea>
+
+            <label for="manualDiscountPin">
+                PIN ผู้อนุมัติ 6 หลัก
+            </label>
+
+            <input id="manualDiscountPin" type="password" inputmode="numeric" maxlength="6" autocomplete="off"
+                placeholder="••••••">
+
+            <p id="manualDiscountMessage" class="message"></p>
+
+            <div class="actions">
+                <button id="cancelManualDiscountBtn" class="outline-btn" type="button">
+                    ยกเลิก
+                </button>
+
+                <button id="confirmManualDiscountBtn" class="primary-btn" type="button">
+                    ยืนยันส่วนลด
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SUCCESS MODAL
+    ========================================= -->
+
+    <div id="successModal" class="modal hidden">
+
+        <div class="modal-card success">
+
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <h2>
+                บันทึกการขายสำเร็จ
+            </h2>
+
+
+            <p>
+                เลขที่ใบเสร็จ
+            </p>
+
+
+            <strong id="invoiceText">
+                -
+            </strong>
+
+
+
+            <div class="success-box">
+
+                <div>
+
+                    <span>
+                        ยอดสุทธิ
+                    </span>
+
+                    <strong id="successTotal">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        เงินทอน
+                    </span>
+
+                    <strong id="successChange">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="actions">
+
+                <button id="printReceiptBtn" class="outline-btn" type="button">
+                    🧾 พิมพ์ใบเสร็จ
+                </button>
+
+
+                <button id="newSaleBtn" class="primary-btn" type="button">
+                    เริ่มบิลใหม่
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         RECEIPT PRINT 80mm
+    ========================================= -->
+
+    <section id="receiptPrint" class="receipt-print">
+
+        <div class="receipt-center">
+
+            <h2>
+                JOKJUNG POS
+            </h2>
+
+            <div id="receiptBranch">
+                -
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div>
+            เลขที่บิล:
+            <span id="receiptInvoice">
+                -
+            </span>
+        </div>
+
+
+        <div>
+            วันที่:
+            <span id="receiptDate">
+                -
+            </span>
+        </div>
+
+
+        <div>
+            พนักงาน:
+            <span id="receiptCashier">
+                -
+            </span>
+        </div>
+
+        <div>
+            ประเภทออเดอร์:
+            <span id="receiptOrderType">
+                -
+            </span>
+        </div>
+
+        <div>
+            โต๊ะ:
+            <span id="receiptTable">
+                -
+            </span>
+        </div>
+
+        <div>
+            จำนวนลูกค้า:
+            <span id="receiptGuestCount">
+                -
+            </span>
+        </div>
+
+        <div>
+            เลขคิว:
+            <span id="receiptOrderId">
+                -
+            </span>
+        </div>
+
+        <div class="receipt-order-note-row">
+            หมายเหตุ:
+            <span id="receiptOrderNote">
+                -
+            </span>
+        </div>
+
+
+        <hr>
+
+
+        <div id="receiptItems"></div>
+
+
+        <hr>
+
+
+
+        <div class="receipt-row">
+
+            <span>
+                ยอดก่อนลด
+            </span>
+
+            <strong id="receiptSubtotal">
+                ฿0.00
+            </strong>
+
+        </div>
+
+
+
+        <div class="receipt-row">
+
+            <span>
+                ส่วนลด
+            </span>
+
+            <strong id="receiptDiscount">
+                ฿0.00
+            </strong>
+
+        </div>
+
+
+
+        <div id="receiptVatBreakdown" class="receipt-vat-breakdown hidden">
+            <div class="receipt-row">
+                <span>มูลค่าก่อน VAT</span>
+                <strong id="receiptBeforeVat">฿0.00</strong>
+            </div>
+            <div class="receipt-row">
+                <span id="receiptVatLabel">VAT 7%</span>
+                <strong id="receiptVatAmount">฿0.00</strong>
+            </div>
+            <div class="receipt-center receipt-vat-note">ราคาสินค้ารวม VAT แล้ว</div>
+        </div>
+
+
+        <div class="receipt-row receipt-total">
+
+            <span>
+                ยอดสุทธิ
+            </span>
+
+            <strong id="receiptTotal">
+                ฿0.00
+            </strong>
+
+        </div>
+
+
+
+        <div class="receipt-row">
+
+            <span>
+                รับเงิน
+            </span>
+
+            <strong id="receiptReceived">
+                ฿0.00
+            </strong>
+
+        </div>
+
+
+
+        <div class="receipt-row">
+
+            <span>
+                เงินทอน
+            </span>
+
+            <strong id="receiptChange">
+                ฿0.00
+            </strong>
+
+        </div>
+
+
+
+        <div class="receipt-row">
+
+            <span>
+                ชำระโดย
+            </span>
+
+            <strong id="receiptPayment">
+                -
+            </strong>
+
+        </div>
+
+
+        <hr>
+
+
+
+        <div class="receipt-center receipt-contact">
+
+            <div>
+                <strong>
+                    ติดต่อร้าน
+                </strong>
+            </div>
+
+            <div>
+                โทร: 082-3804188
+            </div>
+
+            <div class="receipt-line-title">
+                LINE ร้าน
+            </div>
+
+
+            <img src="./assets/line-qr.jpg" alt="LINE ร้าน" class="receipt-line-qr">
+
+
+            <div class="receipt-line-text">
+                สแกน QR เพื่อเพิ่ม LINE ร้าน
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="receipt-center receipt-thanks">
+            ขอบคุณที่ใช้บริการ
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         QR CODE LIBRARY
+    ========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+
+
+    <!-- ========================================
+         POS JAVASCRIPT
+    ========================================= -->
+
+    <script type="module" src="./js/pos.js"></script>
+
+</body>
+
+</html>

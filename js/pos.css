@@ -1,0 +1,3696 @@
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+:root {
+
+    --primary: #f5b400;
+    --primary-dark: #dfa400;
+    --primary-light: #fff4c7;
+
+    --background: #f3f4f6;
+
+    --white: #ffffff;
+
+    --text: #202124;
+    --muted: #70757a;
+
+    --border: #e2e5e9;
+
+    --danger: #d93025;
+
+    --success: #188038;
+    --success-light: #e6f4ea;
+
+}
+
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    font-family:
+        Arial,
+        "Noto Sans Thai",
+        sans-serif;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+button,
+input,
+textarea {
+
+    font: inherit;
+
+}
+
+
+button {
+
+    cursor: pointer;
+
+}
+
+
+button:disabled {
+
+    cursor: not-allowed;
+
+    opacity: .55;
+
+}
+
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+
+/* ========================================
+   TOPBAR
+======================================== */
+
+.topbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 40;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    min-height: 70px;
+
+    padding:
+        10px 20px;
+
+    background:
+        var(--white);
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.topbar-left,
+.topbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.topbar-brand {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+}
+
+
+.topbar-brand strong {
+
+    font-size: 16px;
+
+}
+
+
+.topbar small {
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.icon-btn,
+.outline-btn {
+
+    min-height: 40px;
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+
+    background:
+        var(--white);
+
+    color:
+        var(--text);
+
+}
+
+
+.icon-btn {
+
+    display: grid;
+
+    width: 40px;
+
+    padding: 0;
+
+    place-items: center;
+
+    font-size: 20px;
+
+}
+
+
+
+/* ========================================
+   MAIN LAYOUT
+======================================== */
+
+.layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        390px;
+
+    min-height:
+        calc(
+            100vh - 70px
+        );
+
+}
+
+
+
+/* ========================================
+   CATALOG
+======================================== */
+
+.catalog {
+
+    min-width: 0;
+
+    padding: 20px;
+
+}
+
+
+
+/* ========================================
+   TOOLBAR
+======================================== */
+
+.toolbar {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    gap: 10px;
+
+}
+
+
+.toolbar input {
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 12px;
+
+    background:
+        var(--white);
+
+    outline: none;
+
+}
+
+
+.toolbar input:focus {
+
+    border-color:
+        var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            245,
+            180,
+            0,
+            .13
+        );
+
+}
+
+
+.refresh-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+}
+
+
+.refresh-icon {
+
+    font-size: 19px;
+
+}
+
+
+
+/* ========================================
+   CATEGORY TABS
+======================================== */
+
+.tabs {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin:
+        14px 0;
+
+    padding-bottom: 3px;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling:
+        touch;
+
+}
+
+
+.tabs::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+
+.tab {
+
+    flex:
+        0 0 auto;
+
+    min-height: 42px;
+
+    padding:
+        8px 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        999px;
+
+    background:
+        var(--white);
+
+    color:
+        var(--text);
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.tab.active {
+
+    border-color:
+        var(--primary);
+
+    background:
+        var(--primary);
+
+}
+
+
+
+/* ========================================
+   STATE
+======================================== */
+
+.state {
+
+    display: flex;
+
+    min-height: 180px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        var(--muted);
+
+    text-align: center;
+
+}
+
+
+
+/* ========================================
+   PRODUCT GRID
+======================================== */
+
+.product-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(
+                150px,
+                1fr
+            )
+        );
+
+    gap: 12px;
+
+}
+
+
+
+/* ========================================
+   PRODUCT CARD
+======================================== */
+
+.product-card {
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+
+    background:
+        var(--white);
+
+    transition:
+        transform .1s ease,
+        box-shadow .1s ease;
+
+}
+
+
+.product-card:active {
+
+    transform:
+        scale(.98);
+
+}
+
+
+.product-card button {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    padding: 0;
+
+    border: 0;
+
+    background:
+        transparent;
+
+    color:
+        var(--text);
+
+    text-align: left;
+
+}
+
+
+
+/* ========================================
+   PRODUCT IMAGE
+======================================== */
+
+.product-image {
+
+    display: grid;
+
+    height: 115px;
+
+    place-items: center;
+
+    overflow: hidden;
+
+    background:
+        var(--primary-light);
+
+    font-size: 40px;
+
+}
+
+
+.product-image img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+
+/* ========================================
+   PRODUCT INFO
+======================================== */
+
+.product-info {
+
+    padding: 10px;
+
+}
+
+
+.product-info h3 {
+
+    display:
+        -webkit-box;
+
+    min-height: 37px;
+
+    overflow: hidden;
+
+    font-size: 14px;
+
+    line-height: 1.3;
+
+    -webkit-box-orient:
+        vertical;
+
+    -webkit-line-clamp:
+        2;
+
+}
+
+
+.product-info > div {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 8px;
+
+    margin-top: 8px;
+
+}
+
+
+.product-info strong {
+
+    font-size: 16px;
+
+}
+
+
+.plus {
+
+    display: grid;
+
+    flex:
+        0 0 34px;
+
+    width: 34px;
+
+    height: 34px;
+
+    place-items: center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--primary);
+
+    font-size: 20px;
+
+}
+
+
+
+/* ========================================
+   CART DESKTOP
+======================================== */
+
+.cart {
+
+    position: sticky;
+
+    top: 70px;
+
+    display: flex;
+
+    height:
+        calc(
+            100vh - 70px
+        );
+
+    flex-direction:
+        column;
+
+    background:
+        var(--white);
+
+    border-left:
+        1px solid
+        var(--border);
+
+}
+
+
+.cart-handle {
+
+    display: none;
+
+}
+
+
+
+/* ========================================
+   CART HEADER
+======================================== */
+
+.cart-head {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    padding: 18px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.cart-head h2 {
+
+    font-size: 21px;
+
+}
+
+
+.cart-head small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.cart-head-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.danger-link {
+
+    padding: 5px;
+
+    border: 0;
+
+    background:
+        transparent;
+
+    color:
+        var(--danger);
+
+    font-weight: 700;
+
+}
+
+
+.mobile-cart-close {
+
+    display: none;
+
+}
+
+
+
+/* ========================================
+   CART ITEMS
+======================================== */
+
+.cart .state {
+
+    flex: 1;
+
+}
+
+
+.cart-items {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding:
+        8px 16px;
+
+}
+
+
+.cart-item {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    gap: 10px;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.cart-item small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.qty {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 9px;
+
+}
+
+
+.qty button {
+
+    width: 32px;
+
+    height: 32px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 8px;
+
+    background:
+        var(--white);
+
+}
+
+
+.remove {
+
+    width: auto !important;
+
+    padding:
+        0 5px;
+
+    border:
+        0 !important;
+
+    color:
+        var(--danger);
+
+}
+
+
+
+/* ========================================
+   CART SUMMARY
+======================================== */
+
+.summary {
+
+    padding:
+        16px 18px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    background:
+        var(--white);
+
+}
+
+
+.summary > div,
+.summary label {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.summary input {
+
+    width: 120px;
+
+    padding: 8px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 9px;
+
+    text-align: right;
+
+}
+
+
+.summary .total {
+
+    padding-top: 13px;
+
+    border-top:
+        1px dashed
+        var(--border);
+
+    font-size: 20px;
+
+}
+
+
+
+/* ========================================
+   BUTTON
+======================================== */
+
+.primary-btn {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        10px 16px;
+
+    border:
+        1px solid
+        var(--primary);
+
+    border-radius: 12px;
+
+    background:
+        var(--primary);
+
+    color:
+        var(--text);
+
+    font-weight: 800;
+
+}
+
+
+.primary-btn:hover {
+
+    background:
+        var(--primary-dark);
+
+}
+
+
+.message {
+
+    min-height: 18px;
+
+    margin-top: 9px;
+
+    color:
+        var(--danger);
+
+    font-size: 12px;
+
+}
+
+
+
+/* ========================================
+   MOBILE CART ELEMENTS
+   ซ่อนบน Desktop
+======================================== */
+
+.mobile-cart-bar,
+.cart-backdrop {
+
+    display: none;
+
+}
+
+
+
+/* ========================================
+   MODAL
+======================================== */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .50
+        );
+
+}
+
+
+.modal-card {
+
+    width:
+        min(
+            500px,
+            100%
+        );
+
+    max-height:
+        calc(
+            100vh - 40px
+        );
+
+    overflow-y: auto;
+
+    padding: 23px;
+
+    border-radius: 18px;
+
+    background:
+        var(--white);
+
+}
+
+
+.modal-head {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+}
+
+
+
+/* ========================================
+   PAYMENT TOTAL
+======================================== */
+
+.pay-total {
+
+    margin:
+        18px 0;
+
+    padding: 17px;
+
+    border-radius: 13px;
+
+    background:
+        var(--primary-light);
+
+    text-align: center;
+
+}
+
+
+.pay-total span {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+}
+
+
+.pay-total strong {
+
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 34px;
+
+}
+
+
+
+/* ========================================
+   PAYMENT METHODS
+======================================== */
+
+.methods {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+
+}
+
+
+.method {
+
+    min-height: 65px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 12px;
+
+    background:
+        var(--white);
+
+    font-weight: 800;
+
+}
+
+
+.method.active {
+
+    border-color:
+        var(--primary);
+
+    background:
+        var(--primary-light);
+
+}
+
+
+
+/* ========================================
+   FORM
+======================================== */
+
+.modal-card label {
+
+    display: block;
+
+    margin:
+        12px 0 7px;
+
+    font-weight: 700;
+
+}
+
+
+.money,
+textarea {
+
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+
+}
+
+
+.money {
+
+    font-size: 24px;
+
+    text-align: right;
+
+}
+
+
+
+/* ========================================
+   QUICK CASH
+======================================== */
+
+.quick-cash {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    gap: 7px;
+
+    margin-top: 9px;
+
+}
+
+
+.quick-cash button {
+
+    min-height: 39px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 8px;
+
+    background:
+        var(--white);
+
+}
+
+
+
+/* ========================================
+   CHANGE
+======================================== */
+
+.change {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    margin-top: 13px;
+
+    padding: 14px;
+
+    border-radius: 11px;
+
+    background:
+        var(--success-light);
+
+    color:
+        var(--success);
+
+}
+
+
+
+/* ========================================
+   QR
+======================================== */
+
+.qr {
+
+    text-align: center;
+
+}
+
+
+.qr-payment {
+
+    padding: 15px;
+
+    text-align: center;
+
+}
+
+
+.qr-label {
+
+    margin-top: 5px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.promptpay-qr {
+
+    display: flex;
+
+    width: 240px;
+
+    min-height: 240px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin:
+        15px auto;
+
+    border-radius: 12px;
+
+    background:
+        var(--white);
+
+}
+
+
+.promptpay-qr img,
+.promptpay-qr canvas {
+
+    max-width: 100%;
+
+    height: auto;
+
+}
+
+
+.qr-amount {
+
+    margin-top: 10px;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+}
+
+
+.qr-warning {
+
+    margin-top: 10px;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+
+
+/* ========================================
+   ACTION BUTTONS
+======================================== */
+
+.actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 17px;
+
+}
+
+
+.actions > * {
+
+    flex: 1;
+
+}
+
+
+
+/* ========================================
+   SUCCESS
+======================================== */
+
+.success {
+
+    text-align: center;
+
+}
+
+
+.success-icon {
+
+    display: grid;
+
+    width: 70px;
+
+    height: 70px;
+
+    margin:
+        0 auto 14px;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        var(--success-light);
+
+    color:
+        var(--success);
+
+    font-size: 38px;
+
+}
+
+
+.success > p {
+
+    margin-top: 10px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.success-box {
+
+    margin:
+        18px 0;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background:
+        #f8f9fa;
+
+}
+
+
+.success-box div {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    padding:
+        6px 0;
+
+}
+
+
+
+/* ========================================
+   RECEIPT
+======================================== */
+
+.receipt-print {
+
+    display: none;
+
+}
+
+
+.receipt-line-title {
+
+    margin-top: 6px;
+
+}
+
+
+.receipt-line-text {
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+}
+
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (
+    max-width: 1000px
+)
+and
+(
+    min-width: 761px
+) {
+
+    .layout {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            330px;
+
+    }
+
+
+    .product-grid {
+
+        grid-template-columns:
+            repeat(
+                auto-fill,
+                minmax(
+                    140px,
+                    1fr
+                )
+            );
+
+    }
+
+}
+
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (
+    max-width: 760px
+) {
+
+    body {
+
+        padding-bottom:
+            calc(
+                82px
+                +
+                env(
+                    safe-area-inset-bottom
+                )
+            );
+
+    }
+
+
+
+    /* ====================================
+       TOPBAR MOBILE
+    ===================================== */
+
+    .topbar {
+
+        min-height: 58px;
+
+        padding:
+            7px 10px;
+
+    }
+
+
+    .topbar-left {
+
+        min-width: 0;
+
+        gap: 8px;
+
+    }
+
+
+    .topbar-brand {
+
+        min-width: 0;
+
+    }
+
+
+    .topbar-brand strong {
+
+        font-size: 14px;
+
+    }
+
+
+    .topbar small {
+
+        display: block;
+
+        max-width: 130px;
+
+        overflow: hidden;
+
+        font-size: 10px;
+
+        text-overflow:
+            ellipsis;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .topbar-right {
+
+        min-width: 0;
+
+    }
+
+
+    .topbar #logoutBtn {
+
+        display: none;
+
+    }
+
+
+    .topbar #userName {
+
+        display: block;
+
+        max-width: 120px;
+
+        overflow: hidden;
+
+        font-size: 12px;
+
+        text-overflow:
+            ellipsis;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .topbar .icon-btn {
+
+        flex:
+            0 0 40px;
+
+    }
+
+
+
+    /* ====================================
+       MAIN MOBILE
+    ===================================== */
+
+    .layout {
+
+        display: block;
+
+        min-height: auto;
+
+    }
+
+
+    .catalog {
+
+        padding:
+            8px 10px 20px;
+
+    }
+
+
+
+    /* ====================================
+       SEARCH MOBILE
+    ===================================== */
+
+    .toolbar {
+
+        position: sticky;
+
+        top: 58px;
+
+        z-index: 25;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            46px;
+
+        gap: 7px;
+
+        padding:
+            6px 0;
+
+        background:
+            var(--background);
+
+    }
+
+
+    .toolbar input {
+
+        min-height: 44px;
+
+        padding:
+            0 12px;
+
+        font-size: 16px;
+
+    }
+
+
+    .refresh-btn {
+
+        width: 46px;
+
+        min-height: 44px;
+
+        padding: 0;
+
+        border-radius: 12px;
+
+    }
+
+
+    .refresh-text {
+
+        display: none;
+
+    }
+
+
+    .refresh-icon {
+
+        font-size: 22px;
+
+    }
+
+
+
+    /* ====================================
+       CATEGORY MOBILE
+    ===================================== */
+
+    .tabs {
+
+        position: sticky;
+
+        top: 108px;
+
+        z-index: 24;
+
+        margin:
+            0 -10px 9px;
+
+        padding:
+            7px 10px 9px;
+
+        background:
+            var(--background);
+
+    }
+
+
+    .tab {
+
+        min-height: 38px;
+
+        padding:
+            7px 13px;
+
+        font-size: 13px;
+
+    }
+
+
+
+    /* ====================================
+       PRODUCT GRID MOBILE
+    ===================================== */
+
+    .product-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        gap: 9px;
+
+    }
+
+
+    .product-card {
+
+        border-radius: 12px;
+
+    }
+
+
+    .product-image {
+
+        height: 92px;
+
+        font-size: 34px;
+
+    }
+
+
+    .product-info {
+
+        padding: 9px;
+
+    }
+
+
+    .product-info h3 {
+
+        min-height: 34px;
+
+        font-size: 13px;
+
+        line-height: 1.3;
+
+    }
+
+
+    .product-info strong {
+
+        font-size: 15px;
+
+    }
+
+
+    .plus {
+
+        width: 32px;
+
+        height: 32px;
+
+        flex-basis: 32px;
+
+        font-size: 19px;
+
+    }
+
+
+
+    /* ====================================
+       CART BOTTOM SHEET
+    ===================================== */
+
+    .cart {
+
+        position: fixed;
+
+        top: auto;
+
+        right: 0;
+
+        bottom: 0;
+
+        left: 0;
+
+        z-index: 80;
+
+        display: flex;
+
+        height:
+            min(
+                78vh,
+                650px
+            );
+
+        flex-direction:
+            column;
+
+        border: 0;
+
+        border-radius:
+            22px
+            22px
+            0
+            0;
+
+        background:
+            var(--white);
+
+        box-shadow:
+            0 -10px 40px
+            rgba(
+                0,
+                0,
+                0,
+                .18
+            );
+
+        transform:
+            translateY(
+                110%
+            );
+
+        transition:
+            transform
+            .25s ease;
+
+        padding-bottom:
+            env(
+                safe-area-inset-bottom
+            );
+
+    }
+
+
+    .cart.mobile-open {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+
+    /* ====================================
+       CART HANDLE
+    ===================================== */
+
+    .cart-handle {
+
+        display: block;
+
+        flex:
+            0 0 auto;
+
+        width: 46px;
+
+        height: 5px;
+
+        margin:
+            8px auto 0;
+
+        border-radius:
+            999px;
+
+        background:
+            #d6d9dd;
+
+    }
+
+
+
+    /* ====================================
+       CART HEADER MOBILE
+    ===================================== */
+
+    .cart-head {
+
+        flex:
+            0 0 auto;
+
+        padding:
+            11px 16px;
+
+    }
+
+
+    .cart-head h2 {
+
+        font-size: 20px;
+
+    }
+
+
+    .mobile-cart-close {
+
+        display: grid;
+
+        width: 38px;
+
+        height: 38px;
+
+        padding: 0;
+
+        place-items: center;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius:
+            50%;
+
+        background:
+            var(--white);
+
+        color:
+            var(--text);
+
+        font-size: 24px;
+
+    }
+
+
+
+    /* ====================================
+       CART ITEMS MOBILE
+    ===================================== */
+
+    .cart-items {
+
+        min-height: 0;
+
+        padding:
+            0 16px;
+
+    }
+
+
+    .cart-item {
+
+        padding:
+            11px 0;
+
+    }
+
+
+
+    /* ====================================
+       CART SUMMARY MOBILE
+    ===================================== */
+
+    .summary {
+
+        flex:
+            0 0 auto;
+
+        padding:
+            12px 16px
+            calc(
+                12px
+                +
+                env(
+                    safe-area-inset-bottom
+                )
+            );
+
+    }
+
+
+    .summary > div,
+    .summary label {
+
+        margin-bottom: 9px;
+
+    }
+
+
+    .summary .total {
+
+        padding-top: 10px;
+
+        font-size: 19px;
+
+    }
+
+
+    .summary .primary-btn {
+
+        min-height: 50px;
+
+    }
+
+
+
+    /* ====================================
+       CART BACKDROP
+    ===================================== */
+
+    .cart-backdrop {
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 70;
+
+        background:
+            rgba(
+                0,
+                0,
+                0,
+                .40
+            );
+
+    }
+
+
+    .cart-backdrop.show {
+
+        display: block;
+
+    }
+
+
+
+    /* ====================================
+       MOBILE CART BAR
+    ===================================== */
+
+    .mobile-cart-bar {
+
+        position: fixed;
+
+        right: 10px;
+
+        bottom:
+            calc(
+                8px
+                +
+                env(
+                    safe-area-inset-bottom
+                )
+            );
+
+        left: 10px;
+
+        z-index: 60;
+
+        display: flex;
+
+        min-height: 64px;
+
+        align-items: center;
+
+        justify-content:
+            space-between;
+
+        gap: 12px;
+
+        padding:
+            8px 14px;
+
+        border:
+            1px solid
+            #d99e00;
+
+        border-radius: 16px;
+
+        background:
+            var(--primary);
+
+        color:
+            var(--text);
+
+        box-shadow:
+            0 7px 25px
+            rgba(
+                0,
+                0,
+                0,
+                .22
+            );
+
+        text-align: left;
+
+    }
+
+
+    .mobile-cart-bar:active {
+
+        transform:
+            scale(.99);
+
+    }
+
+
+    .mobile-cart-info {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+    }
+
+
+    .mobile-cart-icon {
+
+        font-size: 25px;
+
+    }
+
+
+    .mobile-cart-info strong {
+
+        display: block;
+
+        font-size: 14px;
+
+    }
+
+
+    .mobile-cart-info small {
+
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 10px;
+
+        opacity: .7;
+
+    }
+
+
+    .mobile-cart-right {
+
+        text-align: right;
+
+    }
+
+
+    .mobile-cart-right strong {
+
+        display: block;
+
+        font-size: 18px;
+
+    }
+
+
+    .mobile-cart-right span {
+
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 10px;
+
+    }
+
+
+
+    /* ====================================
+       PAYMENT MODAL MOBILE
+    ===================================== */
+
+    .modal {
+
+        align-items: end;
+
+        padding: 0;
+
+    }
+
+
+    .modal-card {
+
+        width: 100%;
+
+        max-height: 92vh;
+
+        padding:
+            18px 16px
+            calc(
+                18px
+                +
+                env(
+                    safe-area-inset-bottom
+                )
+            );
+
+        border-radius:
+            22px
+            22px
+            0
+            0;
+
+    }
+
+
+    .pay-total {
+
+        margin:
+            13px 0;
+
+        padding: 13px;
+
+    }
+
+
+    .pay-total strong {
+
+        font-size: 30px;
+
+    }
+
+
+    .methods {
+
+        gap: 8px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .method {
+
+        min-height: 55px;
+
+    }
+
+
+    .quick-cash {
+
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+    }
+
+
+    .quick-cash button {
+
+        min-width: 0;
+
+        padding:
+            4px 2px;
+
+        font-size: 13px;
+
+    }
+
+
+    .promptpay-qr {
+
+        width:
+            min(
+                220px,
+                100%
+            );
+
+        min-height: 220px;
+
+    }
+
+
+    .actions {
+
+        position: sticky;
+
+        bottom: 0;
+
+        padding-top: 8px;
+
+        background:
+            var(--white);
+
+    }
+
+}
+
+
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+
+@media (
+    max-width: 390px
+) {
+
+    .product-grid {
+
+        gap: 7px;
+
+    }
+
+
+    .product-image {
+
+        height: 84px;
+
+    }
+
+
+    .product-info {
+
+        padding: 8px;
+
+    }
+
+
+    .product-info h3 {
+
+        font-size: 12px;
+
+    }
+
+
+    .tab {
+
+        padding:
+            7px 11px;
+
+        font-size: 12px;
+
+    }
+
+
+    .mobile-cart-bar {
+
+        right: 7px;
+
+        left: 7px;
+
+    }
+
+}
+
+
+
+/* ========================================
+   PRINT RECEIPT 80mm
+======================================== */
+
+@media print {
+
+    @page {
+
+        size:
+            80mm auto;
+
+        margin:
+            4mm;
+
+    }
+
+
+    body {
+
+        padding: 0 !important;
+
+        background:
+            #ffffff !important;
+
+    }
+
+
+    body * {
+
+        visibility:
+            hidden !important;
+
+    }
+
+
+    #receiptPrint,
+    #receiptPrint * {
+
+        visibility:
+            visible !important;
+
+    }
+
+
+    #receiptPrint {
+
+        display:
+            block !important;
+
+        position:
+            absolute;
+
+        top: 0;
+
+        left: 0;
+
+        width: 72mm;
+
+        margin: 0;
+
+        padding: 0;
+
+        background:
+            #ffffff;
+
+        color:
+            #000000;
+
+        font-family:
+            Arial,
+            "Noto Sans Thai",
+            sans-serif;
+
+        font-size: 12px;
+
+        line-height: 1.4;
+
+    }
+
+
+    #receiptPrint h2 {
+
+        margin:
+            0 0 4px;
+
+        font-size: 18px;
+
+    }
+
+
+    #receiptPrint hr {
+
+        margin:
+            8px 0;
+
+        border: 0;
+
+        border-top:
+            1px dashed
+            #000000;
+
+    }
+
+
+    .receipt-center {
+
+        text-align: center;
+
+    }
+
+
+    .receipt-row,
+    .receipt-item-line {
+
+        display: flex;
+
+        justify-content:
+            space-between;
+
+        gap: 8px;
+
+    }
+
+
+    .receipt-item {
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .receipt-item-name {
+
+        font-weight: 700;
+
+    }
+
+
+    .receipt-total {
+
+        margin:
+            4px 0;
+
+        font-size: 14px;
+
+    }
+
+
+    .receipt-contact {
+
+        margin:
+            8px 0;
+
+    }
+
+
+    .receipt-line-qr {
+
+        display: block;
+
+        width: 30mm;
+
+        height: 30mm;
+
+        object-fit:
+            contain;
+
+        margin:
+            5px auto 0;
+
+    }
+
+
+    .receipt-thanks {
+
+        margin-top: 10px;
+
+    }
+
+}
+
+/* ========================================
+   MOBILE POS FINAL FIX
+======================================== */
+
+@media (max-width: 760px) {
+
+    /* ================================
+       SEARCH BAR STICKY
+    ================================= */
+
+    .toolbar {
+        position: sticky !important;
+        top: 58px !important;
+        z-index: 300 !important;
+
+        background: var(--background) !important;
+
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+    }
+
+
+    /* ================================
+       CATEGORY STICKY
+    ================================= */
+
+    .tabs {
+        position: sticky !important;
+
+        top: 114px !important;
+
+        z-index: 299 !important;
+
+        background: var(--background) !important;
+
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+
+        padding:
+            8px 10px 10px !important;
+
+        box-shadow:
+            0 4px 8px
+            rgba(0, 0, 0, 0.04) !important;
+    }
+
+
+    /* ================================
+       MOBILE CART BAR
+       บังคับให้อยู่ล่างสุด
+    ================================= */
+
+    .mobile-cart-bar {
+        position: fixed !important;
+
+        left: 12px !important;
+        right: 12px !important;
+
+        top: auto !important;
+
+        bottom: 8px !important;
+
+        margin: 0 !important;
+
+        z-index: 9999 !important;
+
+        transform: translate3d(0, 0, 0) !important;
+
+        width: auto !important;
+    }
+
+
+    /* รองรับ iPhone safe area */
+    @supports (
+        padding-bottom:
+        env(safe-area-inset-bottom)
+    ) {
+
+        .mobile-cart-bar {
+            bottom:
+                calc(
+                    8px
+                    +
+                    env(safe-area-inset-bottom)
+                ) !important;
+        }
+    }
+
+
+    /* ================================
+       เว้นพื้นที่ท้ายสินค้า
+    ================================= */
+
+    body {
+        padding-bottom:
+            110px !important;
+    }
+
+
+    .catalog {
+        padding-bottom:
+            120px !important;
+    }
+
+
+    /* ================================
+       CART BOTTOM SHEET
+    ================================= */
+
+    .cart {
+        position: fixed !important;
+
+        left: 0 !important;
+        right: 0 !important;
+
+        top: auto !important;
+        bottom: 0 !important;
+
+        height: 78vh !important;
+
+        z-index: 10001 !important;
+
+        transform:
+            translateY(110%) !important;
+    }
+
+
+    .cart.mobile-open {
+        transform:
+            translateY(0) !important;
+    }
+
+
+    /* ================================
+       BACKDROP
+    ================================= */
+
+    .cart-backdrop.show {
+        display: block !important;
+
+        position: fixed !important;
+
+        inset: 0 !important;
+
+        z-index: 10000 !important;
+    }
+
+
+    /* ================================
+       ตอนเปิดตะกร้า
+       ซ่อนแถบล่าง
+    ================================= */
+
+    body:has(.cart.mobile-open)
+    .mobile-cart-bar {
+        display: none !important;
+    }
+}
+
+/* ========================================
+   MOBILE PAYMENT SCREEN FIX
+======================================== */
+
+@media (max-width: 760px) {
+
+    /* ----------------------------------------
+       Search + Category
+       ล็อกเฉพาะหน้าเมนู
+    ----------------------------------------- */
+
+    .toolbar {
+        position: sticky !important;
+        top: 58px !important;
+
+        /*
+         * ต้องต่ำกว่า Modal
+         */
+        z-index: 40 !important;
+    }
+
+
+    .tabs {
+        position: sticky !important;
+        top: 108px !important;
+
+        /*
+         * ต้องต่ำกว่า Modal
+         */
+        z-index: 39 !important;
+    }
+
+
+    /* ----------------------------------------
+       Payment Modal
+       ให้อยู่เหนือทุกอย่าง
+    ----------------------------------------- */
+
+    #paymentModal {
+        z-index: 20000 !important;
+    }
+
+
+    #paymentModal .modal-card {
+        position: relative !important;
+        z-index: 20001 !important;
+    }
+
+
+    /* ----------------------------------------
+       ตอนเปิด Payment
+       ซ่อน Search / Category
+    ----------------------------------------- */
+
+    body:has(#paymentModal:not(.hidden))
+    .toolbar,
+
+    body:has(#paymentModal:not(.hidden))
+    .tabs {
+
+        visibility: hidden !important;
+    }
+
+
+    /* ----------------------------------------
+       ตอนเปิด Payment
+       ซ่อนแถบตะกร้าสีเหลือง
+    ----------------------------------------- */
+
+    body:has(#paymentModal:not(.hidden))
+    .mobile-cart-bar {
+
+        display: none !important;
+    }
+
+
+    /* ----------------------------------------
+       ตอนเปิดตะกร้า Bottom Sheet
+       ก็ซ่อนแถบตะกร้าล่างเช่นกัน
+    ----------------------------------------- */
+
+    body:has(.cart.mobile-open)
+    .mobile-cart-bar {
+
+        display: none !important;
+    }
+
+
+    /* ----------------------------------------
+       Mobile Cart Bar
+       ใช้เฉพาะหน้าเลือกสินค้า
+    ----------------------------------------- */
+
+    .mobile-cart-bar {
+
+        position: fixed !important;
+
+        left: 12px !important;
+        right: 12px !important;
+
+        top: auto !important;
+
+        bottom: calc(
+            8px + env(safe-area-inset-bottom)
+        ) !important;
+
+        margin: 0 !important;
+
+        width: auto !important;
+
+        z-index: 500 !important;
+    }
+}
+
+/* ========================================
+   SUCCESS MODAL MOBILE FIX
+======================================== */
+
+@media (max-width: 760px) {
+
+    /* เมื่อหน้าบันทึกการขายสำเร็จเปิดอยู่
+       ซ่อนแถบตะกร้าด้านล่าง */
+    body:has(#successModal:not(.hidden))
+    .mobile-cart-bar {
+        display: none !important;
+    }
+
+
+    /* Success Modal ต้องอยู่เหนือทุกอย่าง */
+    #successModal {
+        position: fixed !important;
+        inset: 0 !important;
+
+        z-index: 30000 !important;
+
+        display: flex !important;
+
+        align-items: flex-end !important;
+        justify-content: center !important;
+
+        padding: 0 !important;
+
+        background: rgba(0, 0, 0, .5) !important;
+    }
+
+
+    /* ถ้ามี hidden ต้องซ่อนจริง */
+    #successModal.hidden {
+        display: none !important;
+    }
+
+
+    /* กล่องผลการขาย */
+    #successModal .modal-card {
+        position: relative !important;
+
+        width: 100% !important;
+
+        max-height: 92dvh !important;
+
+        overflow-y: auto !important;
+
+        padding:
+            22px 18px
+            calc(
+                22px + env(safe-area-inset-bottom)
+            ) !important;
+
+        border-radius:
+            24px 24px 0 0 !important;
+
+        background: #fff !important;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /* ลดขนาดบางส่วนไม่ให้กินพื้นที่มากเกิน */
+    #successModal .success-icon {
+        width: 64px !important;
+        height: 64px !important;
+
+        margin-bottom: 10px !important;
+
+        font-size: 34px !important;
+    }
+
+
+    #successModal h2 {
+        margin: 6px 0 !important;
+        font-size: 25px !important;
+    }
+
+
+    #successModal .success-box {
+        margin: 14px 0 !important;
+    }
+
+
+    /* ปุ่มใบเสร็จ + เริ่มบิลใหม่ */
+    #successModal .actions {
+        position: sticky !important;
+
+        bottom: 0 !important;
+
+        display: grid !important;
+
+        grid-template-columns: 1fr 1fr !important;
+
+        gap: 10px !important;
+
+        margin-top: 16px !important;
+
+        padding:
+            10px 0
+            max(
+                4px,
+                env(safe-area-inset-bottom)
+            ) !important;
+
+        background: #fff !important;
+
+        z-index: 5 !important;
+    }
+
+
+    #successModal .actions button {
+        min-height: 52px !important;
+
+        font-weight: 700 !important;
+    }
+
+}
+/* ========================================
+   START ORDER
+======================================== */
+
+.order-type-select {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.order-type-btn {
+    min-height: 60px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    font-weight: 800;
+}
+
+.order-type-btn.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.table-select-btn {
+    min-height: 52px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    font-weight: 700;
+}
+
+.table-select-btn.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.table-select-btn:disabled {
+    opacity: .45;
+}
+
+.guest-section {
+    margin: 18px 0;
+}
+
+.guest-control {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.guest-control button {
+    min-height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 22px;
+}
+
+.guest-control strong {
+    text-align: center;
+    font-size: 18px;
+}
+
+@media (max-width: 760px) {
+    .table-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ========================================
+   START ORDER MODAL - MOBILE FIX
+======================================== */
+
+@media (max-width: 760px) {
+
+    /* ซ่อนแถบตะกร้าตอนเปิดหน้าต่างเริ่มออเดอร์ */
+    body:has(#orderStartModal:not(.hidden)) .mobile-cart-bar {
+        display: none !important;
+    }
+
+
+    /* modal เต็มจอมือถือ */
+    #orderStartModal {
+        align-items: flex-end !important;
+        padding: 0 !important;
+        z-index: 30000 !important;
+    }
+
+
+    /* กล่องเริ่มออเดอร์ */
+    #orderStartModal .modal-card {
+        width: 100% !important;
+        max-width: none !important;
+
+        height: auto !important;
+        max-height: 92dvh !important;
+
+        overflow-y: auto !important;
+
+        padding:
+            18px 18px calc(22px + env(safe-area-inset-bottom)) !important;
+
+        border-radius:
+            24px 24px 0 0 !important;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /* หัว modal ค้างด้านบนเวลาเลื่อน */
+    #orderStartModal .modal-head {
+        position: sticky !important;
+        top: -18px !important;
+
+        z-index: 5 !important;
+
+        margin:
+            -18px -18px 12px !important;
+
+        padding:
+            18px !important;
+
+        background: #fff !important;
+    }
+
+
+    #orderStartModal .modal-head h2 {
+        font-size: 26px !important;
+    }
+
+
+    /* ทานที่ร้าน / กลับบ้าน */
+    #orderStartModal .order-type-select {
+        gap: 8px !important;
+        margin: 10px 0 16px !important;
+    }
+
+
+    #orderStartModal .order-type-btn {
+        min-height: 54px !important;
+        padding: 8px !important;
+        font-size: 16px !important;
+    }
+
+
+    /* โต๊ะ */
+    #orderStartModal .table-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr)) !important;
+
+        gap: 8px !important;
+
+        margin-top: 8px !important;
+    }
+
+
+    #orderStartModal .table-select-btn {
+        min-height: 58px !important;
+
+        padding: 6px !important;
+
+        font-size: 14px !important;
+
+        line-height: 1.25 !important;
+    }
+
+
+    /* จำนวนลูกค้า */
+    #orderStartModal .guest-section {
+        margin: 18px 0 12px !important;
+    }
+
+
+    #orderStartModal .guest-control {
+        grid-template-columns:
+            52px 1fr 52px !important;
+
+        gap: 8px !important;
+    }
+
+
+    #orderStartModal .guest-control button {
+        min-height: 50px !important;
+    }
+
+
+    /* ปุ่มเริ่มออเดอร์ให้อยู่ท้าย modal */
+    #orderStartModal #startOrderBtn {
+        position: sticky !important;
+
+        bottom: 0 !important;
+
+        min-height: 54px !important;
+
+        margin-top: 10px !important;
+
+        z-index: 5 !important;
+    }
+}
+
+/* ========================================
+   TABLE STATUS
+======================================== */
+
+/* โต๊ะว่าง */
+.table-select-btn {
+    background: #ffffff;
+    border: 1px solid #dfe3e8;
+}
+
+
+/* โต๊ะมีลูกค้า แต่ยังไม่ได้เลือก */
+.table-select-btn.occupied {
+    background: #fff7df !important;
+    border: 1px solid #f2c14e !important;
+}
+
+.table-select-btn.occupied strong,
+.table-select-btn.occupied small {
+    color: #9a6500 !important;
+}
+
+
+/* โต๊ะที่กำลังเลือก */
+.table-select-btn.active {
+    border: 2px solid #f5a800 !important;
+    background: #fff1b8 !important;
+    box-shadow: 0 0 0 3px rgba(245, 168, 0, 0.15);
+}
+
+
+/* โต๊ะค้าง + กำลังเลือก */
+.table-select-btn.occupied.active {
+    background: #ffc928 !important;
+    border: 2px solid #e29100 !important;
+    box-shadow: 0 0 0 4px rgba(255, 190, 0, 0.20) !important;
+}
+
+.table-select-btn.occupied.active strong {
+    color: #1f1f1f !important;
+}
+
+.table-select-btn.occupied.active small {
+    color: #5c4300 !important;
+    font-weight: 800 !important;
+}
+
+.back-dashboard-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px 16px;
+
+    border: 1px solid #d9dee5;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #4b5563;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.back-dashboard-btn:hover {
+    background: #f5f6f8;
+    border-color: #c8cdd4;
+}
+
+.back-dashboard-btn:active {
+    transform: scale(0.99);
+}
+.hold-table-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px 14px;
+
+    border: 1px solid #f0ad00;
+    border-radius: 10px;
+
+    background: #fff7d6;
+    color: #8a5b00;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.hold-table-btn:hover {
+    background: #ffefb4;
+}
+
+.hold-table-btn:active {
+    transform: scale(0.99);
+}
+
+/* =========================================================
+   JOKJUNG POS DISCOUNT MODAL MOBILE FIX V2.5.3
+   Hide mobile cart bar and keep confirm button visible
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    /* ส่วนลดพิเศษต้องอยู่เหนือ UI ทั้งหมด */
+    #manualDiscountModal {
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 40000 !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        background: rgba(0,0,0,.50) !important;
+    }
+
+    #manualDiscountModal.hidden {
+        display: none !important;
+    }
+
+    #manualDiscountModal .modal-card {
+        position: relative !important;
+        z-index: 40001 !important;
+
+        width: 100% !important;
+        max-width: 760px !important;
+
+        max-height:
+            calc(100dvh - 26px - env(safe-area-inset-top)) !important;
+
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+
+        padding-bottom:
+            calc(24px + env(safe-area-inset-bottom)) !important;
+
+        border-radius: 24px 24px 0 0 !important;
+    }
+
+    /*
+     * ต้นเหตุจากรูป:
+     * V2.5.2 ซ่อน Payment Modal ก่อนเปิด Discount Modal
+     * ทำให้ selector เดิมของ Payment ไม่ได้ซ่อน mobile cart bar แล้ว
+     * จึงเห็นปุ่มยอดเงินสีเหลืองมาทับปุ่มยืนยันส่วนลด
+     */
+    body:has(#manualDiscountModal:not(.hidden))
+    .mobile-cart-bar {
+        display: none !important;
+    }
+
+    /*
+     * ถ้าตะกร้า Bottom Sheet ค้างสถานะ mobile-open
+     * ให้ซ่อนทั้ง Cart และ Backdrop ขณะอนุมัติส่วนลด
+     */
+    body:has(#manualDiscountModal:not(.hidden))
+    .cart {
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    body:has(#manualDiscountModal:not(.hidden))
+    .cart-backdrop {
+        display: none !important;
+        pointer-events: none !important;
+    }
+
+    /*
+     * Footer ของ modal ต้องเลื่อนมาถึงและกดได้จริง
+     * ไม่วาง fixed/sticky ทับฟอร์ม
+     */
+    #manualDiscountModal .modal-actions {
+        position: static !important;
+        margin-top: 18px !important;
+        padding-bottom:
+            calc(4px + env(safe-area-inset-bottom)) !important;
+        background: #fff !important;
+        z-index: auto !important;
+    }
+
+    #manualDiscountModal #confirmManualDiscountBtn {
+        min-height: 54px !important;
+        width: 100% !important;
+        font-size: 17px !important;
+        font-weight: 900 !important;
+    }
+}
+
+
+/* =========================================================
+   JOKJUNG POS DISCOUNT MODAL UI FIX V2.5.4
+   Restore full-width fields + balanced action buttons
+   ========================================================= */
+
+#manualDiscountModal #manualDiscountAmount,
+#manualDiscountModal #manualDiscountPin,
+#manualDiscountModal #manualDiscountReason {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+#manualDiscountModal #manualDiscountAmount,
+#manualDiscountModal #manualDiscountPin {
+    min-height: 54px !important;
+    padding: 12px 14px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    background: var(--white) !important;
+}
+
+#manualDiscountModal #manualDiscountAmount {
+    font-size: 22px !important;
+    text-align: right !important;
+}
+
+#manualDiscountModal #manualDiscountPin {
+    font-size: 20px !important;
+    letter-spacing: 3px !important;
+}
+
+#manualDiscountModal #manualDiscountReason {
+    min-height: 110px !important;
+    resize: vertical !important;
+}
+
+#manualDiscountModal .modal-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+#manualDiscountModal .modal-actions button,
+#manualDiscountModal #cancelManualDiscountBtn,
+#manualDiscountModal #confirmManualDiscountBtn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 56px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+
+@media (max-width: 760px) {
+    #manualDiscountModal .modal-card {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    #manualDiscountModal .modal-actions {
+        margin-top: 22px !important;
+        padding-bottom:
+            calc(6px + env(safe-area-inset-bottom)) !important;
+    }
+
+    #manualDiscountModal #cancelManualDiscountBtn {
+        border: 1px solid var(--border) !important;
+        background: var(--white) !important;
+        color: var(--text) !important;
+    }
+
+    #manualDiscountModal #confirmManualDiscountBtn {
+        border: 1px solid var(--primary) !important;
+        background: var(--primary) !important;
+        color: var(--text) !important;
+    }
+}
+
+
+/* =========================================================
+   JOKJUNG POS PAYMENT MODAL MOBILE UI FIX V2.5.5
+   Clean mobile-first layout for payment screen
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    #paymentModal {
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 30000 !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        background: rgba(0,0,0,.50) !important;
+    }
+
+    #paymentModal.hidden {
+        display: none !important;
+    }
+
+    #paymentModal .modal-card {
+        width: 100% !important;
+        max-width: 760px !important;
+        max-height: calc(100dvh - 18px - env(safe-area-inset-top)) !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+        border-radius: 24px 24px 0 0 !important;
+        padding: 20px 18px calc(18px + env(safe-area-inset-bottom)) !important;
+        background: #fff !important;
+        box-shadow: 0 -8px 30px rgba(0,0,0,.16) !important;
+    }
+
+    #paymentModal .modal-head,
+    #paymentModal .modal-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        margin-bottom: 16px !important;
+    }
+
+    #paymentModal .modal-head h2,
+    #paymentModal .modal-header h2,
+    #paymentModal h2 {
+        margin: 0 !important;
+        font-size: 26px !important;
+        line-height: 1.15 !important;
+    }
+
+    #paymentModal .close-btn,
+    #paymentModal #closePaymentBtn {
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        border-radius: 14px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #paymentModal .payment-total-card,
+    #paymentModal .total-card,
+    #paymentModal [class*="payment-total"] {
+        border-radius: 18px !important;
+        padding: 22px 16px !important;
+        margin: 8px 0 18px !important;
+    }
+
+    #paymentModal #paymentTotalText {
+        font-size: 34px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+    }
+
+    /* Promotion / Discount section */
+    #paymentModal .promotion-section,
+    #paymentModal .discount-section,
+    #paymentModal [class*="promotion"],
+    #paymentModal [class*="discount"] {
+        margin-bottom: 14px !important;
+    }
+
+    #paymentModal #activePromotionSelect,
+    #paymentModal #couponCodeInput {
+        width: 100% !important;
+        min-height: 50px !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+        font-size: 16px !important;
+    }
+
+    #paymentModal #applyPromotionBtn,
+    #paymentModal #applyCouponBtn,
+    #paymentModal #manualDiscountBtn {
+        min-height: 50px !important;
+        border-radius: 12px !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+    }
+
+    /* stack promotion controls cleanly */
+    #paymentModal .promotion-row,
+    #paymentModal .coupon-row,
+    #paymentModal .discount-row {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    #paymentModal #applyPromotionBtn,
+    #paymentModal #applyCouponBtn {
+        width: 100% !important;
+    }
+
+    #paymentModal #manualDiscountBtn {
+        width: 100% !important;
+        margin-top: 4px !important;
+    }
+
+    /* Payment method buttons */
+    #paymentModal .payment-methods,
+    #paymentModal .payment-tabs,
+    #paymentModal [class*="payment-method"] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    #paymentModal .payment-methods button,
+    #paymentModal .payment-tabs button,
+    #paymentModal [data-payment],
+    #paymentModal [data-method] {
+        min-height: 58px !important;
+        width: 100% !important;
+        border-radius: 14px !important;
+        font-size: 18px !important;
+        font-weight: 900 !important;
+    }
+
+    /* Cash input and quick cash */
+    #paymentModal #receivedInput {
+        width: 100% !important;
+        min-height: 58px !important;
+        border-radius: 14px !important;
+        font-size: 28px !important;
+        text-align: right !important;
+        padding: 12px 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    #paymentModal #quickCash {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+
+    #paymentModal #quickCash button {
+        min-height: 50px !important;
+        border-radius: 12px !important;
+        font-size: 17px !important;
+    }
+
+    #paymentModal .change-box,
+    #paymentModal [class*="change"] {
+        border-radius: 14px !important;
+    }
+
+    #paymentModal #changeText {
+        font-size: 22px !important;
+        font-weight: 900 !important;
+    }
+
+    #paymentModal #saleNote {
+        width: 100% !important;
+        min-height: 84px !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+    }
+
+    /* Final action buttons */
+    #paymentModal .modal-actions {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1.05fr !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 18px !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    #paymentModal #cancelPaymentBtn,
+    #paymentModal #confirmPaymentBtn {
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 58px !important;
+        border-radius: 14px !important;
+        font-size: 18px !important;
+        font-weight: 900 !important;
+    }
+
+    #paymentModal #cancelPaymentBtn {
+        background: #fff !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text) !important;
+    }
+
+    #paymentModal #confirmPaymentBtn {
+        background: var(--primary) !important;
+        border: 1px solid var(--primary) !important;
+        color: var(--text) !important;
+    }
+
+    /* Remove awkward empty gap at bottom */
+    #paymentModal .modal-card > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    body:has(#paymentModal:not(.hidden)) .mobile-cart-bar {
+        display: none !important;
+    }
+
+    body:has(#paymentModal:not(.hidden)) {
+        overflow: hidden !important;
+    }
+}
+
+@media (max-width: 420px) {
+    #paymentModal .modal-card {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    #paymentModal #quickCash {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    #paymentModal .modal-actions {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}

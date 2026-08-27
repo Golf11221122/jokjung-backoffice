@@ -1,0 +1,324 @@
+/* =========================================================
+   JOKJUNG POS MAIN
+   EMPLOYEES MOBILE UI V2.14
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .page {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 12px;
+        padding-right: 12px;
+        box-sizing: border-box;
+    }
+
+    .topbar {
+        gap: 10px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .topbar-left {
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .topbar-left h1 {
+        font-size: 24px;
+        line-height: 1.15;
+    }
+
+    .topbar-left small,
+    #branchText {
+        display: block;
+        max-width: 48vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .topbar-right {
+        gap: 8px;
+        min-width: 0;
+    }
+
+    #userName {
+        max-width: 30vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #logoutBtn {
+        padding: 10px 12px;
+        white-space: nowrap;
+    }
+
+    .page-heading {
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .page-heading,
+    .filters-card,
+    .summary-grid,
+    .employee-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #addEmployeeBtn {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .filters-grid,
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .filters-grid .field:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .employee-card {
+        overflow: visible;
+    }
+
+    .employee-header {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .table-wrap {
+        overflow: visible !important;
+        width: 100%;
+    }
+
+    .table-wrap table {
+        display: block;
+        width: 100%;
+        min-width: 0 !important;
+        border: 0;
+    }
+
+    .table-wrap thead {
+        display: none;
+    }
+
+    .table-wrap tbody {
+        display: grid;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .table-wrap tr {
+        display: grid;
+        width: 100%;
+        box-sizing: border-box;
+        gap: 0;
+        padding: 14px;
+        border: 1px solid rgba(0, 0, 0, .10);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
+    }
+
+    .table-wrap td {
+        display: grid;
+        grid-template-columns: 108px minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 9px 0 !important;
+        border: 0 !important;
+        text-align: left !important;
+    }
+
+    .table-wrap td + td {
+        border-top: 1px solid rgba(0, 0, 0, .06) !important;
+    }
+
+    .table-wrap td::before {
+        color: #6f6f6f;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .table-wrap td:nth-child(1)::before {
+        content: "พนักงาน";
+    }
+
+    .table-wrap td:nth-child(2)::before {
+        content: "ตำแหน่ง";
+    }
+
+    .table-wrap td:nth-child(3)::before {
+        content: "สถานะ";
+    }
+
+    .table-wrap td:nth-child(4)::before {
+        content: "PIN VOID";
+    }
+
+    .table-wrap td:nth-child(5) {
+        display: block;
+        padding-top: 12px !important;
+    }
+
+    .table-wrap td:nth-child(5)::before {
+        content: none;
+    }
+
+    .employee-name {
+        display: block;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .employee-id {
+        display: none;
+    }
+
+    .badge {
+        width: fit-content;
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .row-actions {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px !important;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .row-actions .action-btn {
+        width: 100%;
+        min-width: 0 !important;
+        min-height: 44px;
+        margin: 0 !important;
+        padding: 9px 8px !important;
+        line-height: 1.2;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+
+    .row-actions .pin {
+        grid-column: span 1;
+    }
+
+    .modal {
+        align-items: flex-end !important;
+        padding: 0 !important;
+    }
+
+    .modal-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 92svh;
+        margin: 0 !important;
+        border-radius: 22px 22px 0 0 !important;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding:
+            20px
+            16px
+            calc(22px + env(safe-area-inset-bottom))
+            !important;
+        box-sizing: border-box;
+    }
+
+    .modal-head {
+        position: sticky;
+        top: -20px;
+        z-index: 2;
+        margin:
+            -20px
+            -16px
+            16px;
+        padding:
+            18px
+            16px
+            14px;
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, .06);
+    }
+
+    .modal-head h2 {
+        font-size: 26px;
+        line-height: 1.2;
+    }
+
+    .modal-actions {
+        position: sticky;
+        bottom: calc(-22px - env(safe-area-inset-bottom));
+        z-index: 2;
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin:
+            18px
+            -16px
+            calc(-22px - env(safe-area-inset-bottom));
+        padding:
+            12px
+            16px
+            calc(14px + env(safe-area-inset-bottom));
+        background: rgba(255, 255, 255, .96);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(0, 0, 0, .06);
+    }
+
+    .modal-actions button {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    input,
+    select,
+    button {
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width: 390px) {
+
+    .filters-grid,
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .row-actions {
+        grid-template-columns: 1fr !important;
+    }
+
+    .table-wrap td {
+        grid-template-columns: 92px minmax(0, 1fr);
+    }
+
+    .topbar-right {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    #userName {
+        max-width: 38vw;
+    }
+}

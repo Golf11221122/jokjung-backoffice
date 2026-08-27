@@ -1,0 +1,575 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f6f7f9;
+    color: #222;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 16px 24px;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.topbar small {
+    display: block;
+    margin-top: 4px;
+    color: #777;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+    width: min(1400px, calc(100% - 32px));
+    margin: 24px auto 60px;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.page-heading h2 {
+    margin: 0 0 6px;
+    font-size: 26px;
+}
+
+.page-heading p {
+    margin: 0;
+    color: #777;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+button {
+    font: inherit;
+}
+
+.icon-btn,
+.outline-btn,
+.primary-btn,
+.action-btn {
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.15s ease;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    font-size: 22px;
+}
+
+.outline-btn {
+    padding: 10px 16px;
+
+    border: 1px solid #d8d8d8;
+    background: #fff;
+
+    color: #333;
+    font-weight: 600;
+}
+
+.primary-btn {
+    padding: 10px 18px;
+
+    border: 1px solid #f4a300;
+    background: #f4a300;
+
+    color: #111;
+    font-weight: 700;
+}
+
+.action-btn {
+    padding: 8px 12px;
+
+    border: 1px solid #d8d8d8;
+    background: #fff;
+
+    color: #333;
+}
+
+.action-btn.pin {
+    border-color: #f4a300;
+    color: #a66f00;
+}
+
+.action-btn:hover,
+.outline-btn:hover,
+.icon-btn:hover {
+    background: #f5f5f5;
+}
+
+.primary-btn:hover {
+    filter: brightness(0.96);
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 16px;
+
+    padding: 20px;
+}
+
+.summary-card span {
+    display: block;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.summary-card strong {
+    font-size: 26px;
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+.filter-card,
+.employee-card {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 16px;
+}
+
+.filter-card {
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 14px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #222;
+
+    font: inherit;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: none;
+    border-color: #f4a300;
+    box-shadow: 0 0 0 3px rgba(244, 163, 0, 0.12);
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+
+/* =========================================
+   EMPLOYEE TABLE
+========================================= */
+
+.employee-card {
+    overflow: hidden;
+}
+
+.employee-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.employee-header h2 {
+    margin: 0 0 4px;
+    font-size: 20px;
+}
+
+.employee-header small {
+    color: #777;
+}
+
+.state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #777;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    background: #fafafa;
+    font-size: 13px;
+    color: #666;
+}
+
+td {
+    font-size: 14px;
+}
+
+.employee-name {
+    font-weight: 700;
+}
+
+.employee-id {
+    display: block;
+    margin-top: 4px;
+
+    color: #999;
+    font-size: 11px;
+}
+
+.row-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================================
+   BADGES
+========================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 78px;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-admin {
+    background: #fff3cd;
+    color: #7a5600;
+}
+
+.badge-manager {
+    background: #e8f0fe;
+    color: #174ea6;
+}
+
+.badge-staff {
+    background: #eef2f7;
+    color: #455a64;
+}
+
+.badge-active {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.badge-inactive {
+    background: #fce8e6;
+    color: #c5221f;
+}
+
+.badge-pin {
+    background: #fff7e0;
+    color: #8a5a00;
+}
+
+.badge-no-pin {
+    background: #f1f3f4;
+    color: #777;
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-card {
+    width: 100%;
+
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+
+    background: #fff;
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18);
+
+    padding: 20px;
+}
+
+.modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.modal-head h2 {
+    margin: 0 0 5px;
+    font-size: 22px;
+}
+
+.modal-head small {
+    color: #888;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.switch-row {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+.switch-row input {
+    width: auto;
+}
+
+.note-box {
+    padding: 14px;
+
+    border: 1px solid #f0d58a;
+    border-radius: 12px;
+
+    background: #fff9e8;
+}
+
+.note-box p {
+    margin: 7px 0 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.pin-input {
+    letter-spacing: 8px;
+    text-align: center;
+
+    font-size: 22px !important;
+}
+
+.form-message {
+    min-height: 22px;
+    margin: 12px 0 0;
+
+    color: #d93025;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .topbar-right {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .page {
+        width: min(100% - 20px, 1400px);
+        margin-top: 14px;
+    }
+
+    .topbar {
+        padding: 12px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 14px;
+    }
+
+    .summary-card strong {
+        font-size: 22px;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-card {
+        border-radius: 14px;
+        padding: 16px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+}

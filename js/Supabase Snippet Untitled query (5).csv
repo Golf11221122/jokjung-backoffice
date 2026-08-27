@@ -1,0 +1,78 @@
+table_name,column_name,data_type,is_nullable,column_default
+branches,id,uuid,NO,gen_random_uuid()
+branches,name,text,NO,null
+branches,address,text,YES,null
+branches,phone,text,YES,null
+branches,is_active,boolean,NO,true
+branches,created_at,timestamp with time zone,NO,now()
+branches,updated_at,timestamp with time zone,NO,now()
+end_of_day_closings,id,uuid,NO,gen_random_uuid()
+end_of_day_closings,branch_id,uuid,NO,null
+end_of_day_closings,business_date,date,NO,null
+end_of_day_closings,status,text,NO,'closed'::text
+end_of_day_closings,net_sales,numeric,NO,0
+end_of_day_closings,cash_sales,numeric,NO,0
+end_of_day_closings,qr_sales,numeric,NO,0
+end_of_day_closings,discount,numeric,NO,0
+end_of_day_closings,bill_count,integer,NO,0
+end_of_day_closings,void_count,integer,NO,0
+end_of_day_closings,shift_count,integer,NO,0
+end_of_day_closings,total_cash_difference,numeric,NO,0
+end_of_day_closings,snapshot,jsonb,NO,'{}'::jsonb
+end_of_day_closings,closed_by,uuid,YES,null
+end_of_day_closings,closed_at,timestamp with time zone,NO,now()
+profiles,id,uuid,NO,null
+profiles,full_name,text,NO,null
+profiles,role,text,NO,'staff'::text
+profiles,pin,character varying,YES,null
+profiles,is_active,boolean,YES,true
+profiles,created_at,timestamp with time zone,YES,now()
+profiles,branch_id,uuid,YES,null
+sales,id,uuid,NO,gen_random_uuid()
+sales,invoice_no,text,NO,null
+sales,cashier_id,uuid,YES,null
+sales,subtotal,numeric,YES,0
+sales,discount,numeric,YES,0
+sales,total,numeric,NO,null
+sales,payment_method,text,YES,null
+sales,created_at,timestamp with time zone,YES,now()
+sales,branch_id,uuid,YES,null
+sales,received_amount,numeric,NO,0
+sales,change_amount,numeric,NO,0
+sales,status,text,NO,'completed'::text
+sales,note,text,YES,null
+sales,void_reason,text,YES,null
+sales,voided_by,uuid,YES,null
+sales,voided_at,timestamp with time zone,YES,null
+sales,void_approved_by,uuid,YES,null
+sales,shift_id,uuid,YES,null
+sales,terminal_code,text,YES,null
+sales,business_date,date,YES,null
+shifts,id,uuid,NO,gen_random_uuid()
+shifts,branch_id,uuid,NO,null
+shifts,opened_by,uuid,NO,null
+shifts,closed_by,uuid,YES,null
+shifts,status,text,NO,'open'::text
+shifts,opening_cash,numeric,NO,0
+shifts,cash_sales,numeric,NO,0
+shifts,qr_sales,numeric,NO,0
+shifts,total_sales,numeric,NO,0
+shifts,total_discount,numeric,NO,0
+shifts,bill_count,integer,NO,0
+shifts,void_count,integer,NO,0
+shifts,void_amount,numeric,NO,0
+shifts,expected_cash,numeric,YES,null
+shifts,counted_cash,numeric,YES,null
+shifts,cash_difference,numeric,YES,null
+shifts,opening_note,text,YES,null
+shifts,closing_note,text,YES,null
+shifts,opened_at,timestamp with time zone,NO,now()
+shifts,closed_at,timestamp with time zone,YES,null
+shifts,created_at,timestamp with time zone,NO,now()
+shifts,updated_at,timestamp with time zone,NO,now()
+shifts,business_date,date,YES,null
+shifts,terminal_code,text,YES,null
+shifts,cashier_id,uuid,YES,null
+shifts,cashier_name,text,YES,null
+shifts,float_mode,text,YES,null
+shifts,carry_from_shift_id,uuid,YES,null

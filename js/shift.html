@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        เปิดกะ / ปิดกะ | JOKJUNG POS
+    </title>
+
+    <link rel="stylesheet" href="./css/shift.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================
+     TOPBAR
+======================================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button id="backBtn" class="icon-btn" type="button">
+                ←
+            </button>
+
+
+            <div>
+
+                <h1>
+                    เปิดกะ / ปิดกะ
+                </h1>
+
+                <small id="branchText">
+                    กำลังโหลดสาขา...
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <div class="user-box">
+
+                <strong id="userName">
+                    ผู้ใช้งาน
+                </strong>
+
+                <small id="userRole">
+                    -
+                </small>
+
+            </div>
+
+
+            <button id="logoutBtn" class="outline-btn" type="button">
+                ออกจากระบบ
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <main class="page">
+
+
+        <!-- ========================================
+         PAGE MESSAGE
+    ======================================== -->
+
+        <p id="pageMessage" class="page-message">
+        </p>
+
+
+
+        <!-- ========================================
+         LOADING
+    ======================================== -->
+
+        <section id="loadingState" class="state-card">
+            กำลังโหลดข้อมูลกะ...
+        </section>
+
+
+
+        <!-- ========================================
+         OPEN SHIFT PANEL
+    ======================================== -->
+
+        <section id="openShiftPanel" class="panel hidden">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="status-badge status-closed">
+                        ยังไม่ได้เปิดกะ
+                    </span>
+
+                    <h2>
+                        เปิดกะใหม่
+                    </h2>
+
+                    <p>
+                        ระบุเงินสดตั้งต้นก่อนเริ่มขาย
+                    </p>
+
+                </div>
+
+                <div class="panel-icon">
+                    🔓
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="field">
+
+                    <label for="openingCashInput">
+                        เงินสดตั้งต้น
+                    </label>
+
+                    <div class="money-input">
+
+                        <span>
+                            ฿
+                        </span>
+
+                        <input id="openingCashInput" type="number" min="0" step="0.01" value="0" placeholder="0.00">
+
+                    </div>
+
+                    <small>
+                        เช่น เงินทอนตั้งต้น 500 หรือ 1,000 บาท
+                    </small>
+
+                </div>
+
+
+                <div class="field field-full">
+
+                    <label for="openingNoteInput">
+                        หมายเหตุ
+                    </label>
+
+                    <textarea id="openingNoteInput" rows="3" placeholder="เช่น เงินทอนตั้งต้นจากผู้จัดการ"></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="action-row">
+
+                <button id="openShiftBtn" class="primary-btn" type="button">
+                    เปิดกะ
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================================
+         ACTIVE SHIFT
+    ======================================== -->
+
+        <section id="activeShiftPanel" class="hidden">
+
+
+            <!-- SHIFT HEADER -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="status-badge status-open">
+                            กำลังเปิดกะ
+                        </span>
+
+                        <h2>
+                            กะปัจจุบัน
+                        </h2>
+
+                        <p id="shiftOpenedText">
+                            -
+                        </p>
+
+                    </div>
+
+                    <div class="panel-icon">
+                        🟢
+                    </div>
+
+                </div>
+
+
+                <div class="shift-info-grid">
+
+                    <div class="info-box">
+
+                        <span>
+                            ผู้เปิดกะ
+                        </span>
+
+                        <strong id="shiftOpenedBy">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <span>
+                            เวลาเปิดกะ
+                        </span>
+
+                        <strong id="shiftOpenedAt">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <span>
+                            เงินสดตั้งต้น
+                        </span>
+
+                        <strong id="shiftOpeningCash">
+                            ฿0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <span>
+                            ระยะเวลากะ
+                        </span>
+
+                        <strong id="shiftDuration">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div id="openingNoteWrap" class="note-box hidden">
+
+                    <span>
+                        หมายเหตุเปิดกะ
+                    </span>
+
+                    <p id="openingNoteText">
+                        -
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- LIVE SUMMARY -->
+
+            <section class="summary-grid">
+
+
+                <article class="summary-card">
+
+                    <span>
+                        ยอดขายรวม
+                    </span>
+
+                    <strong id="liveTotalSales">
+                        ฿0.00
+                    </strong>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <span>
+                        จำนวนบิล
+                    </span>
+
+                    <strong id="liveBillCount">
+                        0
+                    </strong>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <span>
+                        เงินสด
+                    </span>
+
+                    <strong id="liveCashSales">
+                        ฿0.00
+                    </strong>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <span>
+                        QR
+                    </span>
+
+                    <strong id="liveQrSales">
+                        ฿0.00
+                    </strong>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <span>
+                        ส่วนลด
+                    </span>
+
+                    <strong id="liveDiscount">
+                        ฿0.00
+                    </strong>
+
+                </article>
+
+
+                <article class="summary-card void-card">
+
+                    <span>
+                        VOID
+                    </span>
+
+                    <strong id="liveVoidCount">
+                        0
+                    </strong>
+
+                    <small id="liveVoidAmount">
+                        ฿0.00
+                    </small>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- CASH EXPECTED -->
+
+            <section class="panel cash-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            เงินสดในลิ้นชัก
+                        </h2>
+
+                        <p>
+                            ระบบคำนวณจากเงินตั้งต้น + ยอดขายเงินสด
+                        </p>
+
+                    </div>
+
+                    <div class="panel-icon">
+                        💵
+                    </div>
+
+                </div>
+
+
+                <div class="cash-calc">
+
+                    <div>
+
+                        <span>
+                            เงินสดตั้งต้น
+                        </span>
+
+                        <strong id="calcOpeningCash">
+                            ฿0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calc-sign">
+                        +
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            ยอดขายเงินสด
+                        </span>
+
+                        <strong id="calcCashSales">
+                            ฿0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calc-sign">
+                        =
+                    </div>
+
+
+                    <div class="expected-box">
+
+                        <span>
+                            เงินสดที่ควรมี
+                        </span>
+
+                        <strong id="expectedCashText">
+                            ฿0.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- CLOSE SHIFT -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            ปิดกะ
+                        </h2>
+
+                        <p>
+                            นับเงินสดจริงก่อนยืนยันปิดกะ
+                        </p>
+
+                    </div>
+
+                    <div class="panel-icon">
+                        🔒
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label for="countedCashInput">
+                            เงินสดที่นับได้จริง
+                        </label>
+
+                        <div class="money-input">
+
+                            <span>
+                                ฿
+                            </span>
+
+                            <input id="countedCashInput" type="number" min="0" step="0.01" placeholder="0.00">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            เงินเกิน / ขาด
+                        </label>
+
+                        <div id="cashDifferenceBox" class="difference-box neutral">
+
+                            <span>
+                                ผลต่าง
+                            </span>
+
+                            <strong id="cashDifferenceText">
+                                ฿0.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field field-full">
+
+                        <label for="closingNoteInput">
+                            หมายเหตุปิดกะ
+                        </label>
+
+                        <textarea id="closingNoteInput" rows="3"
+                            placeholder="เช่น เงินขาดจากทอนลูกค้า 10 บาท"></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="action-row">
+
+                    <button id="refreshShiftBtn" class="outline-btn" type="button">
+                        ↻ รีเฟรชยอด
+                    </button>
+
+
+                    <button id="closeShiftBtn" class="danger-btn" type="button">
+                        ปิดกะ
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </section>
+
+
+
+        <!-- ========================================
+         CLOSED SUCCESS
+    ======================================== -->
+
+        <section id="closedShiftPanel" class="panel success-panel hidden">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                ปิดกะสำเร็จ
+            </h2>
+
+            <p>
+                ระบบบันทึกยอดขายและยอดเงินสดเรียบร้อยแล้ว
+            </p>
+
+
+            <div class="closed-summary-grid">
+
+                <div>
+
+                    <span>
+                        ยอดขายรวม
+                    </span>
+
+                    <strong id="closedTotalSales">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        เงินสด
+                    </span>
+
+                    <strong id="closedCashSales">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        QR
+                    </span>
+
+                    <strong id="closedQrSales">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        จำนวนบิล
+                    </span>
+
+                    <strong id="closedBillCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        เงินสดที่ควรมี
+                    </span>
+
+                    <strong id="closedExpectedCash">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        เงินสดนับจริง
+                    </span>
+
+                    <strong id="closedCountedCash">
+                        ฿0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div id="closedDifferenceBox" class="closed-difference neutral">
+
+                <span>
+                    เงินเกิน / ขาด
+                </span>
+
+                <strong id="closedDifferenceText">
+                    ฿0.00
+                </strong>
+
+            </div>
+
+
+            <div class="action-row center">
+
+                <button id="newShiftBtn" class="primary-btn" type="button">
+                    เปิดกะใหม่
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script type="module" src="./js/shift.js"></script>
+
+
+</body>
+
+</html>

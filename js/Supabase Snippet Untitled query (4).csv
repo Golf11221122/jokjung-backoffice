@@ -1,0 +1,61 @@
+table_name,constraint_name,constraint_type,column_name
+end_of_day_closings,2200_28491_10_not_null,CHECK,null
+end_of_day_closings,2200_28491_11_not_null,CHECK,null
+end_of_day_closings,2200_28491_12_not_null,CHECK,null
+end_of_day_closings,2200_28491_13_not_null,CHECK,null
+end_of_day_closings,2200_28491_15_not_null,CHECK,null
+end_of_day_closings,2200_28491_1_not_null,CHECK,null
+end_of_day_closings,2200_28491_2_not_null,CHECK,null
+end_of_day_closings,2200_28491_3_not_null,CHECK,null
+end_of_day_closings,2200_28491_4_not_null,CHECK,null
+end_of_day_closings,2200_28491_5_not_null,CHECK,null
+end_of_day_closings,2200_28491_6_not_null,CHECK,null
+end_of_day_closings,2200_28491_7_not_null,CHECK,null
+end_of_day_closings,2200_28491_8_not_null,CHECK,null
+end_of_day_closings,2200_28491_9_not_null,CHECK,null
+end_of_day_closings,end_of_day_closings_branch_id_fkey,FOREIGN KEY,branch_id
+end_of_day_closings,end_of_day_closings_closed_by_fkey,FOREIGN KEY,closed_by
+end_of_day_closings,end_of_day_closings_pkey,PRIMARY KEY,id
+end_of_day_closings,end_of_day_closings_branch_id_business_date_key,UNIQUE,business_date
+end_of_day_closings,end_of_day_closings_branch_id_business_date_key,UNIQUE,branch_id
+sales,2200_17687_10_not_null,CHECK,null
+sales,2200_17687_11_not_null,CHECK,null
+sales,2200_17687_12_not_null,CHECK,null
+sales,2200_17687_1_not_null,CHECK,null
+sales,2200_17687_2_not_null,CHECK,null
+sales,2200_17687_6_not_null,CHECK,null
+sales,sales_change_amount_nonnegative,CHECK,null
+sales,sales_discount_nonnegative,CHECK,null
+sales,sales_received_amount_nonnegative,CHECK,null
+sales,sales_subtotal_nonnegative,CHECK,null
+sales,sales_total_nonnegative,CHECK,null
+sales,sales_branch_id_fkey,FOREIGN KEY,branch_id
+sales,sales_cashier_id_fkey,FOREIGN KEY,cashier_id
+sales,sales_shift_id_fkey,FOREIGN KEY,shift_id
+sales,sales_void_approved_by_fkey,FOREIGN KEY,void_approved_by
+sales,sales_voided_by_fkey,FOREIGN KEY,voided_by
+sales,sales_pkey,PRIMARY KEY,id
+sales,sales_invoice_no_key,UNIQUE,invoice_no
+shifts,2200_25752_10_not_null,CHECK,null
+shifts,2200_25752_11_not_null,CHECK,null
+shifts,2200_25752_12_not_null,CHECK,null
+shifts,2200_25752_13_not_null,CHECK,null
+shifts,2200_25752_19_not_null,CHECK,null
+shifts,2200_25752_1_not_null,CHECK,null
+shifts,2200_25752_21_not_null,CHECK,null
+shifts,2200_25752_22_not_null,CHECK,null
+shifts,2200_25752_2_not_null,CHECK,null
+shifts,2200_25752_3_not_null,CHECK,null
+shifts,2200_25752_5_not_null,CHECK,null
+shifts,2200_25752_6_not_null,CHECK,null
+shifts,2200_25752_7_not_null,CHECK,null
+shifts,2200_25752_8_not_null,CHECK,null
+shifts,2200_25752_9_not_null,CHECK,null
+shifts,shifts_opening_cash_check,CHECK,null
+shifts,shifts_status_check,CHECK,null
+shifts,shifts_branch_id_fkey,FOREIGN KEY,branch_id
+shifts,shifts_carry_from_shift_id_fkey,FOREIGN KEY,carry_from_shift_id
+shifts,shifts_cashier_id_fkey,FOREIGN KEY,cashier_id
+shifts,shifts_closed_by_fkey,FOREIGN KEY,closed_by
+shifts,shifts_opened_by_fkey,FOREIGN KEY,opened_by
+shifts,shifts_pkey,PRIMARY KEY,id

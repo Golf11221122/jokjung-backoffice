@@ -1,0 +1,4 @@
+eod_id,branch_id,business_date,status,net_sales,cash_sales,qr_sales,discount,bill_count,void_count,shift_count,total_cash_difference,closed_at_th
+a948eaa7-0f49-4659-8c08-28a110d99de5,373f0680-d3aa-4f9c-8eac-d11d17f0f2df,2026-08-24,closed,1075.00,570.00,505.00,10.00,7,1,3,0.00,2026-08-25 01:13:36.659913
+153e42bb-d56b-47a3-8210-bb701353ca6f,373f0680-d3aa-4f9c-8eac-d11d17f0f2df,2026-08-25,closed,3235.00,2575.00,660.00,35.00,13,1,4,0.00,2026-08-27 08:04:26.014607
+4766c397-5eeb-403a-a651-c3248dbc558e,373f0680-d3aa-4f9c-8eac-d11d17f0f2df,2026-08-27,closed,90.00,0,90.00,0.00,1,0,1,0.00,2026-08-27 09:33:59.848992

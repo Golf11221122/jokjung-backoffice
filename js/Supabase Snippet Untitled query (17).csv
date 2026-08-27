@@ -1,0 +1,2 @@
+eod_id,business_date,status,net_sales,cash_sales,qr_sales,discount,bill_count,void_count,shift_count,total_cash_difference,closed_at_th
+b52a6248-80a5-44cb-b4ce-47090cee07c1,2026-08-26,closed,2695.00,2125.00,570.00,25.00,9,0,1,0.00,2026-08-27 00:00:57.405233

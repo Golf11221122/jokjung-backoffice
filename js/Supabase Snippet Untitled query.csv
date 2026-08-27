@@ -1,0 +1,2 @@
+id,business_date,status,net_sales,cash_sales,qr_sales,bill_count,shift_count,total_cash_difference,closed_at,closed_by
+396088f0-33f1-4422-80b5-0575590a503d,2026-08-23,closed,285.00,0,285.00,1,1,0.00,2026-08-23 08:59:02.53216+00,e37f5164-26f4-49c9-85c0-db2558e6fa56

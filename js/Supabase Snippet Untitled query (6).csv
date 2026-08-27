@@ -1,0 +1,2 @@
+conname,definition
+profiles_role_check,"CHECK ((lower(TRIM(BOTH FROM role)) = ANY (ARRAY['admin'::text, 'manager'::text, 'cashier'::text, 'staff'::text, 'kitchen'::text, 'stock'::text])))"

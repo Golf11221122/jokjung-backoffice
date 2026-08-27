@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | JOKJUNG POS</title>
+
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🍜
+                </div>
+
+                <div>
+                    <h1>JOKJUNG</h1>
+                    <p>Restaurant POS</p>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-menu">
+
+                <div class="menu-scroll">
+                    <a href="./dashboard.html" class="menu-item active"><span
+                            class="menu-icon">📊</span><span>แดชบอร์ด</span></a>
+                    <a href="./pos.html" class="menu-item"><span class="menu-icon">🛒</span><span>หน้าขาย POS</span></a>
+                    <a href="./shift.html" class="menu-item"><span class="menu-icon">🕐</span><span>เปิดกะ /ปิดกะ</span></a>
+                    <a href="./sales-history.html" class="menu-item"><span
+                            class="menu-icon">🧾</span><span>รายการขาย</span></a>
+                    <a href="./kitchen.html" class="menu-item"><span
+                            class="menu-icon">👨‍🍳</span><span>จอครัว</span></a>
+                    <a href="./tables.html" class="menu-item"><span
+                            class="menu-icon">🪑</span><span>จัดการโต๊ะ</span></a>
+                    <a class="nav-link" data-nav="end-of-day" href="./finance/end-of-day.html">🔐 End of Day</a>
+
+                    <button type="button" class="management-toggle" id="managementToggle" aria-expanded="false">
+                        <span class="management-title"><span class="menu-icon">⚙️</span><span>ระบบจัดการ</span></span>
+                        <span class="management-arrow">⌄</span>
+                    </button>
+
+                    <div class="management-menu" id="managementMenu">
+                        <a href="./products.html" class="menu-item"><span
+                                class="menu-icon">📦</span><span>สินค้า</span></a>
+                        <a href="./categories.html" class="menu-item"><span
+                                class="menu-icon">🏷️</span><span>หมวดหมู่</span></a>
+                        <a href="./ingredients.html" class="menu-item"><span
+                                class="menu-icon">🥬</span><span>วัตถุดิบ</span></a>
+                        <a href="./recipes.html" class="menu-item"><span
+                                class="menu-icon">📋</span><span>สูตรสินค้า</span></a>
+                        <a href="./stock-movements.html" class="menu-item"><span
+                                class="menu-icon">🔄</span><span>รับเข้า / ปรับสต็อก</span></a>
+                        <a href="./inventory-report.html" class="menu-item"><span
+                                class="menu-icon">📊</span><span>รายงานวัตถุดิบ</span></a>
+                        <a href="./sales-report.html" class="menu-item"><span
+                                class="menu-icon">📈</span><span>รายงานยอดขาย</span></a>
+                        <a href="./cancellation-history.html" class="menu-item" id="cancellationHistoryMenu"><span
+                                class="menu-icon">🚫</span><span>ประวัติการยกเลิก</span></a>
+                        <a href="./order-history.html" class="menu-item" id="orderHistoryMenu"><span
+                                class="menu-icon">🕓</span><span>ประวัติออเดอร์</span></a>
+                        <a href="./kitchen-stations.html" class="menu-item"><span
+                                class="menu-icon">🍳</span><span>จัดการครัว</span></a>
+                        <a href="./modifier-options.html" class="menu-item"><span
+                                class="menu-icon">🧩</span><span>ตัวเลือกเมนู</span></a>
+                        <a href="./marketing.html" class="menu-item"><span
+                                class="menu-icon">📣</span><span>Marketing</span></a>
+                        <a href="./cost-control.html" class="menu-item"><span class="menu-icon">💰</span><span>บัญชี /
+                                Cost Control</span></a>
+
+                        <a href="./employees.html" class="menu-item"><span
+                                class="menu-icon">👥</span><span>จัดการพนักงาน</span></a>
+                        <a href="#" class="menu-item" id="settingsMenu"><span
+                                class="menu-icon">⚙️</span><span>ตั้งค่า</span></a>
+                    </div>
+                </div>
+
+            </nav>
+
+
+            <button type="button" class="logout-button" id="logoutBtn">
+                <span>🚪</span>
+                ออกจากระบบ
+            </button>
+
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+        <!-- MAIN -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <button type="button" class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+
+                <div>
+                    <h2>แดชบอร์ด</h2>
+
+                    <p id="currentDate">
+                        กำลังโหลดวันที่...
+                    </p>
+                </div>
+
+
+                <div class="user-section">
+
+                    <div class="user-avatar" id="userAvatar">
+                        U
+                    </div>
+
+
+                    <div class="user-information">
+
+                        <strong id="userName">
+                            กำลังโหลด...
+                        </strong>
+
+                        <span id="userRole">
+                            -
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <section class="page-content">
+
+                <!-- WELCOME -->
+                <div class="welcome-card">
+
+                    <div>
+
+                        <p class="welcome-label">
+                            ยินดีต้อนรับกลับ
+                        </p>
+
+                        <h3 id="welcomeName">
+                            ผู้ใช้งาน
+                        </h3>
+
+                        <p>
+                            ภาพรวมยอดขายและข้อมูลร้าน JOKJUNG POS
+                        </p>
+
+                    </div>
+
+                    <div class="welcome-illustration">
+                        🍜
+                    </div>
+
+                </div>
+
+
+                <!-- TODAY -->
+                <div class="section-title">
+                    <div>
+                        <h3>ยอดขายวันนี้</h3>
+                        <p>สรุปยอดขายของสาขาปัจจุบัน</p>
+                    </div>
+
+                    <button id="refreshDashboardBtn" class="small-button" type="button">
+                        ↻ รีเฟรช
+                    </button>
+                </div>
+
+
+                <section class="summary-grid">
+
+                    <article class="summary-card">
+
+                        <div class="summary-icon">
+                            💰
+                        </div>
+
+                        <div>
+                            <p>ยอดขายวันนี้</p>
+
+                            <h3 id="todaySales">
+                                ฿0.00
+                            </h3>
+
+                            <span>
+                                ยอดสุทธิที่ขายสำเร็จ
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="summary-card">
+
+                        <div class="summary-icon">
+                            🧾
+                        </div>
+
+                        <div>
+                            <p>จำนวนบิลวันนี้</p>
+
+                            <h3 id="todayBills">
+                                0
+                            </h3>
+
+                            <span>
+                                จำนวนรายการขาย
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="summary-card">
+
+                        <div class="summary-icon">
+                            💵
+                        </div>
+
+                        <div>
+                            <p>เงินสด</p>
+
+                            <h3 id="todayCash">
+                                ฿0.00
+                            </h3>
+
+                            <span>
+                                รับชำระเงินสดวันนี้
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="summary-card">
+
+                        <div class="summary-icon">
+                            📱
+                        </div>
+
+                        <div>
+                            <p>QR</p>
+
+                            <h3 id="todayQr">
+                                ฿0.00
+                            </h3>
+
+                            <span>
+                                รับชำระผ่าน QR วันนี้
+                            </span>
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- BUSINESS SUMMARY -->
+                <div class="section-title">
+
+                    <div>
+                        <h3>ภาพรวมร้าน</h3>
+                        <p>ยอดขายและข้อมูลสำคัญ</p>
+                    </div>
+
+                </div>
+
+
+                <section class="business-summary">
+
+                    <article class="metric-card">
+
+                        <span>
+                            📅 ยอดขายเดือนนี้
+                        </span>
+
+                        <strong id="monthSales">
+                            ฿0.00
+                        </strong>
+
+                    </article>
+
+
+                    <article class="metric-card">
+
+                        <span>
+                            📈 กำไรขั้นต้นวันนี้
+                        </span>
+
+                        <strong id="todayProfit">
+                            ฿0.00
+                        </strong>
+
+                        <small>
+                            ยอดขาย - ต้นทุนสินค้า
+                        </small>
+
+                    </article>
+
+
+                    <article class="metric-card">
+
+                        <span>
+                            📦 จำนวนสินค้า
+                        </span>
+
+                        <strong id="productCount">
+                            0
+                        </strong>
+
+                    </article>
+
+
+                    <article class="metric-card">
+
+                        <span>
+                            🏷️ จำนวนหมวดหมู่
+                        </span>
+
+                        <strong id="categoryCount">
+                            0
+                        </strong>
+
+                    </article>
+
+                </section>
+
+
+                <!-- REPORT -->
+                <section class="report-grid" id="reports">
+
+                    <!-- 7 DAYS -->
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    ยอดขายย้อนหลัง 7 วัน
+                                </h3>
+
+                                <p>
+                                    ยอดขายสุทธิแต่ละวัน
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div id="sevenDayChart" class="sales-chart">
+                            <div class="chart-empty">
+                                กำลังโหลด...
+                            </div>
+                        </div>
+
+                    </article>
+
+
+                    <!-- TOP PRODUCTS -->
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    สินค้าขายดี
+                                </h3>
+
+                                <p>
+                                    Top 5 จากจำนวนที่ขาย
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div id="topProducts" class="top-products">
+                            <div class="chart-empty">
+                                กำลังโหลด...
+                            </div>
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- LOWER -->
+                <section class="dashboard-grid">
+
+                    <!-- QUICK ACTION -->
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>เมนูทางลัด</h3>
+
+                                <p>
+                                    เข้าใช้งานส่วนสำคัญของระบบ
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <button type="button" class="quick-action" id="openPosBtn">
+                                <span>🛒</span>
+
+                                <strong>
+                                    เปิดหน้าขาย
+                                </strong>
+
+                                <small>
+                                    เริ่มรับออเดอร์
+                                </small>
+                            </button>
+
+
+                            <button type="button" class="quick-action" id="openProductsBtn">
+                                <span>📦</span>
+
+                                <strong>
+                                    จัดการสินค้า
+                                </strong>
+
+                                <small>
+                                    เพิ่มหรือแก้ไขเมนู
+                                </small>
+                            </button>
+
+
+                            <button type="button" class="quick-action" id="openSalesBtn">
+                                <span>🧾</span>
+
+                                <strong>
+                                    ประวัติการขาย
+                                </strong>
+
+                                <small>
+                                    ดูบิลย้อนหลัง
+                                </small>
+                            </button>
+
+
+                            <button type="button" class="quick-action" id="openSalesReportBtn">
+                                <span>📈</span>
+
+                                <strong>
+                                    รายงานยอดขาย
+                                </strong>
+
+                                <small>
+                                    PDF / Excel / พิมพ์รายงาน
+                                </small>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROFILE -->
+                    <article class="panel profile-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    ข้อมูลผู้ใช้งาน
+                                </h3>
+
+                                <p>
+                                    บัญชีที่กำลังเข้าสู่ระบบ
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>อีเมล</span>
+
+                            <strong id="userEmail">
+                                กำลังโหลด...
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>ชื่อผู้ใช้</span>
+
+                            <strong id="profileName">
+                                กำลังโหลด...
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>สิทธิ์</span>
+
+                            <strong id="profileRole">
+                                กำลังโหลด...
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>สาขา</span>
+
+                            <strong id="profileBranch">
+                                กำลังโหลด...
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>สถานะระบบ</span>
+
+                            <strong class="online-text">
+                                ● ออนไลน์
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <p class="status-message" id="statusMessage"></p>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script type="module" src="./js/dashboard.js"></script>
+
+</body>
+
+</html>
