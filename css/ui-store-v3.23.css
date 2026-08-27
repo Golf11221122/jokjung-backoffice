@@ -1,0 +1,104 @@
+/* =========================================================
+   JOKJUNG Back Office V3.23 — Operational UX Consistency
+   Interaction clarity only. No business logic changes.
+   ========================================================= */
+:root{
+  --jk-navy:#101828;--jk-ink:#1d2939;--jk-muted:#667085;--jk-border:#e4e7ec;
+  --jk-surface:#fff;--jk-soft:#f8fafc;--jk-gold:#d89b20;--jk-green:#067647;
+  --jk-red:#b42318;--jk-orange:#b54708;--jk-focus:#2e90fa;
+}
+
+/* Professional focus treatment: keyboard + iPhone switch-control friendly */
+:where(button,a,input,select,textarea,[role="button"]):focus-visible{
+  outline:3px solid rgba(46,144,250,.24)!important;outline-offset:2px!important;
+  box-shadow:0 0 0 1px var(--jk-focus)!important;
+}
+
+/* Keep every actionable control visually actionable */
+button,.primary-btn,.outline-btn,.danger-btn,.secondary-btn,[role="button"]{
+  position:relative;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+button:not(:disabled),a.button,[role="button"]:not([aria-disabled="true"]){cursor:pointer}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed!important;filter:saturate(.55);opacity:.58!important}
+
+/* Explicit tap acknowledgement */
+.jk23-tapped{transform:translateY(1px) scale(.985)!important;filter:brightness(.97)}
+.jk23-working{padding-right:34px!important}
+.jk23-working:after{
+  content:"";position:absolute;right:11px;top:50%;width:13px;height:13px;margin-top:-7px;
+  border:2px solid currentColor;border-right-color:transparent;border-radius:50%;
+  animation:jk23spin .65s linear infinite;opacity:.78
+}
+@keyframes jk23spin{to{transform:rotate(360deg)}}
+
+/* Command status strip added to every operational screen */
+.jk23-contextbar{
+  display:flex;align-items:center;gap:8px;min-height:42px;margin:0 0 14px;padding:8px 11px;
+  border:1px solid var(--jk-border);border-radius:12px;background:var(--jk-surface);
+  box-shadow:0 1px 2px rgba(16,24,40,.035);font-size:11px;color:var(--jk-muted)
+}
+.jk23-contextbar .jk23-page{font-weight:850;color:var(--jk-ink)}
+.jk23-contextbar .jk23-divider{width:1px;height:18px;background:var(--jk-border)}
+.jk23-contextbar .jk23-spacer{flex:1}
+.jk23-contextbar .jk23-sync{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.jk23-contextbar .jk23-sync:before{content:"";width:7px;height:7px;border-radius:50%;background:#12b76a;box-shadow:0 0 0 3px rgba(18,183,106,.1)}
+body.jk23-offline .jk23-contextbar .jk23-sync:before{background:#f04438;box-shadow:0 0 0 3px rgba(240,68,56,.1)}
+
+/* Unsaved work indicator */
+.jk23-dirty-badge{
+  display:none;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;
+  background:#fffaeb;color:#93370d;border:1px solid #fedf89;font-weight:800;font-size:10px
+}
+body.jk23-dirty .jk23-dirty-badge{display:inline-flex}
+body.jk23-dirty .jk23-dirty-badge:before{content:"•";font-size:16px;line-height:8px}
+
+/* Better data-table scanability */
+.content table{font-variant-numeric:tabular-nums}
+.content tbody tr{transition:background-color .1s ease,box-shadow .1s ease}
+.content tbody tr:hover{background:#f8fafc}
+.content thead th{position:relative}
+.content td :where(.status,.badge,.pill),.content td[class*="amount"],.content td[class*="total"]{white-space:nowrap}
+
+/* Inputs feel like a production system, not plain HTML */
+.content :where(input,select,textarea):not([type="checkbox"]):not([type="radio"]){
+  transition:border-color .14s ease,box-shadow .14s ease,background-color .14s ease
+}
+.content :where(input,select,textarea):not([type="checkbox"]):not([type="radio"]):focus{
+  border-color:#84adff!important;box-shadow:0 0 0 3px rgba(46,144,250,.10)!important;background:#fff
+}
+.content :where(input,select,textarea):invalid:not(:placeholder-shown){border-color:#fda29b}
+
+/* Uniform feedback center */
+#jk23Feedback{
+  position:fixed;z-index:32000;right:16px;bottom:16px;width:min(390px,calc(100vw - 28px));
+  display:grid;gap:8px;pointer-events:none
+}
+.jk23-note{
+  display:grid;grid-template-columns:30px 1fr auto;gap:9px;align-items:center;padding:11px 12px;
+  background:#fff;border:1px solid var(--jk-border);border-radius:12px;box-shadow:0 12px 34px rgba(16,24,40,.16);
+  animation:jk23note .18s ease;pointer-events:auto
+}
+@keyframes jk23note{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.jk23-note-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:900;background:#ecfdf3;color:var(--jk-green)}
+.jk23-note.warning .jk23-note-icon{background:#fffaeb;color:var(--jk-orange)}
+.jk23-note.error .jk23-note-icon{background:#fef3f2;color:var(--jk-red)}
+.jk23-note-title{font-size:12px;font-weight:900;color:var(--jk-ink)}
+.jk23-note-sub{margin-top:1px;font-size:10px;color:var(--jk-muted);line-height:1.4}
+.jk23-note-time{font-size:9px;color:#98a2b3;align-self:start;padding-top:2px}
+
+/* Visible feedback on button that was acted upon */
+.jk23-complete{box-shadow:0 0 0 3px rgba(18,183,106,.12)!important}
+.jk23-error{box-shadow:0 0 0 3px rgba(240,68,56,.13)!important}
+
+/* Mobile: keep critical feedback and controls reachable */
+@media(max-width:700px){
+  .jk23-contextbar{overflow-x:auto;scrollbar-width:none;padding:8px 10px;margin-bottom:10px}
+  .jk23-contextbar::-webkit-scrollbar{display:none}
+  .jk23-contextbar .jk23-spacer{min-width:8px}
+  #jk23Feedback{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100vw - 20px)}
+  .content button,.content .primary-btn,.content .outline-btn,.content .danger-btn,.content .secondary-btn{min-height:44px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
