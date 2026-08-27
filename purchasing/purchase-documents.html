@@ -1,21 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Purchase Documents | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-<link rel="stylesheet" href="../css/print.css">
-</head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/print.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="../finance/financial-summary.html">🧭 Financial Summary</a></div>
-<div class="nav-section"><div class="nav-title">Stock & Cost</div>
+<div class="nav-section"><div class="nav-title">Stock &amp; Cost</div>
 <a class="nav-link" data-nav="ingredients" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
 <a class="nav-link" data-nav="ingredient-categories" href="../stock/categories.html">🗂️ หมวดวัตถุดิบ</a>
 <a class="nav-link" data-nav="movements" href="../stock/movements.html">🔄 Stock Movement</a><a class="nav-link" data-nav="waste-loss" href="../stock/waste-loss.html">🗑️ Waste / Loss</a>
@@ -34,26 +35,22 @@
 </div>
 </nav>
 </aside>
-
 <div class="main">
 <header class="topbar">
-<div class="topbar-left"><button id="menuBtn" class="menu-btn" type="button">☰</button><div><h1>🧾 Purchase Documents</h1><p id="branchText">กำลังโหลด...</p></div></div>
-<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn" type="button">ออกจากระบบ</button></div>
+<div class="topbar-left"><button class="menu-btn" id="menuBtn" type="button">☰</button><div><h1>🧾 Purchase Documents</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn" type="button">ออกจากระบบ</button></div>
 </header>
-
 <main class="content">
 <div class="page-head">
 <div><h2>ใบเสร็จ / Invoice / Tax Invoice</h2><p>เก็บเอกสารซื้อแบบ Structured Data พร้อมไฟล์ PDF/รูป และเชื่อม Supplier / PO</p></div>
-<button id="addBtn" class="primary-btn">＋ เพิ่มเอกสาร</button>
+<button class="primary-btn" id="addBtn">＋ เพิ่มเอกสาร</button>
 </div>
-
-<section id="kpis" class="kpi-grid"></section>
-
+<section class="kpi-grid" id="kpis"></section>
 <section class="panel">
 <div class="toolbar document-toolbar">
-<input id="search" placeholder="ค้นหาเลขเอกสาร / Supplier / PO...">
-<input id="dateFrom" type="date">
-<input id="dateTo" type="date">
+<input id="search" placeholder="ค้นหาเลขเอกสาร / Supplier / PO..."/>
+<input id="dateFrom" type="date"/>
+<input id="dateTo" type="date"/>
 <select id="supplierFilter"><option value="">Supplier ทั้งหมด</option></select>
 <select id="typeFilter">
 <option value="">ทุกประเภท</option>
@@ -71,24 +68,21 @@
 <option value="paid">ชำระแล้ว</option>
 <option value="void">ยกเลิก</option>
 </select>
-<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+<button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button>
 </div>
 <div id="table"></div>
-<p id="message" class="message"></p>
+<p class="message" id="message"></p>
 </section>
 </main>
 </div>
 </div>
-
-<div id="modal" class="modal hidden">
+<div class="modal hidden" id="modal">
 <div class="modal-card purchase-doc-modal">
 <div class="modal-head">
-<div><h3 id="modalTitle">เพิ่มเอกสารซื้อ</h3><p id="internalNoText" class="mini-note">เลขภายในจะสร้างอัตโนมัติ</p></div>
-<button id="closeBtn" class="close-btn">×</button>
+<div><h3 id="modalTitle">เพิ่มเอกสารซื้อ</h3><p class="mini-note" id="internalNoText">เลขภายในจะสร้างอัตโนมัติ</p></div>
+<button class="close-btn" id="closeBtn">×</button>
 </div>
-
-<input id="documentId" type="hidden">
-
+<input id="documentId" type="hidden"/>
 <div class="form-grid">
 <label class="field"><span>ประเภทเอกสาร</span>
 <select id="documentType">
@@ -99,112 +93,94 @@
 <option value="debit_note">Debit Note</option>
 <option value="other">Other</option>
 </select></label>
-
-<label class="field"><span>เลขที่เอกสาร Supplier</span><input id="documentNo" placeholder="เช่น INV-2026-001"></label>
+<label class="field"><span>เลขที่เอกสาร Supplier</span><input id="documentNo" placeholder="เช่น INV-2026-001"/></label>
 <label class="field"><span>Supplier</span><select id="supplier"></select></label>
 <label class="field"><span>อ้างอิง PO</span><select id="purchaseOrder"></select></label>
-<label class="field"><span>วันที่เอกสาร</span><input id="documentDate" type="date"></label>
-<label class="field"><span>ครบกำหนดชำระ</span><input id="dueDate" type="date"></label>
-
-<label class="field"><span>สกุลเงิน (ISO)</span><input id="currencyCode" value="THB" maxlength="3"></label>
-<label class="field"><span>Exchange Rate</span><input id="exchangeRate" type="number" min="0.000001" step="0.000001" value="1"></label>
-
-<label class="field"><span>Subtotal</span><input id="subtotal" type="number" min="0" step="0.01" value="0"></label>
-<label class="field"><span>Discount</span><input id="discountAmount" type="number" min="0" step="0.01" value="0"></label>
-<label class="field"><span>Shipping / Freight</span><input id="shippingAmount" type="number" min="0" step="0.01" value="0"></label>
-
+<label class="field"><span>วันที่เอกสาร</span><input id="documentDate" type="date"/></label>
+<label class="field"><span>ครบกำหนดชำระ</span><input id="dueDate" type="date"/></label>
+<label class="field"><span>สกุลเงิน (ISO)</span><input id="currencyCode" maxlength="3" value="THB"/></label>
+<label class="field"><span>Exchange Rate</span><input id="exchangeRate" min="0.000001" step="0.000001" type="number" value="1"/></label>
+<label class="field"><span>Subtotal</span><input id="subtotal" min="0" step="0.01" type="number" value="0"/></label>
+<label class="field"><span>Discount</span><input id="discountAmount" min="0" step="0.01" type="number" value="0"/></label>
+<label class="field"><span>Shipping / Freight</span><input id="shippingAmount" min="0" step="0.01" type="number" value="0"/></label>
 <label class="field"><span>VAT Mode</span>
 <select id="taxMode">
 <option value="none">No VAT</option>
 <option value="exclusive">VAT Exclusive</option>
 <option value="inclusive">VAT Inclusive</option>
 </select></label>
-<label class="field"><span>VAT %</span><input id="taxRate" type="number" min="0" max="100" step="0.01" value="7"></label>
-
-<label class="field"><span>VAT Amount</span><input id="taxAmount" type="number" min="0" step="0.01" value="0"></label>
-<label class="field"><span>Withholding Tax</span><input id="withholdingTax" type="number" min="0" step="0.01" value="0"></label>
-
-<label class="field"><span>Total</span><input id="totalAmount" type="number" min="0" step="0.01" value="0"></label>
-<label class="field"><span>ยอดชำระแล้ว</span><input id="paidAmount" type="number" min="0" step="0.01" value="0" readonly><small>บันทึกการจ่ายที่ Finance → Accounts Payable</small></label>
-
+<label class="field"><span>VAT %</span><input id="taxRate" max="100" min="0" step="0.01" type="number" value="7"/></label>
+<label class="field"><span>VAT Amount</span><input id="taxAmount" min="0" step="0.01" type="number" value="0"/></label>
+<label class="field"><span>Withholding Tax</span><input id="withholdingTax" min="0" step="0.01" type="number" value="0"/></label>
+<label class="field"><span>Total</span><input id="totalAmount" min="0" step="0.01" type="number" value="0"/></label>
+<label class="field"><span>ยอดชำระแล้ว</span><input id="paidAmount" min="0" readonly="" step="0.01" type="number" value="0"/><small>บันทึกการจ่ายที่ Finance → Accounts Payable</small></label>
 <label class="field"><span>วิธีชำระ</span>
 <select id="paymentMethod">
 <option value="">-</option><option value="cash">Cash</option><option value="bank_transfer">Bank Transfer</option>
 <option value="qr">QR</option><option value="card">Card</option><option value="credit">Credit</option><option value="other">Other</option>
 </select></label>
 <label class="field"><span>สถานะชำระ</span>
-<select id="paymentStatus" disabled>
+<select disabled="" id="paymentStatus">
 <option value="unpaid">Unpaid</option><option value="partial">Partial</option><option value="paid">Paid</option><option value="void">Void</option>
 </select></label>
-
-<label class="field"><span>วันที่/เวลาชำระ</span><input id="paidAt" type="datetime-local" readonly></label>
+<label class="field"><span>วันที่/เวลาชำระ</span><input id="paidAt" readonly="" type="datetime-local"/></label>
 <label class="field form-wide"><span>หมายเหตุ</span><textarea id="note"></textarea></label>
-
 <label class="field form-wide upload-box">
 <span>ไฟล์เอกสาร (PDF / JPG / PNG / WEBP สูงสุด 10MB ต่อไฟล์)</span>
-<input id="files" type="file" multiple accept=".pdf,image/jpeg,image/png,image/webp">
+<input accept=".pdf,image/jpeg,image/png,image/webp" id="files" multiple="" type="file"/>
 <small>บันทึกเอกสารก่อน ระบบจะอัปโหลดไฟล์เข้า Private Storage</small>
 </label>
 </div>
-
 <div class="doc-total-preview">
 <div><span>ยอดก่อน VAT หลัง Discount</span><strong id="basePreview">฿0.00</strong></div>
 <div><span>VAT</span><strong id="vatPreview">฿0.00</strong></div>
 <div><span>ยอดคงค้าง</span><strong id="balancePreview">฿0.00</strong></div>
 </div>
-
-
-
 <section class="document-items-panel">
 <div class="section-head">
-  <div>
-    <strong>📦 รายการสินค้าในเอกสาร</strong>
-    <div class="mini-note">ใช้สำหรับ 3-Way Match: PO ↔ รับของ ↔ Invoice</div>
-  </div>
-  <div class="action-row">
-    <button id="importPoItemsBtn" class="outline-btn" type="button">ดึงรายการจาก PO</button>
-    <button id="addDocumentItemBtn" class="outline-btn" type="button">＋ เพิ่มรายการ</button>
-  </div>
+<div>
+<strong>📦 รายการสินค้าในเอกสาร</strong>
+<div class="mini-note">ใช้สำหรับ 3-Way Match: PO ↔ รับของ ↔ Invoice</div>
+</div>
+<div class="action-row">
+<button class="outline-btn" id="importPoItemsBtn" type="button">ดึงรายการจาก PO</button>
+<button class="outline-btn" id="addDocumentItemBtn" type="button">＋ เพิ่มรายการ</button>
+</div>
 </div>
 <div id="documentItems"></div>
 </section>
-
-<section id="threeWayPanel" class="reconcile-panel">
+<section class="reconcile-panel" id="threeWayPanel">
 <div class="section-head">
-  <strong>✅ 3-Way Matching</strong>
-  <span id="threeWayBadge" class="reconcile-badge no-po">ยังไม่เลือก PO</span>
+<strong>✅ 3-Way Matching</strong>
+<span class="reconcile-badge no-po" id="threeWayBadge">ยังไม่เลือก PO</span>
 </div>
 <div class="reconcile-grid three-way-grid">
-  <div><span>PO Items</span><strong id="threeWayPoItems">0</strong></div>
-  <div><span>รับครบ</span><strong id="threeWayReceived">0</strong></div>
-  <div><span>Invoice Items</span><strong id="threeWayInvoiceItems">0</strong></div>
-  <div><span>ส่วนต่างยอด</span><strong id="threeWayVariance">฿0.00</strong></div>
+<div><span>PO Items</span><strong id="threeWayPoItems">0</strong></div>
+<div><span>รับครบ</span><strong id="threeWayReceived">0</strong></div>
+<div><span>Invoice Items</span><strong id="threeWayInvoiceItems">0</strong></div>
+<div><span>ส่วนต่างยอด</span><strong id="threeWayVariance">฿0.00</strong></div>
 </div>
-<p id="threeWayMessage" class="mini-note">เลือก PO และกรอกรายการในเอกสารเพื่อเริ่มตรวจ 3-Way Match</p>
+<p class="mini-note" id="threeWayMessage">เลือก PO และกรอกรายการในเอกสารเพื่อเริ่มตรวจ 3-Way Match</p>
 </section>
-
-<section id="reconcilePanel" class="reconcile-panel">
-<div class="section-head"><strong>🔎 PO Reconciliation</strong><span id="reconcileBadge" class="reconcile-badge no-po">ยังไม่เลือก PO</span></div>
+<section class="reconcile-panel" id="reconcilePanel">
+<div class="section-head"><strong>🔎 PO Reconciliation</strong><span class="reconcile-badge no-po" id="reconcileBadge">ยังไม่เลือก PO</span></div>
 <div class="reconcile-grid">
 <div><span>PO Total (ก่อน VAT)</span><strong id="reconcilePoTotal">฿0.00</strong></div>
 <div><span>Document Base (ไม่รวม VAT)</span><strong id="reconcileDocBase">฿0.00</strong></div>
 <div><span>VAT</span><strong id="reconcileVat">฿0.00</strong></div>
 <div><span>ส่วนต่าง</span><strong id="reconcileVariance">฿0.00</strong></div>
 </div>
-<p id="reconcileMessage" class="mini-note">เลือก PO เพื่อเปรียบเทียบยอดเอกสารกับ PO</p>
+<p class="mini-note" id="reconcileMessage">เลือก PO เพื่อเปรียบเทียบยอดเอกสารกับ PO</p>
 </section>
-
 <section class="attachment-panel">
 <div class="section-head"><strong>ไฟล์แนบ</strong><span id="attachmentCount">0 ไฟล์</span></div>
 <div id="attachments"><div class="empty">ยังไม่มีไฟล์แนบ</div></div>
 </section>
-
-<p id="formMessage" class="message"></p>
+<p class="message" id="formMessage"></p>
 <div class="form-actions">
-<button id="saveBtn" class="primary-btn">บันทึกเอกสาร</button>
+<button class="primary-btn" id="saveBtn">บันทึกเอกสาร</button>
 </div>
 </div>
 </div>
-
-<script type="module" src="../js/purchase-documents.js"></script>
-</body></html>
+<script src="../js/purchase-documents.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body></html>
