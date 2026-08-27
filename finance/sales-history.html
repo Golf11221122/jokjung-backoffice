@@ -1,13 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>ประวัติยอดขาย | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-<link rel="stylesheet" href="../css/print.css">
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/print.css" rel="stylesheet"/>
 <style>
 .history-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
 .history-card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:15px}
@@ -51,197 +52,186 @@ th{font-size:13px;color:#667085;background:#fafafa;white-space:nowrap}
   #loadBtn{grid-column:1/-1}
 }
 </style>
-</head>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
-    <nav>
-      <div class="nav-section">
-        <div class="nav-title">ภาพรวม</div>
-        <a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="./financial-summary.html">🧭 Financial Summary</a>
-        <a class="nav-link" data-nav="daily-closing" href="./daily-closing.html">🌙 Daily Closing</a>
-        <a class="nav-link" data-nav="end-of-day" href="./end-of-day.html">🔐 End of Day</a>
-        <a class="nav-link active" data-nav="sales-history" href="./sales-history.html">🧾 ประวัติยอดขาย</a>
-      </div>
-      <div class="nav-section">
-        <div class="nav-title">Finance</div>
-        <a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a><a class="nav-link" data-nav="bank-cash-reconciliation" href="./bank-cash-reconciliation.html">🏦 Bank / Cash Reconciliation</a>
-        <a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a><a class="nav-link" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a><a class="nav-link" data-nav="payment-forecast" href="./payment-forecast.html">📅 Payment Forecast</a><a class="nav-link" data-nav="cash-flow" href="./cash-flow.html">💵 Cash Flow</a>
-      </div>
-    </nav>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button id="menuBtn" class="menu-btn" type="button">☰</button>
-        <div>
-          <h1>🧾 ประวัติยอดขาย</h1>
-          <p id="branchText">กำลังโหลด...</p>
-        </div>
-      </div>
-      <div class="user-box">
-        <span id="userName">-</span>
-        <span id="roleBadge" class="role-pill">-</span>
-        <button id="logoutBtn" class="outline-btn" type="button">ออกจากระบบ</button>
-      </div>
-    </header>
-
-    <main class="content">
-      <div class="page-head">
-        <div>
-          <h2>รายงานยอดขายย้อนหลัง</h2>
-          <p>ดูตาม Business Date • Cash / QR • จำนวนบิล • กะ • เงินขาดเกิน</p>
-        </div>
-        <div class="filter-bar">
-          <div class="filter-field">
-            <label for="dateFrom">จากวันที่</label>
-            <input id="dateFrom" type="date">
-          </div>
-          <div class="filter-field">
-            <label for="dateTo">ถึงวันที่</label>
-            <input id="dateTo" type="date">
-          </div>
-          <button id="loadBtn" class="primary-btn" type="button">ดูรายงาน</button>
-          <div class="report-actions no-print">
-            <button id="shareBtn" class="outline-btn" type="button">📤 แชร์</button>
-            <button id="printBtn" class="outline-btn" type="button">🖨️ พิมพ์</button>
-          </div>
-        </div>
-      </div>
-
-      <p id="pageMessage"></p>
-
-      <section class="history-grid">
-        <article class="history-card">
-          <small>ยอดขายรวม</small>
-          <strong id="sumSales">฿0.00</strong>
-          <span id="sumDays">0 วัน</span>
-        </article>
-        <article class="history-card">
-          <small>เงินสด / QR</small>
-          <strong id="sumPayment">฿0.00 / ฿0.00</strong>
-        </article>
-        <article class="history-card">
-          <small>จำนวนบิล / จำนวนกะ</small>
-          <strong id="sumBillsShifts">0 / 0</strong>
-        </article>
-        <article class="history-card">
-          <small>เงินขาด / เกินรวม</small>
-          <strong id="sumDiff">฿0.00</strong>
-        </article>
-      </section>
-
-      <section class="panel">
-        <div class="panel-header">
-          <div>
-            <h3>สรุปรายวัน</h3>
-            <p id="periodText">-</p>
-          </div>
-        </div>
-        <div id="historyLoading" class="empty-box hidden">กำลังโหลดข้อมูล...</div>
-        <div id="historyEmpty" class="empty-box hidden">ไม่พบข้อมูลในช่วงวันที่นี้</div>
-        <div id="historyTable" class="table-wrap hidden">
-          <table>
-            <thead>
-              <tr>
-                <th>Business Date</th>
-                <th>สถานะ</th>
-                <th class="num">ยอดขาย</th>
-                <th class="num">Cash</th>
-                <th class="num">QR</th>
-                <th class="num">บิล</th>
-                <th class="num">กะ</th>
-                <th class="num">ส่วนลด</th>
-                <th class="num">ขาด/เกิน</th>
-                <th class="center">รายละเอียด</th>
-              </tr>
-            </thead>
-            <tbody id="historyRows"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="detailPanel" class="panel detail-panel hidden">
-        <div class="detail-head">
-          <div>
-            <h3 id="detailTitle">รายละเอียด</h3>
-            <p id="detailStatus">-</p>
-          </div>
-          <button id="closeDetailBtn" class="outline-btn" type="button">ปิดรายละเอียด</button>
-        </div>
-
-        <section class="history-grid">
-          <article class="history-card">
-            <small>ยอดขาย</small>
-            <strong id="detailSales">฿0.00</strong>
-          </article>
-          <article class="history-card">
-            <small>Cash / QR</small>
-            <strong id="detailPayment">฿0.00 / ฿0.00</strong>
-          </article>
-          <article class="history-card">
-            <small>บิล / กะ</small>
-            <strong id="detailBillsShifts">0 / 0</strong>
-          </article>
-          <article class="history-card">
-            <small>ขาด / เกิน</small>
-            <strong id="detailDiff">฿0.00</strong>
-          </article>
-        </section>
-
-        <div class="tabs">
-          <button class="tab active" data-tab="shiftPane" type="button">รายกะ</button>
-          <button class="tab" data-tab="billPane" type="button">รายบิล</button>
-        </div>
-
-        <section id="shiftPane" class="pane active">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>พนักงาน</th>
-                  <th>เครื่อง</th>
-                  <th>เวลาเปิด → ปิด</th>
-                  <th class="num">ยอดขาย</th>
-                  <th class="num">Cash</th>
-                  <th class="num">QR</th>
-                  <th class="num">Expected</th>
-                  <th class="num">Counted</th>
-                  <th class="num">ขาด/เกิน</th>
-                </tr>
-              </thead>
-              <tbody id="shiftRows"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <section id="billPane" class="pane">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>เวลา</th>
-                  <th>เลขบิล</th>
-                  <th>พนักงาน</th>
-                  <th>Payment</th>
-                  <th>สถานะ</th>
-                  <th class="num">Subtotal</th>
-                  <th class="num">ส่วนลด</th>
-                  <th class="num">ยอดสุทธิ</th>
-                </tr>
-              </thead>
-              <tbody id="billRows"></tbody>
-            </table>
-          </div>
-        </section>
-      </section>
-    </main>
-  </div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
+<nav>
+<div class="nav-section">
+<div class="nav-title">ภาพรวม</div>
+<a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="./financial-summary.html">🧭 Financial Summary</a>
+<a class="nav-link" data-nav="daily-closing" href="./daily-closing.html">🌙 Daily Closing</a>
+<a class="nav-link" data-nav="end-of-day" href="./end-of-day.html">🔐 End of Day</a>
+<a class="nav-link active" data-nav="sales-history" href="./sales-history.html">🧾 ประวัติยอดขาย</a>
 </div>
-
-<script type="module" src="../js/sales-history.js"></script>
-</body>
+<div class="nav-section">
+<div class="nav-title">Finance</div>
+<a class="nav-link" data-nav="reconciliation" href="./reconciliation.html">💳 กระทบยอดการขาย</a><a class="nav-link" data-nav="bank-cash-reconciliation" href="./bank-cash-reconciliation.html">🏦 Bank / Cash Reconciliation</a>
+<a class="nav-link" data-nav="pnl" href="./pnl.html">📈 P&amp;L</a><a class="nav-link" data-nav="accounts-payable" href="./accounts-payable.html">💸 Accounts Payable</a><a class="nav-link" data-nav="payment-forecast" href="./payment-forecast.html">📅 Payment Forecast</a><a class="nav-link" data-nav="cash-flow" href="./cash-flow.html">💵 Cash Flow</a>
+</div>
+</nav>
+</aside>
+<div class="main">
+<header class="topbar">
+<div class="topbar-left">
+<button class="menu-btn" id="menuBtn" type="button">☰</button>
+<div>
+<h1>🧾 ประวัติยอดขาย</h1>
+<p id="branchText">กำลังโหลด...</p>
+</div>
+</div>
+<div class="user-box">
+<span id="userName">-</span>
+<span class="role-pill" id="roleBadge">-</span>
+<button class="outline-btn" id="logoutBtn" type="button">ออกจากระบบ</button>
+</div>
+</header>
+<main class="content">
+<div class="page-head">
+<div>
+<h2>รายงานยอดขายย้อนหลัง</h2>
+<p>ดูตาม Business Date • Cash / QR • จำนวนบิล • กะ • เงินขาดเกิน</p>
+</div>
+<div class="filter-bar">
+<div class="filter-field">
+<label for="dateFrom">จากวันที่</label>
+<input id="dateFrom" type="date"/>
+</div>
+<div class="filter-field">
+<label for="dateTo">ถึงวันที่</label>
+<input id="dateTo" type="date"/>
+</div>
+<button class="primary-btn" id="loadBtn" type="button">ดูรายงาน</button>
+<div class="report-actions no-print">
+<button class="outline-btn" id="shareBtn" type="button">📤 แชร์</button>
+<button class="outline-btn" id="printBtn" type="button">🖨️ พิมพ์</button>
+</div>
+</div>
+</div>
+<p id="pageMessage"></p>
+<section class="history-grid">
+<article class="history-card">
+<small>ยอดขายรวม</small>
+<strong id="sumSales">฿0.00</strong>
+<span id="sumDays">0 วัน</span>
+</article>
+<article class="history-card">
+<small>เงินสด / QR</small>
+<strong id="sumPayment">฿0.00 / ฿0.00</strong>
+</article>
+<article class="history-card">
+<small>จำนวนบิล / จำนวนกะ</small>
+<strong id="sumBillsShifts">0 / 0</strong>
+</article>
+<article class="history-card">
+<small>เงินขาด / เกินรวม</small>
+<strong id="sumDiff">฿0.00</strong>
+</article>
+</section>
+<section class="panel">
+<div class="panel-header">
+<div>
+<h3>สรุปรายวัน</h3>
+<p id="periodText">-</p>
+</div>
+</div>
+<div class="empty-box hidden" id="historyLoading">กำลังโหลดข้อมูล...</div>
+<div class="empty-box hidden" id="historyEmpty">ไม่พบข้อมูลในช่วงวันที่นี้</div>
+<div class="table-wrap hidden" id="historyTable">
+<table>
+<thead>
+<tr>
+<th>Business Date</th>
+<th>สถานะ</th>
+<th class="num">ยอดขาย</th>
+<th class="num">Cash</th>
+<th class="num">QR</th>
+<th class="num">บิล</th>
+<th class="num">กะ</th>
+<th class="num">ส่วนลด</th>
+<th class="num">ขาด/เกิน</th>
+<th class="center">รายละเอียด</th>
+</tr>
+</thead>
+<tbody id="historyRows"></tbody>
+</table>
+</div>
+</section>
+<section class="panel detail-panel hidden" id="detailPanel">
+<div class="detail-head">
+<div>
+<h3 id="detailTitle">รายละเอียด</h3>
+<p id="detailStatus">-</p>
+</div>
+<button class="outline-btn" id="closeDetailBtn" type="button">ปิดรายละเอียด</button>
+</div>
+<section class="history-grid">
+<article class="history-card">
+<small>ยอดขาย</small>
+<strong id="detailSales">฿0.00</strong>
+</article>
+<article class="history-card">
+<small>Cash / QR</small>
+<strong id="detailPayment">฿0.00 / ฿0.00</strong>
+</article>
+<article class="history-card">
+<small>บิล / กะ</small>
+<strong id="detailBillsShifts">0 / 0</strong>
+</article>
+<article class="history-card">
+<small>ขาด / เกิน</small>
+<strong id="detailDiff">฿0.00</strong>
+</article>
+</section>
+<div class="tabs">
+<button class="tab active" data-tab="shiftPane" type="button">รายกะ</button>
+<button class="tab" data-tab="billPane" type="button">รายบิล</button>
+</div>
+<section class="pane active" id="shiftPane">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>พนักงาน</th>
+<th>เครื่อง</th>
+<th>เวลาเปิด → ปิด</th>
+<th class="num">ยอดขาย</th>
+<th class="num">Cash</th>
+<th class="num">QR</th>
+<th class="num">Expected</th>
+<th class="num">Counted</th>
+<th class="num">ขาด/เกิน</th>
+</tr>
+</thead>
+<tbody id="shiftRows"></tbody>
+</table>
+</div>
+</section>
+<section class="pane" id="billPane">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>เวลา</th>
+<th>เลขบิล</th>
+<th>พนักงาน</th>
+<th>Payment</th>
+<th>สถานะ</th>
+<th class="num">Subtotal</th>
+<th class="num">ส่วนลด</th>
+<th class="num">ยอดสุทธิ</th>
+</tr>
+</thead>
+<tbody id="billRows"></tbody>
+</table>
+</div>
+</section>
+</section>
+</main>
+</div>
+</div>
+<script src="../js/sales-history.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

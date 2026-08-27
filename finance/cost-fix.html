@@ -1,11 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>🛠 Cost Fix Center | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
 <style>
 .fix-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
 .fix-card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px}
@@ -24,31 +25,29 @@
 @media(max-width:900px){.fix-grid{grid-template-columns:1fr 1fr}.diag{grid-template-columns:1fr 1fr}}
 @media(max-width:550px){.fix-grid,.diag{grid-template-columns:1fr}.issue-head{flex-direction:column}.ing{grid-template-columns:1fr 1fr}}
 </style>
-<link rel="stylesheet" href="../css/responsive.css"><link rel="stylesheet" href="../css/print.css"></head>
+<link href="../css/responsive.css" rel="stylesheet"/><link href="../css/print.css" rel="stylesheet"/><link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body><div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" href="../dashboard.html">📊 Dashboard</a></div>
 <div class="nav-section"><div class="nav-title">Finance</div>
 <a class="nav-link" href="./expenses.html">🧾 ค่าใช้จ่าย</a>
-<a class="nav-link" href="./pnl.html">📈 P&L</a>
+<a class="nav-link" href="./pnl.html">📈 P&amp;L</a>
 <a class="nav-link" href="./cost-quality.html">🧪 Cost Data Quality</a>
 <a class="nav-link active" href="./cost-fix.html">🛠 Cost Fix Center</a><a class="nav-link" data-nav="bulk-cost-sync" href="./bulk-cost-sync.html">🔄 Bulk Cost Sync</a>
 </div>
-<div class="nav-section"><div class="nav-title">Stock & Cost</div>
+<div class="nav-section"><div class="nav-title">Stock &amp; Cost</div>
 <a class="nav-link" href="../stock/ingredients.html">📦 วัตถุดิบ / Stock</a>
 <a class="nav-link" href="../stock/recipes.html">🧾 Recipe / BOM</a>
 <a class="nav-link" href="../stock/cost-control.html">💰 Cost Control</a>
 </div>
 </nav></aside>
-
 <div class="main">
-<header class="topbar"><div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>🛠 Cost Fix Center</h1><p id="branchText">-</p></div></div><div class="user-box"><span id="userName">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div></header>
+<header class="topbar"><div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>🛠 Cost Fix Center</h1><p id="branchText">-</p></div></div><div class="user-box"><span id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div></header>
 <main class="content">
 <div class="page-head"><div><h2>หาสาเหตุ COGS = 0</h2><p>ตรวจจาก Sale → Product → Recipe/BOM → Ingredient Cost แล้วพาไปแก้ตรงจุด</p></div></div>
-<section class="panel"><div class="filters"><input id="dateFrom" type="date"><input id="dateTo" type="date"><button id="monthBtn" class="outline-btn">เดือนนี้</button><button id="loadBtn" class="primary-btn">วิเคราะห์</button></div></section>
-
+<section class="panel"><div class="filters"><input id="dateFrom" type="date"/><input id="dateTo" type="date"/><button class="outline-btn" id="monthBtn">เดือนนี้</button><button class="primary-btn" id="loadBtn">วิเคราะห์</button></div></section>
 <div class="fix-grid">
 <div class="fix-card"><span>ปัญหาทั้งหมด</span><strong id="total">0</strong></div>
 <div class="fix-card"><span>ไม่มี Recipe</span><strong id="noRecipe">0</strong></div>
@@ -56,12 +55,11 @@
 <div class="fix-card"><span>Product Cost ไม่ Sync</span><strong id="notSynced">0</strong></div>
 <div class="fix-card"><span>Sale Snapshot ต้นทุน 0</span><strong id="saleSnapshot">0</strong></div>
 </div>
-
 <section class="panel">
-<div class="toolbar"><input id="search" placeholder="ค้นหาเมนู..." style="min-width:240px;padding:9px;border:1px solid #ddd;border-radius:8px"><select id="issueFilter"><option value="">ทุกสาเหตุ</option><option value="NO_RECIPE">ไม่มี Recipe</option><option value="INGREDIENT_COST_ZERO">วัตถุดิบต้นทุน 0</option><option value="PRODUCT_COST_NOT_SYNCED">Product Cost ไม่ Sync</option><option value="SALE_COST_NOT_CAPTURED">Sale Snapshot ต้นทุน 0</option><option value="INGREDIENT_MISSING">วัตถุดิบหาย/ปิด</option></select></div>
+<div class="toolbar"><input id="search" placeholder="ค้นหาเมนู..." style="min-width:240px;padding:9px;border:1px solid #ddd;border-radius:8px"/><select id="issueFilter"><option value="">ทุกสาเหตุ</option><option value="NO_RECIPE">ไม่มี Recipe</option><option value="INGREDIENT_COST_ZERO">วัตถุดิบต้นทุน 0</option><option value="PRODUCT_COST_NOT_SYNCED">Product Cost ไม่ Sync</option><option value="SALE_COST_NOT_CAPTURED">Sale Snapshot ต้นทุน 0</option><option value="INGREDIENT_MISSING">วัตถุดิบหาย/ปิด</option></select></div>
 <div id="issues"></div>
 <p id="message"></p>
 </section>
 </main></div></div>
-<script type="module" src="../js/cost-fix.js"></script>
-</body></html>
+<script src="../js/cost-fix.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body></html>

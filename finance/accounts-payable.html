@@ -1,21 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Accounts Payable | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-</head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div>
 <a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="./financial-summary.html">🧭 Financial Summary</a>
-<a class="nav-link" data-nav="kpi-targets" href="./kpi-targets.html">🎯 KPI & Targets</a>
+<a class="nav-link" data-nav="kpi-targets" href="./kpi-targets.html">🎯 KPI &amp; Targets</a>
 <a class="nav-link" data-nav="daily-closing" href="./daily-closing.html">🌙 Daily Closing</a>
 </div>
 <div class="nav-section"><div class="nav-title">Finance</div>
@@ -34,24 +35,20 @@
 </div>
 </nav>
 </aside>
-
 <div class="main">
 <header class="topbar">
-<div class="topbar-left"><button id="menuBtn" class="menu-btn" type="button">☰</button><div><h1>💸 Accounts Payable</h1><p id="branchText">กำลังโหลด...</p></div></div>
-<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+<div class="topbar-left"><button class="menu-btn" id="menuBtn" type="button">☰</button><div><h1>💸 Accounts Payable</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div>
 </header>
-
 <main class="content">
 <div class="page-head">
 <div><h2>เจ้าหนี้การค้า</h2><p>อนุมัติเอกสารก่อนจ่าย ติดตาม Due Date, Aging และประวัติการชำระ</p></div>
-<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+<button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button>
 </div>
-
-<section id="kpis" class="kpi-grid"></section>
-
+<section class="kpi-grid" id="kpis"></section>
 <section class="panel">
 <div class="toolbar ap-toolbar">
-<input id="search" placeholder="ค้นหา Supplier / Invoice / PO...">
+<input id="search" placeholder="ค้นหา Supplier / Invoice / PO..."/>
 <select id="supplierFilter"><option value="">Supplier ทั้งหมด</option></select>
 <select id="approvalFilter">
 <option value="">ทุกสถานะอนุมัติ</option>
@@ -76,19 +73,17 @@
 </select>
 </div>
 <div id="table"></div>
-<p id="message" class="message"></p>
+<p class="message" id="message"></p>
 </section>
 </main>
 </div>
 </div>
-
-<div id="detailModal" class="modal hidden">
+<div class="modal hidden" id="detailModal">
 <div class="modal-card ap-modal">
 <div class="modal-head">
-<div><h3 id="detailTitle">Accounts Payable</h3><p id="detailSub" class="mini-note">-</p></div>
-<button id="closeDetailBtn" class="close-btn">×</button>
+<div><h3 id="detailTitle">Accounts Payable</h3><p class="mini-note" id="detailSub">-</p></div>
+<button class="close-btn" id="closeDetailBtn">×</button>
 </div>
-
 <section class="ap-detail-grid">
 <div><span>Supplier</span><strong id="detailSupplier">-</strong></div>
 <div><span>Total</span><strong id="detailTotal">฿0.00</strong></div>
@@ -97,22 +92,20 @@
 <div><span>Due Date</span><strong id="detailDue">-</strong></div>
 <div><span>3-Way</span><strong id="detailThreeWay">-</strong></div>
 </section>
-
 <div class="ap-approval-box">
-<div class="section-head"><strong>Approval for Payment</strong><span id="approvalBadge" class="ap-badge pending">รอตรวจ</span></div>
+<div class="section-head"><strong>Approval for Payment</strong><span class="ap-badge pending" id="approvalBadge">รอตรวจ</span></div>
 <div class="action-row">
-<button id="approveBtn" class="primary-btn">✅ อนุมัติจ่าย</button>
-<button id="holdBtn" class="outline-btn">⏸ พักไว้</button>
-<button id="rejectBtn" class="danger-btn">✕ ไม่อนุมัติ</button>
+<button class="primary-btn" id="approveBtn">✅ อนุมัติจ่าย</button>
+<button class="outline-btn" id="holdBtn">⏸ พักไว้</button>
+<button class="danger-btn" id="rejectBtn">✕ ไม่อนุมัติ</button>
 </div>
 <p class="mini-note">เอกสารที่มี PO ต้องผ่าน 3-Way Match ก่อนจึงอนุมัติได้</p>
 </div>
-
 <div class="ap-payment-box">
-<div class="section-head"><strong>บันทึกการจ่ายเงิน</strong><span id="paymentStatusBadge" class="ap-badge">-</span></div>
+<div class="section-head"><strong>บันทึกการจ่ายเงิน</strong><span class="ap-badge" id="paymentStatusBadge">-</span></div>
 <div class="form-grid">
-<label class="field"><span>วันที่จ่าย</span><input id="paymentDate" type="date"></label>
-<label class="field"><span>ยอดจ่ายครั้งนี้</span><input id="paymentAmount" type="number" min="0.01" step="0.01"></label>
+<label class="field"><span>วันที่จ่าย</span><input id="paymentDate" type="date"/></label>
+<label class="field"><span>ยอดจ่ายครั้งนี้</span><input id="paymentAmount" min="0.01" step="0.01" type="number"/></label>
 <label class="field"><span>วิธีชำระ</span>
 <select id="paymentMethod">
 <option value="bank_transfer">Bank Transfer</option>
@@ -122,27 +115,22 @@
 <option value="credit">Credit</option>
 <option value="other">Other</option>
 </select></label>
-<label class="field"><span>เลขอ้างอิง</span><input id="paymentReference" placeholder="เลขสลิป / Ref / Cheque"></label>
+<label class="field"><span>เลขอ้างอิง</span><input id="paymentReference" placeholder="เลขสลิป / Ref / Cheque"/></label>
 <label class="field form-wide"><span>หมายเหตุ</span><textarea id="paymentNote"></textarea></label>
 </div>
-<button id="payBtn" class="primary-btn">💸 บันทึกการจ่าย</button>
+<button class="primary-btn" id="payBtn">💸 บันทึกการจ่าย</button>
 </div>
-
-
 <section class="ap-history">
 <div class="section-head"><strong>Supplier Credit / Purchase Return</strong><span id="creditHistoryCount">0 รายการ</span></div>
 <div id="creditHistory"><div class="empty">ยังไม่มี Supplier Credit</div></div>
 </section>
-
 <section class="ap-history">
 <div class="section-head"><strong>ประวัติการจ่าย</strong><span id="historyCount">0 รายการ</span></div>
 <div id="paymentHistory"><div class="empty">ยังไม่มีประวัติการจ่าย</div></div>
 </section>
-
-<p id="detailMessage" class="message"></p>
+<p class="message" id="detailMessage"></p>
 </div>
 </div>
-
-<script type="module" src="../js/accounts-payable.js"></script>
-</body>
+<script src="../js/accounts-payable.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

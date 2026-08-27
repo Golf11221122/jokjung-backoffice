@@ -1,16 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Financial Summary | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-</head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div>
@@ -28,29 +29,26 @@
 </div>
 </nav>
 </aside>
-
 <div class="main">
 <header class="topbar">
 <div class="topbar-left">
-<button id="menuBtn" class="menu-btn">☰</button>
+<button class="menu-btn" id="menuBtn">☰</button>
 <div><h1>🧭 Financial Summary</h1><p id="branchText">กำลังโหลด...</p></div>
 </div>
-<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+<div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div>
 </header>
-
 <main class="content">
 <div class="page-head">
 <div>
 <h2>สรุปการเงินประจำวัน / ช่วงเวลา</h2>
 <p>รวม Sales, P&amp;L, Cash Flow, AP, Payment Forecast และ Bank/Cash Reconciliation ในหน้าเดียว</p>
 </div>
-<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+<button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button>
 </div>
-
 <section class="panel">
 <div class="toolbar finance-summary-toolbar">
-<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label>
-<label class="field"><span>ถึง</span><input id="dateTo" type="date"></label>
+<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"/></label>
+<label class="field"><span>ถึง</span><input id="dateTo" type="date"/></label>
 <div class="quick-range">
 <button class="small-btn" data-range="today">วันนี้</button>
 <button class="small-btn" data-range="7">7 วัน</button>
@@ -58,45 +56,37 @@
 </div>
 </div>
 </section>
-
-<section id="headlineKpis" class="kpi-grid"></section>
-
+<section class="kpi-grid" id="headlineKpis"></section>
 <section class="finance-health-grid">
 <article class="panel">
-<div class="section-head"><strong>📈 Profitability</strong><a href="./pnl.html" class="small-btn">เปิด P&amp;L</a></div>
+<div class="section-head"><strong>📈 Profitability</strong><a class="small-btn" href="./pnl.html">เปิด P&amp;L</a></div>
 <div id="profitability"></div>
 </article>
-
 <article class="panel">
-<div class="section-head"><strong>💵 Cash Flow</strong><a href="./cash-flow.html" class="small-btn">เปิด Cash Flow</a></div>
+<div class="section-head"><strong>💵 Cash Flow</strong><a class="small-btn" href="./cash-flow.html">เปิด Cash Flow</a></div>
 <div id="cashFlow"></div>
 </article>
-
 <article class="panel">
-<div class="section-head"><strong>💸 Accounts Payable</strong><a href="./accounts-payable.html" class="small-btn">เปิด AP</a></div>
+<div class="section-head"><strong>💸 Accounts Payable</strong><a class="small-btn" href="./accounts-payable.html">เปิด AP</a></div>
 <div id="apSummary"></div>
 </article>
-
 <article class="panel">
-<div class="section-head"><strong>🏦 Bank / Cash Recon</strong><a href="./bank-cash-reconciliation.html" class="small-btn">เปิด Recon</a></div>
+<div class="section-head"><strong>🏦 Bank / Cash Recon</strong><a class="small-btn" href="./bank-cash-reconciliation.html">เปิด Recon</a></div>
 <div id="reconSummary"></div>
 </article>
-
 <article class="panel">
-<div class="section-head"><strong>🗑️ Waste / Inventory Loss</strong><a href="../stock/waste-loss.html" class="small-btn">เปิด Waste</a></div>
+<div class="section-head"><strong>🗑️ Waste / Inventory Loss</strong><a class="small-btn" href="../stock/waste-loss.html">เปิด Waste</a></div>
 <div id="wasteSummary"></div>
 </article>
 </section>
-
 <section class="panel">
-<div class="section-head"><strong>🚦 สถานะที่ต้องตรวจ</strong><span id="alertCount" class="mini-note">0 รายการ</span></div>
+<div class="section-head"><strong>🚦 สถานะที่ต้องตรวจ</strong><span class="mini-note" id="alertCount">0 รายการ</span></div>
 <div id="alertsList"></div>
 </section>
-
-<p id="message" class="message"></p>
+<p class="message" id="message"></p>
 </main>
 </div>
 </div>
-<script type="module" src="../js/financial-summary.js"></script>
-</body>
+<script src="../js/financial-summary.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

@@ -1,16 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Payment Forecast | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-</head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div>
@@ -31,66 +32,59 @@
 </div>
 </nav>
 </aside>
-
 <div class="main">
 <header class="topbar">
-<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>📅 Payment Forecast</h1><p id="branchText">กำลังโหลด...</p></div></div>
-<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+<div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>📅 Payment Forecast</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div>
 </header>
-
 <main class="content">
 <div class="page-head">
 <div><h2>Cash Flow / แผนจ่าย Supplier</h2><p>ดูเงินที่ต้องเตรียมตาม Due Date และกำหนดวันจ่ายจริงล่วงหน้า</p></div>
-<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+<button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button>
 </div>
-
-<section id="kpis" class="kpi-grid"></section>
-
+<section class="kpi-grid" id="kpis"></section>
 <section class="panel">
 <div class="section-head"><strong>เงินที่ต้องเตรียม 30 วัน</strong><span class="mini-note">Due = ตาม Invoice • Planned = วันที่ตั้งใจจ่าย</span></div>
-<div id="forecastBars" class="forecast-bars"></div>
+<div class="forecast-bars" id="forecastBars"></div>
 </section>
-
 <section class="panel">
 <div class="toolbar forecast-toolbar">
-<input id="search" placeholder="ค้นหา Supplier / Invoice / PO...">
+<input id="search" placeholder="ค้นหา Supplier / Invoice / PO..."/>
 <select id="supplierFilter"><option value="">Supplier ทั้งหมด</option></select>
 <select id="windowFilter">
 <option value="7">7 วันข้างหน้า</option>
-<option value="30" selected>30 วันข้างหน้า</option>
+<option selected="" value="30">30 วันข้างหน้า</option>
 <option value="90">90 วันข้างหน้า</option>
 <option value="365">ทั้งหมด 1 ปี</option>
 </select>
 </div>
 <div id="table"></div>
-<p id="message" class="message"></p>
+<p class="message" id="message"></p>
 </section>
 </main>
 </div>
 </div>
-
-<div id="planModal" class="modal hidden">
+<div class="modal hidden" id="planModal">
 <div class="modal-card" style="width:min(560px,100%)">
 <div class="modal-head">
-<div><h3>วางแผนการจ่าย</h3><p id="planSub" class="mini-note">-</p></div>
-<button id="closePlanBtn" class="close-btn">×</button>
+<div><h3>วางแผนการจ่าย</h3><p class="mini-note" id="planSub">-</p></div>
+<button class="close-btn" id="closePlanBtn">×</button>
 </div>
-<input id="planDocumentId" type="hidden">
+<input id="planDocumentId" type="hidden"/>
 <div class="form-grid">
-<label class="field"><span>ยอดคงค้าง</span><input id="planBalance" readonly></label>
-<label class="field"><span>Due Date</span><input id="planDueDate" readonly></label>
-<label class="field"><span>วันที่วางแผนจ่าย</span><input id="planDate" type="date"></label>
-<label class="field"><span>ยอดที่วางแผนจ่าย</span><input id="planAmount" type="number" min="0.01" step="0.01"></label>
+<label class="field"><span>ยอดคงค้าง</span><input id="planBalance" readonly=""/></label>
+<label class="field"><span>Due Date</span><input id="planDueDate" readonly=""/></label>
+<label class="field"><span>วันที่วางแผนจ่าย</span><input id="planDate" type="date"/></label>
+<label class="field"><span>ยอดที่วางแผนจ่าย</span><input id="planAmount" min="0.01" step="0.01" type="number"/></label>
 <label class="field form-wide"><span>หมายเหตุ</span><textarea id="planNote"></textarea></label>
 </div>
-<p id="planMessage" class="message"></p>
+<p class="message" id="planMessage"></p>
 <div class="form-actions">
-<button id="cancelPlanBtn" class="outline-btn">ยกเลิกแผนเดิม</button>
-<button id="savePlanBtn" class="primary-btn">บันทึกแผนจ่าย</button>
+<button class="outline-btn" id="cancelPlanBtn">ยกเลิกแผนเดิม</button>
+<button class="primary-btn" id="savePlanBtn">บันทึกแผนจ่าย</button>
 </div>
 </div>
 </div>
-
-<script type="module" src="../js/payment-forecast.js"></script>
-</body>
+<script src="../js/payment-forecast.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body>
 </html>

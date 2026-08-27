@@ -1,16 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <title>Cash Flow | JOKJUNG Back Office</title>
-<link rel="stylesheet" href="../css/app.css">
-<link rel="stylesheet" href="../css/stock-v2.css">
-<link rel="stylesheet" href="../css/responsive.css">
-</head>
+<link href="../css/app.css" rel="stylesheet"/>
+<link href="../css/stock-v2.css" rel="stylesheet"/>
+<link href="../css/responsive.css" rel="stylesheet"/>
+<link href="../css/ui-pro-v3.20.css" rel="stylesheet"/></head>
 <body>
 <div class="app">
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar" id="sidebar">
 <div class="sidebar-brand"><strong>JOKJUNG</strong><small>Back Office</small></div>
 <nav>
 <div class="nav-section"><div class="nav-title">ภาพรวม</div><a class="nav-link" data-nav="dashboard" href="../dashboard.html">📊 Dashboard</a><a class="nav-link" data-nav="financial-summary" href="./financial-summary.html">🧭 Financial Summary</a></div>
@@ -26,37 +27,37 @@
 </aside>
 <div class="main">
 <header class="topbar">
-<div class="topbar-left"><button id="menuBtn" class="menu-btn">☰</button><div><h1>💵 Cash Flow</h1><p id="branchText">กำลังโหลด...</p></div></div>
-<div class="user-box"><span id="userName" class="user-name">-</span><span id="roleBadge" class="role-pill">-</span><button id="logoutBtn" class="outline-btn">ออกจากระบบ</button></div>
+<div class="topbar-left"><button class="menu-btn" id="menuBtn">☰</button><div><h1>💵 Cash Flow</h1><p id="branchText">กำลังโหลด...</p></div></div>
+<div class="user-box"><span class="user-name" id="userName">-</span><span class="role-pill" id="roleBadge">-</span><button class="outline-btn" id="logoutBtn">ออกจากระบบ</button></div>
 </header>
 <main class="content">
 <div class="page-head">
 <div><h2>Cash Flow Dashboard</h2><p>เงินเข้าจริงจากยอดขาย − ค่าใช้จ่ายจริง − เงินจ่าย Supplier + แผนจ่ายล่วงหน้า</p></div>
-<button id="refreshBtn" class="outline-btn">↻ รีเฟรช</button>
+<button class="outline-btn" id="refreshBtn">↻ รีเฟรช</button>
 </div>
 <section class="panel">
 <div class="toolbar cashflow-toolbar">
-<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"></label>
-<label class="field"><span>ถึง</span><input id="dateTo" type="date"></label>
+<label class="field"><span>ตั้งแต่</span><input id="dateFrom" type="date"/></label>
+<label class="field"><span>ถึง</span><input id="dateTo" type="date"/></label>
 <div class="quick-range"><button class="small-btn" data-days="0">วันนี้</button><button class="small-btn" data-days="6">7 วัน</button><button class="small-btn" data-days="29">30 วัน</button></div>
 </div>
 </section>
-<section id="kpis" class="kpi-grid"></section>
+<section class="kpi-grid" id="kpis"></section>
 <section class="panel">
 <div class="section-head"><div><strong>กระแสเงินสดรายวัน</strong><div class="mini-note">Actual Net = Sales − Expenses − Supplier Payments</div></div></div>
-<div id="dailyChart" class="cashflow-chart"></div>
+<div class="cashflow-chart" id="dailyChart"></div>
 </section>
 <section class="panel">
-<div class="section-head"><strong>รายละเอียดรายวัน</strong><span id="dayCount" class="mini-note">0 วัน</span></div>
+<div class="section-head"><strong>รายละเอียดรายวัน</strong><span class="mini-note" id="dayCount">0 วัน</span></div>
 <div id="dailyTable"></div>
 </section>
 <section class="panel">
-<div class="section-head"><strong>รายการเงินออกจริง</strong><span id="outflowCount" class="mini-note">0 รายการ</span></div>
+<div class="section-head"><strong>รายการเงินออกจริง</strong><span class="mini-note" id="outflowCount">0 รายการ</span></div>
 <div id="outflowTable"></div>
 </section>
-<p id="message" class="message"></p>
+<p class="message" id="message"></p>
 </main>
 </div>
 </div>
-<script type="module" src="../js/cash-flow.js"></script>
-</body></html>
+<script src="../js/cash-flow.js" type="module"></script>
+<script defer="True" src="../js/ui-feedback-v3.20.js"></script></body></html>
