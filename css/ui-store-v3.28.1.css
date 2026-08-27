@@ -1,0 +1,213 @@
+/* =========================================================
+   JOKJUNG Back Office V3.28.1 — Dark Contrast Fix
+   Improve readability in dark mode across the whole project.
+   UI only.
+   ========================================================= */
+
+html[data-jk-theme="dark"]{
+  --jk28-dark-bg:#08111f;
+  --jk28-dark-surface:#0f1a2d;
+  --jk28-dark-surface-2:#13223a;
+  --jk28-dark-line:#253652;
+  --jk28-dark-text:#eef4ff;
+  --jk28-dark-text-2:#dbe6f7;
+  --jk28-dark-muted:#a7b5ca;
+  --jk28-dark-soft:#8ea0bb;
+}
+
+html[data-jk-theme="dark"] body,
+html[data-jk-theme="dark"] .main,
+html[data-jk-theme="dark"] .content{
+  color:var(--jk28-dark-text) !important;
+}
+
+/* Stronger text contrast for headings and key numbers */
+html[data-jk-theme="dark"] h1,
+html[data-jk-theme="dark"] h2,
+html[data-jk-theme="dark"] h3,
+html[data-jk-theme="dark"] h4,
+html[data-jk-theme="dark"] .page-head h2,
+html[data-jk-theme="dark"] .panel-head h3,
+html[data-jk-theme="dark"] .section-head strong,
+html[data-jk-theme="dark"] .card strong,
+html[data-jk-theme="dark"] .summary-card strong,
+html[data-jk-theme="dark"] .kpi-card strong,
+html[data-jk-theme="dark"] .metric-card strong,
+html[data-jk-theme="dark"] .cost-kpi strong,
+html[data-jk-theme="dark"] .waste-total strong,
+html[data-jk-theme="dark"] .topbar h1,
+html[data-jk-theme="dark"] .sidebar-brand strong{
+  color:var(--jk28-dark-text) !important;
+}
+
+html[data-jk-theme="dark"] p,
+html[data-jk-theme="dark"] span,
+html[data-jk-theme="dark"] div,
+html[data-jk-theme="dark"] label,
+html[data-jk-theme="dark"] td,
+html[data-jk-theme="dark"] li,
+html[data-jk-theme="dark"] .user-name,
+html[data-jk-theme="dark"] #userName,
+html[data-jk-theme="dark"] #roleBadge,
+html[data-jk-theme="dark"] #branchText,
+html[data-jk-theme="dark"] .field span,
+html[data-jk-theme="dark"] .mini-note,
+html[data-jk-theme="dark"] .message{
+  color:var(--jk28-dark-text-2) !important;
+}
+
+html[data-jk-theme="dark"] small,
+html[data-jk-theme="dark"] .page-head p,
+html[data-jk-theme="dark"] .topbar p,
+html[data-jk-theme="dark"] .muted,
+html[data-jk-theme="dark"] .subtext,
+html[data-jk-theme="dark"] .summary-card small,
+html[data-jk-theme="dark"] .card small,
+html[data-jk-theme="dark"] .mini-note,
+html[data-jk-theme="dark"] .finance-summary-row small,
+html[data-jk-theme="dark"] .finance-alert small,
+html[data-jk-theme="dark"] .finance-summary-row > span,
+html[data-jk-theme="dark"] .finance-note,
+html[data-jk-theme="dark"] .jk23-contextbar .jk23-sync,
+html[data-jk-theme="dark"] .jk-ops-chip{
+  color:var(--jk28-dark-muted) !important;
+}
+
+/* Cards/panels */
+html[data-jk-theme="dark"] .card,
+html[data-jk-theme="dark"] .panel,
+html[data-jk-theme="dark"] .summary-card,
+html[data-jk-theme="dark"] .kpi-card,
+html[data-jk-theme="dark"] .metric-card,
+html[data-jk-theme="dark"] .history-card,
+html[data-jk-theme="dark"] .modal-card,
+html[data-jk-theme="dark"] .table-wrap,
+html[data-jk-theme="dark"] .jk23-contextbar,
+html[data-jk-theme="dark"] .jk-opsbar,
+html[data-jk-theme="dark"] .content .grid > .card{
+  background:var(--jk28-dark-surface) !important;
+  border-color:var(--jk28-dark-line) !important;
+  color:var(--jk28-dark-text) !important;
+}
+
+/* Status/context bars from older UX layers */
+html[data-jk-theme="dark"] .jk-opsbar{
+  background:linear-gradient(180deg,#0e1a2f,#0a1526) !important;
+  border:1px solid var(--jk28-dark-line) !important;
+  box-shadow:0 10px 24px rgba(0,0,0,.28) !important;
+}
+html[data-jk-theme="dark"] .jk-ops-chip{
+  background:#0f1b31 !important;
+  border-color:#243653 !important;
+}
+html[data-jk-theme="dark"] .jk-ops-chip strong,
+html[data-jk-theme="dark"] .jk23-contextbar .jk23-page,
+html[data-jk-theme="dark"] .jk23-dirty-badge{
+  color:var(--jk28-dark-text) !important;
+}
+html[data-jk-theme="dark"] .jk23-contextbar{
+  background:linear-gradient(180deg,#0e1a2f,#0a1526) !important;
+  border-color:#243653 !important;
+}
+html[data-jk-theme="dark"] .jk23-contextbar .jk23-divider{
+  background:#314664 !important;
+}
+
+/* Tables */
+html[data-jk-theme="dark"] table,
+html[data-jk-theme="dark"] .table-wrap{
+  background:var(--jk28-dark-surface) !important;
+}
+html[data-jk-theme="dark"] thead th{
+  background:#0b1424 !important;
+  color:#c8d4e6 !important;
+  border-bottom-color:#243653 !important;
+}
+html[data-jk-theme="dark"] tbody td{
+  color:var(--jk28-dark-text-2) !important;
+  border-bottom-color:#1c2c47 !important;
+}
+html[data-jk-theme="dark"] tbody tr:hover{
+  background:#12223a !important;
+}
+
+/* Finance-specific blocks */
+html[data-jk-theme="dark"] .finance-summary-row{
+  border-bottom-color:#1f304c !important;
+}
+html[data-jk-theme="dark"] .finance-summary-row > div,
+html[data-jk-theme="dark"] .finance-summary-row strong,
+html[data-jk-theme="dark"] .finance-alert > div,
+html[data-jk-theme="dark"] .finance-health,
+html[data-jk-theme="dark"] .status-pill,
+html[data-jk-theme="dark"] .badge{
+  color:var(--jk28-dark-text) !important;
+}
+html[data-jk-theme="dark"] .finance-note.good{
+  background:#12311f !important;
+  color:#b7f7ca !important;
+}
+html[data-jk-theme="dark"] .finance-note.warn{
+  background:#3a2b10 !important;
+  color:#f9df95 !important;
+}
+html[data-jk-theme="dark"] .finance-alert{
+  border-color:#243653 !important;
+  background:#101c30 !important;
+}
+html[data-jk-theme="dark"] .finance-alert.danger{background:#32161b !important;border-color:#6e2833 !important;}
+html[data-jk-theme="dark"] .finance-alert.warn{background:#35290f !important;border-color:#86661d !important;}
+html[data-jk-theme="dark"] .finance-alert.info{background:#11263b !important;border-color:#285a88 !important;}
+
+/* Buttons */
+html[data-jk-theme="dark"] .small-btn,
+html[data-jk-theme="dark"] .outline-btn,
+html[data-jk-theme="dark"] .secondary-btn,
+html[data-jk-theme="dark"] .menu-btn,
+html[data-jk-theme="dark"] #logoutBtn,
+html[data-jk-theme="dark"] button.outline-btn{
+  background:#0f1a2d !important;
+  color:var(--jk28-dark-text) !important;
+  border-color:#243653 !important;
+}
+html[data-jk-theme="dark"] .small-btn:hover,
+html[data-jk-theme="dark"] .outline-btn:hover,
+html[data-jk-theme="dark"] .secondary-btn:hover,
+html[data-jk-theme="dark"] .menu-btn:hover,
+html[data-jk-theme="dark"] #logoutBtn:hover{
+  background:#14233a !important;
+}
+html[data-jk-theme="dark"] .primary-btn{
+  color:#08111f !important;
+}
+
+/* Form fields */
+html[data-jk-theme="dark"] input,
+html[data-jk-theme="dark"] select,
+html[data-jk-theme="dark"] textarea{
+  background:#0d1728 !important;
+  color:var(--jk28-dark-text) !important;
+  border-color:#243653 !important;
+}
+html[data-jk-theme="dark"] input::placeholder,
+html[data-jk-theme="dark"] textarea::placeholder{
+  color:#7f90aa !important;
+}
+
+/* Locked tab dock from V3.27 */
+html[data-jk-theme="dark"] #jk27DockInner,
+html[data-jk-theme="dark"] .jk27-action-wrap{
+  background:linear-gradient(180deg,#0d172a,#091120) !important;
+  border-color:#22314d !important;
+}
+html[data-jk-theme="dark"] .jk27-action-wrap :where(button,a,.primary-btn,.outline-btn,.secondary-btn,.danger-btn){
+  color:#eef4ff !important;
+}
+html[data-jk-theme="dark"] .jk27-action-wrap .primary-btn{
+  color:#10203a !important;
+}
+
+/* Keep success/error readable */
+html[data-jk-theme="dark"] .ok{color:#6ee7a8 !important;}
+html[data-jk-theme="dark"] .bad{color:#fca5a5 !important;}
+html[data-jk-theme="dark"] .warn{color:#fcd34d !important;}
