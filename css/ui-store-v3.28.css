@@ -1,0 +1,241 @@
+/* =========================================================
+   JOKJUNG Back Office V3.28 — Light / Dark Theme Toggle
+   UI only. No business logic changes.
+   ========================================================= */
+:root{
+  --jk28-bg:#f4f7fb;
+  --jk28-surface:#ffffff;
+  --jk28-surface-2:#f8fafc;
+  --jk28-text:#1d2939;
+  --jk28-muted:#667085;
+  --jk28-line:#d0d5dd;
+  --jk28-line-soft:#e4e7ec;
+  --jk28-primary:#13213e;
+  --jk28-primary-2:#1d2f57;
+  --jk28-accent:#f2c94c;
+  --jk28-success:#12b76a;
+  --jk28-shadow:0 8px 24px rgba(16,24,40,.08);
+}
+
+/* theme toggle button */
+#jk28ThemeToggle{
+  min-height:40px;
+  padding:0 12px;
+  border-radius:12px;
+  border:1px solid var(--jk28-line);
+  background:var(--jk28-surface);
+  color:var(--jk28-text);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:0 1px 2px rgba(16,24,40,.04);
+  cursor:pointer;
+  transition:transform .15s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+#jk28ThemeToggle:active{transform:scale(.98)}
+#jk28ThemeToggle:hover{transform:translateY(-1px)}
+#jk28ThemeToggle .jk28-theme-dot{
+  width:9px;height:9px;border-radius:999px;background:var(--jk28-accent);display:inline-block;flex:0 0 auto;
+}
+
+/* smoother transition */
+html[data-jk-theme],
+html[data-jk-theme] body,
+html[data-jk-theme] .card,
+html[data-jk-theme] .panel,
+html[data-jk-theme] .table-wrap,
+html[data-jk-theme] .topbar,
+html[data-jk-theme] .sidebar,
+html[data-jk-theme] #jk27DockInner,
+html[data-jk-theme] .jk27-action-wrap{
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+
+/* ===== Dark theme ===== */
+html[data-jk-theme="dark"]{
+  color-scheme:dark;
+}
+html[data-jk-theme="dark"] body{
+  background:#0b1220 !important;
+  color:#e5e7eb !important;
+}
+html[data-jk-theme="dark"] .app,
+html[data-jk-theme="dark"] .main,
+html[data-jk-theme="dark"] .content{
+  background:transparent !important;
+}
+html[data-jk-theme="dark"] .sidebar{
+  background:#0f1728 !important;
+  border-right:1px solid #22314d !important;
+}
+html[data-jk-theme="dark"] .sidebar-brand strong,
+html[data-jk-theme="dark"] .sidebar-brand small,
+html[data-jk-theme="dark"] .nav-title,
+html[data-jk-theme="dark"] .nav-link{
+  color:#dbe4f0 !important;
+}
+html[data-jk-theme="dark"] .nav-link:hover,
+html[data-jk-theme="dark"] .nav-link.active{
+  background:#17233a !important;
+  color:#ffffff !important;
+}
+html[data-jk-theme="dark"] .topbar{
+  background:rgba(9,15,26,.92) !important;
+  border-bottom:1px solid #22314d !important;
+  backdrop-filter:blur(10px) saturate(140%);
+}
+html[data-jk-theme="dark"] .topbar h1,
+html[data-jk-theme="dark"] .topbar p,
+html[data-jk-theme="dark"] .user-box,
+html[data-jk-theme="dark"] .user-name,
+html[data-jk-theme="dark"] #userName,
+html[data-jk-theme="dark"] #roleBadge,
+html[data-jk-theme="dark"] #branchText,
+html[data-jk-theme="dark"] h1,
+html[data-jk-theme="dark"] h2,
+html[data-jk-theme="dark"] h3,
+html[data-jk-theme="dark"] h4,
+html[data-jk-theme="dark"] h5,
+html[data-jk-theme="dark"] p,
+html[data-jk-theme="dark"] label,
+html[data-jk-theme="dark"] small,
+html[data-jk-theme="dark"] span,
+html[data-jk-theme="dark"] strong,
+html[data-jk-theme="dark"] li,
+html[data-jk-theme="dark"] td,
+html[data-jk-theme="dark"] th,
+html[data-jk-theme="dark"] div{
+  color:inherit;
+}
+html[data-jk-theme="dark"] .page-head p,
+html[data-jk-theme="dark"] .topbar p,
+html[data-jk-theme="dark"] small,
+html[data-jk-theme="dark"] .muted,
+html[data-jk-theme="dark"] .subtext{
+  color:#94a3b8 !important;
+}
+html[data-jk-theme="dark"] .card,
+html[data-jk-theme="dark"] .panel,
+html[data-jk-theme="dark"] .summary-card,
+html[data-jk-theme="dark"] .kpi-card,
+html[data-jk-theme="dark"] .metric-card,
+html[data-jk-theme="dark"] .history-card,
+html[data-jk-theme="dark"] .table-wrap,
+html[data-jk-theme="dark"] .modal-card,
+html[data-jk-theme="dark"] .jk23-contextbar,
+html[data-jk-theme="dark"] .tabs,
+html[data-jk-theme="dark"] .content .grid > .card{
+  background:#111b2e !important;
+  border-color:#22314d !important;
+  color:#e5e7eb !important;
+  box-shadow:0 6px 18px rgba(0,0,0,.22) !important;
+}
+html[data-jk-theme="dark"] .table-wrap,
+html[data-jk-theme="dark"] table{
+  background:#111b2e !important;
+}
+html[data-jk-theme="dark"] thead th{
+  background:#0d1728 !important;
+  border-bottom:1px solid #22314d !important;
+  color:#94a3b8 !important;
+}
+html[data-jk-theme="dark"] tbody td{
+  border-bottom:1px solid #1b2941 !important;
+  color:#e5e7eb !important;
+}
+html[data-jk-theme="dark"] tbody tr:hover{
+  background:#16243b !important;
+}
+html[data-jk-theme="dark"] .tab{
+  background:#111b2e !important;
+  border-color:#22314d !important;
+  color:#dbe4f0 !important;
+}
+html[data-jk-theme="dark"] .tab.active{
+  background:var(--jk28-primary) !important;
+  border-color:#35528c !important;
+  color:#fff !important;
+}
+html[data-jk-theme="dark"] input,
+html[data-jk-theme="dark"] select,
+html[data-jk-theme="dark"] textarea,
+html[data-jk-theme="dark"] button.outline-btn,
+html[data-jk-theme="dark"] .outline-btn,
+html[data-jk-theme="dark"] .secondary-btn,
+html[data-jk-theme="dark"] #logoutBtn,
+html[data-jk-theme="dark"] .close-btn,
+html[data-jk-theme="dark"] .menu-btn{
+  background:#0f1728 !important;
+  color:#e5e7eb !important;
+  border-color:#22314d !important;
+}
+html[data-jk-theme="dark"] input::placeholder,
+html[data-jk-theme="dark"] textarea::placeholder{
+  color:#7f8ea3 !important;
+}
+html[data-jk-theme="dark"] .primary-btn{
+  background:linear-gradient(180deg,#21407d,#17305e) !important;
+  border-color:#35528c !important;
+  color:#fff !important;
+}
+html[data-jk-theme="dark"] .danger-btn{
+  background:#3a171c !important;
+  border-color:#7a2630 !important;
+  color:#fecaca !important;
+}
+html[data-jk-theme="dark"] .role-pill,
+html[data-jk-theme="dark"] .pill,
+html[data-jk-theme="dark"] .badge{
+  background:#16243b !important;
+  border-color:#274064 !important;
+  color:#dbe4f0 !important;
+}
+html[data-jk-theme="dark"] .modal{
+  background:rgba(2,6,12,.64) !important;
+}
+html[data-jk-theme="dark"] .modal-card{
+  background:#111b2e !important;
+}
+
+/* dark fixed solid dock */
+html[data-jk-theme="dark"] .jk27-action-wrap,
+html[data-jk-theme="dark"] #jk27DockInner{
+  background:linear-gradient(180deg,#0f1b31,#0a1426) !important;
+  border-color:#22314d !important;
+}
+html[data-jk-theme="dark"] .jk27-action-wrap :where(button,a,.primary-btn,.outline-btn,.secondary-btn,.danger-btn){
+  background:rgba(255,255,255,.08) !important;
+  border-color:rgba(255,255,255,.10) !important;
+  color:#f8fafc !important;
+}
+html[data-jk-theme="dark"] .jk27-action-wrap .primary-btn{
+  background:linear-gradient(180deg,#f1d06f,#d9ab28) !important;
+  border-color:#c59a1f !important;
+  color:#10203a !important;
+}
+html[data-jk-theme="dark"] .jk27-action-wrap :where(input,select,textarea){
+  background:#0f1728 !important;
+  color:#e5e7eb !important;
+  border-color:#22314d !important;
+}
+html[data-jk-theme="dark"] #jk28ThemeToggle{
+  background:#0f1728 !important;
+  color:#e5e7eb !important;
+  border-color:#22314d !important;
+}
+html[data-jk-theme="dark"] #jk28ThemeToggle .jk28-theme-dot{
+  background:#60a5fa;
+}
+
+/* mobile spacing */
+@media (max-width:760px){
+  #jk28ThemeToggle{
+    min-height:38px;
+    padding:0 10px;
+    font-size:12px;
+    gap:6px;
+  }
+}
