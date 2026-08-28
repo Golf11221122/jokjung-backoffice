@@ -1,0 +1,386 @@
+/* =========================================================
+   JOKJUNG Back Office V3.28.5 — Page-by-page polish
+   Focus: dark-mode text clarity, button/tab readability,
+   iPhone/Safari date field visibility, and cleaner mobile layouts.
+   UI only. No SQL / no app logic changes.
+   ========================================================= */
+
+html[data-jk-theme="dark"]{
+  --jk285-bg:#071126;
+  --jk285-surface:#0d1830;
+  --jk285-surface-2:#122140;
+  --jk285-surface-3:#1a2d52;
+  --jk285-border:#284164;
+  --jk285-border-soft:#35537d;
+  --jk285-text:#f7fbff;
+  --jk285-text-soft:#d8e3f3;
+  --jk285-muted:#a6b5cc;
+  --jk285-primary:#dfb246;
+  --jk285-primary-deep:#b88b27;
+  --jk285-success:#2fc06a;
+  --jk285-danger:#ff8e8e;
+  --jk285-white:#ffffff;
+  --jk285-ink:#0f1728;
+}
+
+/* ---------- Strong readable headings / text ---------- */
+html[data-jk-theme="dark"] .page-head h2,
+html[data-jk-theme="dark"] .content h2,
+html[data-jk-theme="dark"] .content h3,
+html[data-jk-theme="dark"] .content h4,
+html[data-jk-theme="dark"] .topbar h1,
+html[data-jk-theme="dark"] .jk-command-hero h2,
+html[data-jk-theme="dark"] .jk-command-eyebrow,
+html[data-jk-theme="dark"] .panel strong,
+html[data-jk-theme="dark"] .card strong,
+html[data-jk-theme="dark"] .history-card strong,
+html[data-jk-theme="dark"] .k strong,
+html[data-jk-theme="dark"] .kpi-card strong,
+html[data-jk-theme="dark"] .metric-card strong,
+html[data-jk-theme="dark"] .summary-card strong,
+html[data-jk-theme="dark"] .quick-link,
+html[data-jk-theme="dark"] .jk-action-tile strong,
+html[data-jk-theme="dark"] .jk-command-btn,
+html[data-jk-theme="dark"] .jk-attention-card strong,
+html[data-jk-theme="dark"] .tab,
+html[data-jk-theme="dark"] .outline-btn,
+html[data-jk-theme="dark"] .small-btn,
+html[data-jk-theme="dark"] .detail-btn,
+html[data-jk-theme="dark"] .primary-btn,
+html[data-jk-theme="dark"] button{
+  color:var(--jk285-text) !important;
+  text-shadow:none !important;
+}
+
+html[data-jk-theme="dark"] .page-head p,
+html[data-jk-theme="dark"] .content p,
+html[data-jk-theme="dark"] .content small,
+html[data-jk-theme="dark"] .content span,
+html[data-jk-theme="dark"] .filter-field label,
+html[data-jk-theme="dark"] .field span,
+html[data-jk-theme="dark"] .mini-note,
+html[data-jk-theme="dark"] .jk-attention-label,
+html[data-jk-theme="dark"] .nav-title,
+html[data-jk-theme="dark"] #branchText,
+html[data-jk-theme="dark"] .role-pill{
+  color:var(--jk285-text-soft) !important;
+}
+html[data-jk-theme="dark"] .empty-box,
+html[data-jk-theme="dark"] .status-not-closed,
+html[data-jk-theme="dark"] .status-no-data{
+  color:var(--jk285-muted) !important;
+}
+
+/* ---------- Dark surfaces ---------- */
+html[data-jk-theme="dark"] .panel,
+html[data-jk-theme="dark"] .card,
+html[data-jk-theme="dark"] .history-card,
+html[data-jk-theme="dark"] .k,
+html[data-jk-theme="dark"] .kpi-card,
+html[data-jk-theme="dark"] .metric-card,
+html[data-jk-theme="dark"] .summary-card,
+html[data-jk-theme="dark"] .pane,
+html[data-jk-theme="dark"] .recon,
+html[data-jk-theme="dark"] .table-wrap,
+html[data-jk-theme="dark"] .empty-box,
+html[data-jk-theme="dark"] .jk-attention-card,
+html[data-jk-theme="dark"] .jk-command-hero,
+html[data-jk-theme="dark"] .quick-link,
+html[data-jk-theme="dark"] .jk-action-tile,
+html[data-jk-theme="dark"] .jk-command-btn,
+html[data-jk-theme="dark"] .status,
+html[data-jk-theme="dark"] .section-head,
+html[data-jk-theme="dark"] .row,
+html[data-jk-theme="dark"] .message,
+html[data-jk-theme="dark"] #message,
+html[data-jk-theme="dark"] #msg,
+html[data-jk-theme="dark"] #pageMessage{
+  background:var(--jk285-surface) !important;
+  border-color:var(--jk285-border) !important;
+  color:var(--jk285-text-soft) !important;
+}
+
+html[data-jk-theme="dark"] .jk-command-hero{
+  background:linear-gradient(135deg,#112246 0%, #1b2b45 100%) !important;
+}
+
+/* ---------- Buttons / tabs / action bars ---------- */
+html[data-jk-theme="dark"] .outline-btn,
+html[data-jk-theme="dark"] .small-btn,
+html[data-jk-theme="dark"] .detail-btn,
+html[data-jk-theme="dark"] .quick-link,
+html[data-jk-theme="dark"] .jk-action-tile,
+html[data-jk-theme="dark"] .jk-command-btn:not(.primary),
+html[data-jk-theme="dark"] .tab,
+html[data-jk-theme="dark"] .menu-btn,
+html[data-jk-theme="dark"] #jk28ThemeToggle,
+html[data-jk-theme="dark"] #logoutBtn,
+html[data-jk-theme="dark"] #globalShareBtn,
+html[data-jk-theme="dark"] #globalPrintBtn,
+html[data-jk-theme="dark"] #shareBtn,
+html[data-jk-theme="dark"] #printBtn,
+html[data-jk-theme="dark"] #todayBtn,
+html[data-jk-theme="dark"] #monthBtn{
+  background:var(--jk285-surface-2) !important;
+  color:var(--jk285-text) !important;
+  border:1px solid var(--jk285-border) !important;
+  box-shadow:none !important;
+  font-weight:800 !important;
+}
+
+html[data-jk-theme="dark"] .outline-btn:hover,
+html[data-jk-theme="dark"] .small-btn:hover,
+html[data-jk-theme="dark"] .detail-btn:hover,
+html[data-jk-theme="dark"] .quick-link:hover,
+html[data-jk-theme="dark"] .jk-action-tile:hover,
+html[data-jk-theme="dark"] .jk-command-btn:not(.primary):hover,
+html[data-jk-theme="dark"] .tab:hover{
+  background:var(--jk285-surface-3) !important;
+  border-color:var(--jk285-border-soft) !important;
+}
+
+html[data-jk-theme="dark"] .primary-btn,
+html[data-jk-theme="dark"] .tab.active,
+html[data-jk-theme="dark"] .jk-command-btn.primary,
+html[data-jk-theme="dark"] #closeBtn,
+html[data-jk-theme="dark"] #loadBtn{
+  background:var(--jk285-primary) !important;
+  color:var(--jk285-ink) !important;
+  border:1px solid var(--jk285-primary-deep) !important;
+  font-weight:900 !important;
+}
+html[data-jk-theme="dark"] .primary-btn *,
+html[data-jk-theme="dark"] .tab.active *,
+html[data-jk-theme="dark"] .jk-command-btn.primary *,
+html[data-jk-theme="dark"] #closeBtn *,
+html[data-jk-theme="dark"] #loadBtn *{
+  color:var(--jk285-ink) !important;
+}
+
+html[data-jk-theme="dark"] .report-actions,
+html[data-jk-theme="dark"] .auto-report-actions{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px !important;
+  width:100%;
+}
+html[data-jk-theme="dark"] .report-actions > *,
+html[data-jk-theme="dark"] .auto-report-actions > *{
+  width:100% !important;
+}
+
+/* ---------- Inputs: especially iPhone Safari date ---------- */
+html[data-jk-theme="dark"] input,
+html[data-jk-theme="dark"] select,
+html[data-jk-theme="dark"] textarea{
+  color:var(--jk285-text) !important;
+}
+
+html[data-jk-theme="dark"] input[type="date"],
+html[data-jk-theme="dark"] input[type="month"],
+html[data-jk-theme="dark"] .filters input,
+html[data-jk-theme="dark"] .filters select,
+html[data-jk-theme="dark"] .filter-bar input,
+html[data-jk-theme="dark"] .filter-bar select,
+html[data-jk-theme="dark"] .toolbar input,
+html[data-jk-theme="dark"] .toolbar select,
+html[data-jk-theme="dark"] .field input,
+html[data-jk-theme="dark"] .field select,
+html[data-jk-theme="dark"] .filter-field input,
+html[data-jk-theme="dark"] .filter-field select,
+html[data-jk-theme="dark"] .page-head input[type="date"],
+html[data-jk-theme="dark"] .page-head select{
+  background:var(--jk285-white) !important;
+  background-color:var(--jk285-white) !important;
+  color:var(--jk285-ink) !important;
+  -webkit-text-fill-color:var(--jk285-ink) !important;
+  border:1px solid #d8dfeb !important;
+  border-radius:14px !important;
+  opacity:1 !important;
+  font-weight:800 !important;
+}
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit,
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit-text,
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit-month-field,
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit-day-field,
+html[data-jk-theme="dark"] input[type="date"]::-webkit-datetime-edit-year-field,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-datetime-edit,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-datetime-edit-fields-wrapper,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-datetime-edit-text,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-datetime-edit-month-field,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-datetime-edit-year-field{
+  color:var(--jk285-ink) !important;
+  -webkit-text-fill-color:var(--jk285-ink) !important;
+  opacity:1 !important;
+}
+html[data-jk-theme="dark"] input::placeholder,
+html[data-jk-theme="dark"] textarea::placeholder{
+  color:#667085 !important;
+  -webkit-text-fill-color:#667085 !important;
+}
+html[data-jk-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-jk-theme="dark"] input[type="month"]::-webkit-calendar-picker-indicator{
+  filter:none !important;
+  opacity:.95 !important;
+}
+html[data-jk-theme="dark"] input:-webkit-autofill,
+html[data-jk-theme="dark"] select:-webkit-autofill,
+html[data-jk-theme="dark"] textarea:-webkit-autofill{
+  -webkit-box-shadow:0 0 0 1000px var(--jk285-white) inset !important;
+  -webkit-text-fill-color:var(--jk285-ink) !important;
+}
+
+/* ---------- Table / status readability ---------- */
+html[data-jk-theme="dark"] th,
+html[data-jk-theme="dark"] td{
+  color:var(--jk285-text-soft) !important;
+  border-bottom-color:rgba(255,255,255,.08) !important;
+}
+html[data-jk-theme="dark"] thead th{
+  background:rgba(255,255,255,.03) !important;
+  color:var(--jk285-muted) !important;
+}
+html[data-jk-theme="dark"] .status-closed,
+html[data-jk-theme="dark"] .status.ok,
+html[data-jk-theme="dark"] .good,
+html[data-jk-theme="dark"] .diff-ok{
+  color:#8ef0b2 !important;
+}
+html[data-jk-theme="dark"] .status-open,
+html[data-jk-theme="dark"] .warn{
+  color:#ffd98a !important;
+}
+html[data-jk-theme="dark"] .status.no,
+html[data-jk-theme="dark"] .bad,
+html[data-jk-theme="dark"] .diff-bad{
+  color:#ffb6b6 !important;
+}
+html[data-jk-theme="dark"] .okbox{
+  background:rgba(50,193,113,.16) !important;
+  border-color:rgba(50,193,113,.36) !important;
+  color:#e6fff0 !important;
+}
+html[data-jk-theme="dark"] .badbox{
+  background:rgba(219,80,80,.16) !important;
+  border-color:rgba(219,80,80,.36) !important;
+  color:#ffe4e4 !important;
+}
+
+/* ---------- Page-by-page action layout cleanup ---------- */
+.page-head{
+  gap:14px !important;
+}
+.page-head > div:last-child,
+.page-head .filter-bar,
+.page-head .toolbar,
+.page-head .filters,
+.page-head .finance-summary-toolbar{
+  gap:10px !important;
+}
+
+/* End of day / daily closing action row */
+.page-head > div:last-child{
+  align-items:stretch !important;
+}
+.page-head > div:last-child > input,
+.page-head > div:last-child > select,
+.page-head > div:last-child > button,
+.page-head > div:last-child > a{
+  min-height:50px;
+}
+
+/* Reconciliation filter area */
+.filters{
+  gap:10px !important;
+}
+.filters > input,
+.filters > select,
+.filters > button{
+  min-height:50px;
+}
+
+/* Financial Summary quick range */
+.quick-range{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px !important;
+}
+.quick-range > *{
+  width:100% !important;
+  min-height:48px;
+}
+
+/* Dashboard quick links / command buttons */
+.jk-command-actions,
+.quick-links,
+.jk-action-grid{
+  gap:12px !important;
+}
+
+/* Messages */
+#message:empty,
+#msg:empty,
+#pageMessage:empty{
+  display:none !important;
+}
+html[data-jk-theme="dark"] #message,
+html[data-jk-theme="dark"] #msg,
+html[data-jk-theme="dark"] #pageMessage{
+  border:1px solid var(--jk285-border) !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  font-weight:700 !important;
+}
+
+/* ---------- Mobile polish ---------- */
+@media (max-width:760px){
+  html[data-jk-theme="dark"] .user-box{
+    gap:10px !important;
+  }
+
+  html[data-jk-theme="dark"] .report-actions,
+  html[data-jk-theme="dark"] .auto-report-actions,
+  html[data-jk-theme="dark"] .quick-range,
+  html[data-jk-theme="dark"] .jk-command-actions,
+  html[data-jk-theme="dark"] .quick-links,
+  html[data-jk-theme="dark"] .jk-action-grid,
+  html[data-jk-theme="dark"] .filter-bar,
+  html[data-jk-theme="dark"] .filters,
+  html[data-jk-theme="dark"] .toolbar,
+  html[data-jk-theme="dark"] .finance-summary-toolbar,
+  html[data-jk-theme="dark"] .page-head > div:last-child{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  html[data-jk-theme="dark"] .page-head > div:last-child > *,
+  html[data-jk-theme="dark"] .filter-bar > *,
+  html[data-jk-theme="dark"] .filters > *,
+  html[data-jk-theme="dark"] .toolbar > *,
+  html[data-jk-theme="dark"] .finance-summary-toolbar > *,
+  html[data-jk-theme="dark"] .report-actions > *,
+  html[data-jk-theme="dark"] .auto-report-actions > *,
+  html[data-jk-theme="dark"] .quick-range > *,
+  html[data-jk-theme="dark"] .jk-command-actions > *,
+  html[data-jk-theme="dark"] .quick-links > *,
+  html[data-jk-theme="dark"] .jk-action-grid > *{
+    width:100% !important;
+    min-height:50px !important;
+  }
+
+  html[data-jk-theme="dark"] .page-head .filter-field,
+  html[data-jk-theme="dark"] .toolbar .field,
+  html[data-jk-theme="dark"] .finance-summary-toolbar .field{
+    width:100% !important;
+  }
+}
+
+/* ---------- Desktop tidy-up ---------- */
+@media (min-width:761px){
+  .page-head > div:last-child{display:flex !important;flex-wrap:wrap;gap:10px !important}
+  .page-head > div:last-child > input{min-width:220px}
+  .page-head > div:last-child > button,
+  .page-head > div:last-child > a{min-width:160px}
+}
